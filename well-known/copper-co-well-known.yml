@@ -1,0 +1,143 @@
+generated: '2026-08-04'
+method: probed
+source: live probes of every Copper host on 2026-08-04
+hosts_probed:
+- copper.co
+- www.copper.co
+- api.copper.co
+- developer.copper.co
+false_positive_warning:
+  host: www.copper.co
+  behavior: >-
+    www.copper.co returns HTTP 200 with the same 105,336-byte marketing SPA HTML shell for
+    EVERY /.well-known/* path requested, including paths that cannot exist. All www.copper.co
+    results were therefore REJECTED as SPA catch-all false positives and are recorded below
+    with status 200 but valid=false. The apex copper.co returns real 404s, so the catch-all
+    is specific to the www host.
+  paths_affected:
+  - /.well-known/security.txt
+  - /.well-known/agent-card.json
+  - /.well-known/agent.json
+  - /.well-known/openid-configuration
+  - /.well-known/oauth-authorization-server
+  - /.well-known/api-catalog
+  - /.well-known/ai-plugin.json
+documents:
+- host: developer.copper.co
+  path: /.well-known/agent-card.json
+  status: 200
+  valid: true
+  content_type: application/json
+  file: ../a2a/copper-co-agent-card.json
+  note: Real A2A agent card. Indexed here; the artifact lives in a2a/.
+- host: developer.copper.co
+  path: /.well-known/agent-skills/copperco/skill.md
+  status: 200
+  valid: true
+  content_type: text/markdown
+  file: ../skills/copper-co-copperco.md
+  note: Provider-published Agent Skill, linked from the agent card.
+- host: developer.copper.co
+  path: /.well-known/agent.json
+  status: 404
+  valid: false
+- host: developer.copper.co
+  path: /.well-known/security.txt
+  status: 404
+  valid: false
+- host: developer.copper.co
+  path: /.well-known/openid-configuration
+  status: 404
+  valid: false
+- host: developer.copper.co
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  valid: false
+- host: developer.copper.co
+  path: /.well-known/api-catalog
+  status: 404
+  valid: false
+- host: developer.copper.co
+  path: /.well-known/ai-plugin.json
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/security.txt
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/agent-card.json
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/agent.json
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/openid-configuration
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/oauth-authorization-server
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/api-catalog
+  status: 404
+  valid: false
+- host: api.copper.co
+  path: /.well-known/ai-plugin.json
+  status: 404
+  valid: false
+- host: copper.co
+  path: /.well-known/security.txt
+  status: 404
+  valid: false
+- host: copper.co
+  path: /.well-known/agent-card.json
+  status: 404
+  valid: false
+- host: copper.co
+  path: /.well-known/agent.json
+  status: 404
+  valid: false
+- host: www.copper.co
+  path: /.well-known/security.txt
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/agent-card.json
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/agent.json
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/openid-configuration
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/oauth-authorization-server
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/api-catalog
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+- host: www.copper.co
+  path: /.well-known/ai-plugin.json
+  status: 200
+  valid: false
+  reason: SPA catch-all returning HTML
+security_txt:
+  published: false
+  note: >-
+    No RFC 9116 security.txt is served on any Copper host. See
+    security/copper-co-vulnerability-disclosure.yml.

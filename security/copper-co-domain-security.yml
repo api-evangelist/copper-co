@@ -1,0 +1,26 @@
+generated: '2026-08-04'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: copper.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 14 23:59:59 2027 GMT
+  hsts: null
+- host: developer.copper.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 14 05:33:23 2026 GMT
+  hsts: null
+- host: api.copper.co
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 14 23:59:59 2027 GMT
+  hsts: null
+domains:
+- domain: copper.co
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

@@ -1,0 +1,86 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/api-reference/authentication
+docs: https://developer.copper.co/api-reference/authentication
+note: >-
+  The published OpenAPI documents declare NO components.securitySchemes and apply no
+  security[] requirement, so the mechanical derive pass (derive-authentication.py)
+  returned an empty profile. This profile is therefore captured from the provider's
+  documentation, which describes the scheme in full. Documenting the scheme in the
+  spec is the single highest-value contract fix available to Copper.
+summary:
+  types:
+  - apiKey
+  - httpSignature
+  api_key_in:
+  - header
+  oauth2_flows: []
+  signed_requests: true
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter_name: Authorization
+  value_format: ApiKey {API_KEY}
+  description: >-
+    API key issued in the Copper Platform UI under Settings > API Keys. Keys may be
+    owned by a user account or, recommended for integrations, by a service account so
+    the key survives team changes. Keys can be restricted to an IP allowlist.
+  sources:
+  - https://developer.copper.co/api-reference/authentication
+  - https://developer.copper.co/api-reference/create-api-key
+- name: RequestSignature
+  type: httpSignature
+  in: header
+  parameter_name: X-Signature
+  algorithm: HMAC-SHA256
+  encoding: hex
+  description: >-
+    Per-request integrity signature. Every request must additionally carry X-Signature
+    and X-Timestamp.
+  sources:
+  - https://developer.copper.co/api-reference/authentication
+required_headers:
+- header: Authorization
+  description: API key obtained on the Copper Platform, in the form "ApiKey {API_KEY}".
+- header: X-Signature
+  description: Hex-encoded HMAC-SHA256 signature of the request.
+- header: X-Timestamp
+  description: Request timestamp as a UNIX timestamp in milliseconds.
+- header: Content-Type
+  description: application/json
+signature:
+  algorithm: HMAC-SHA256
+  encoding: hex
+  secret: API Secret issued alongside the API key
+  string_to_sign: '{X-Timestamp}{HTTP_METHOD_UPPERCASE}{path_including_/platform_prefix_and_query}{request_body}'
+  notes:
+  - Timestamp is milliseconds since the Unix epoch, not seconds.
+  - HTTP method must be uppercase.
+  - Path must include the /platform prefix and all query parameters, e.g. /platform/orders?limit=1000.
+  - Use an empty string for the body when the request has no body.
+  code_examples:
+  - bash
+  - python
+  - java
+  - go
+  - scala
+service_accounts:
+  docs: https://developer.copper.co/api-reference/service-accounts
+  description: >-
+    Recommended owner for integration API keys. Permissions are granted per service
+    account and per portfolio.
+  permission_types:
+  - Trader
+  - Withdrawal Operator
+  - Loan Manager
+  - Approver
+ip_allowlist:
+  supported: true
+  description: An API key may be restricted to a set of source IP addresses.
+oauth2: false
+scopes_artifact: null
+scopes_note: >-
+  Copper uses API-key + HMAC signature authentication with role-based service-account
+  permissions. There is no OAuth 2.0 surface and therefore no scope reference, so no
+  scopes/ artifact is emitted.

@@ -1,0 +1,110 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/copper-co-platform-openapi.json + https://developer.copper.co/api-reference
+searched:
+- https://developer.copper.co/api-reference/authentication
+- https://developer.copper.co/api-reference/errors
+- https://copper.co/en/security
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: >-
+    Five OpenAPI 3.1.0 documents published and linked from llms.txt; the public document
+    carries 78 paths, 88 operations and 179 component schemas.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are plain application/json with a bespoke {error, message} envelope, not
+    application/problem+json. No type/title/status/detail/instance members.
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 security scheme in any spec and no OAuth surface documented.
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration on any Copper host.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on copper.co, api.copper.co or developer.copper.co.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header support documented; no formal deprecation policy.
+- id: hmac-request-signing
+  conforms: true
+  evidence: >-
+    Every request requires an X-Signature header carrying a hex-encoded HMAC-SHA256 over
+    timestamp + uppercase method + path + body, with X-Timestamp for replay protection.
+- id: a2a-agent-card
+  conforms: partial
+  grade: near-conformant
+  evidence: >-
+    A2A agent card served at the canonical /.well-known/agent-card.json on
+    developer.copper.co, protocolVersion 0.3. Uses supportedInterfaces rather than the
+    A2A 1.0.0 additionalInterfaces. See a2a/copper-co-a2a.yml.
+- id: mcp
+  conforms: true
+  evidence: >-
+    Live MCP server at https://developer.copper.co/mcp returning three tools with
+    inputSchema over anonymous JSON-RPC tools/list. Documentation-scoped, not platform
+    operations.
+- id: llms-txt
+  conforms: true
+  evidence: >-
+    https://developer.copper.co/llms.txt served as text/plain, indexing every docs page as
+    a .md URL plus an explicit "OpenAPI Specs" section listing every machine-readable
+    document.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A 28-event webhook catalog is documented but no AsyncAPI document is published. Not
+    penalized as absent event surface — the events exist, the machine-readable spec does not.
+- id: json-api
+  conforms: false
+  evidence: Bespoke JSON response shapes; no JSON:API media type or document structure.
+- id: fapi
+  conforms: false
+  evidence: No FAPI profile claimed; no OAuth/OIDC on which FAPI could apply.
+- id: travel-rule
+  conforms: true
+  evidence: >-
+    Address-book entities carry Travel Rule information and emit a
+    crypto-address-travel-rule-info-updated webhook event, indicating FATF Travel Rule
+    (VASP originator/beneficiary) data handling.
+compliance_program:
+  published: true
+  url: https://copper.co/en/security
+  detail: security/copper-co-trust-center.yml
+  certifications:
+  - SOC 2
+  - ISO 27001
+  - NIST Cybersecurity Framework
+spec_quality_gaps:
+  note: >-
+    Recorded for the provider conversation, not fabricated into the spec. These are real,
+    fixable gaps in Copper's published OpenAPI.
+  findings:
+  - id: no-operation-ids
+    severity: high
+    detail: >-
+      None of the 88 operations declares an operationId. This blocks stable tool naming,
+      SDK generation, Arazzo workflow authoring and MCP tool binding.
+  - id: no-security-schemes
+    severity: high
+    detail: >-
+      components.securitySchemes is empty and no security[] requirement is applied, even
+      though every request requires Authorization + X-Signature + X-Timestamp. The spec
+      does not describe how to authenticate against it.
+  - id: incomplete-error-responses
+    severity: medium
+    detail: >-
+      Operations declare only 400/403/409. The documented 401, 404, 429 and 500 responses
+      are absent from the spec.
+  - id: untagged-operation
+    severity: low
+    detail: 'POST /exchange (Hyperliquid exchange action passthrough) carries no tag.'
+  - id: duplicate-path
+    severity: low
+    detail: 'Both POST /orders and POST /orders/ are declared as separate paths.'
+  - id: placeholder-server
+    severity: low
+    detail: >-
+      copper-unlimited-open-api.json declares only http://0.0.0.0:3010 as its server.

@@ -1,0 +1,125 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Copper Platform API
+  version: 1.0.0
+extends: openapi/copper-co-platform-openapi.json
+x-generated: '2026-08-04'
+x-method: generated
+x-source: >-
+  Derived from API Evangelist enrichment artifacts in this repo. Captures cross-cutting
+  contract facts that Copper documents in prose but does not express in the OpenAPI
+  document itself. The harvested spec is never mutated.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-profile: https://apis.io/provider/copper-co/
+    x-apievangelist-enriched: '2026-08-04'
+    x-api-evangelist-note: >-
+      The upstream document declares no operationIds and no securitySchemes. This overlay
+      supplies the authentication contract; operationIds cannot be supplied without
+      inventing provider-owned identifiers, so they are deliberately left absent.
+- target: $.components
+  update:
+    securitySchemes:
+      ApiKeyAuth:
+        type: apiKey
+        in: header
+        name: Authorization
+        description: >-
+          API key issued in the Copper Platform UI (Settings > API Keys), sent as
+          "ApiKey {API_KEY}". Recommended owner is a service account. Keys may be
+          restricted to an IP allowlist.
+          Source: https://developer.copper.co/api-reference/authentication
+      RequestSignature:
+        type: apiKey
+        in: header
+        name: X-Signature
+        description: >-
+          Hex-encoded HMAC-SHA256 signature over the concatenation of
+          {X-Timestamp}{UPPERCASE_METHOD}{path including /platform prefix and query}{body},
+          signed with the API secret. Empty string for body when absent.
+          Source: https://developer.copper.co/api-reference/authentication
+      RequestTimestamp:
+        type: apiKey
+        in: header
+        name: X-Timestamp
+        description: >-
+          Request timestamp as a UNIX timestamp in MILLISECONDS. Used for replay
+          protection and as the first component of the signed string.
+          Source: https://developer.copper.co/api-reference/authentication
+- target: $
+  update:
+    security:
+    - ApiKeyAuth: []
+      RequestSignature: []
+      RequestTimestamp: []
+- target: $.info
+  update:
+    x-rate-limits:
+      documented: true
+      source: rate-limits/copper-co-rate-limits.yml
+      limits:
+      - 30000 requests per 5 minutes per IP address
+      - 1000 requests per 5 minutes per User ID + Organization ID pair
+      - 30 failed auth attempts per hour per API key + IP pair, then a 15-minute lockout
+      - 60 failed business-logic requests per minute per User ID, then a 3-minute lockout
+      response_code: 429
+      headers_documented: false
+- target: $.info
+  update:
+    x-idempotency:
+      supported: true
+      mechanism: client-supplied body field
+      field: externalOrderId
+      scope: order creation
+      header_based: false
+      source: conventions/copper-co-conventions.yml
+- target: $.info
+  update:
+    x-serialization:
+      numeric_values: >-
+        All numeric values are returned as strings to prevent floating-point precision loss.
+      date_time: Timestamps in milliseconds since the Unix epoch.
+- target: $.info
+  update:
+    x-error-envelope:
+      media_type: application/json
+      rfc9457: false
+      fields:
+        error: machine-readable error code
+        message: human-readable detail
+      declared_in_spec:
+      - 400
+      - 403
+      - 409
+      documented_but_undeclared:
+      - 401
+      - 404
+      - 429
+      - 500
+      source: errors/copper-co-problem-types.yml
+- target: $.info
+  update:
+    x-webhooks:
+      supported: true
+      event_count: 28
+      signature: HMAC-SHA256 or ECDSA over {X-Timestamp}{eventId}{body}
+      headers:
+      - X-Signature
+      - X-Timestamp
+      - X-Id
+      source: asyncapi/copper-co-webhooks.yml
+- target: $.info
+  update:
+    x-environments:
+      production: https://api.copper.co/platform
+      staging: https://api.stage.copper.co/platform
+      testnet: https://api.testnet.copper.co/platform
+      source: sandbox/copper-co-sandbox.yml
+- target: $.paths['/exchange'].post
+  update:
+    tags:
+    - blockchain
+    x-apievangelist-note: >-
+      Untagged in the upstream document. Tagged here so it is not lost from tag-based
+      navigation and refinement. Hyperliquid exchange action passthrough.

@@ -1,0 +1,57 @@
+generated: '2026-08-04'
+method: searched
+probe: false
+probe_note: >-
+  probe-security-programs.py returned trust=none because copper.co/en/security is
+  client-rendered and the keyword check runs against the raw HTML body. The page was then
+  fetched and read directly, confirming a real published security and certification
+  posture, so this artifact is recorded as searched with the URL as evidence.
+url: https://copper.co/en/security
+http_status: 200
+certifications:
+- name: SOC 2
+  detail: Copper states it adheres to the Trust Principles set out in the SOC 2 framework.
+- name: ISO 27001
+  detail: Used as the basis for building out Copper's security controls.
+- name: NIST Cybersecurity Framework
+  detail: Copper states it adheres to NIST guidelines for mitigating organisational cybersecurity risks.
+certification_caveat: >-
+  The page describes adherence to and alignment with these frameworks. It does not publish
+  audit reports, certificate numbers, validity dates or an auditor name, and there is no
+  self-serve trust portal from which a report can be requested. Treat these as stated
+  posture rather than verified certification.
+insurance:
+  cover: USD 500m
+  type: Specie market-based insurance
+  market: Lloyd's of London
+  additional: Bespoke Crypto Crime policy
+  broker: AON
+security_practices:
+- Internal and independent penetration testing performed across the technology estate.
+- 24/7 Security Operations Centre.
+- Dedicated Application Security, Infrastructure Security, Security Architecture and Assurance teams.
+- AI/ML-enabled incident management.
+- Regular mandatory cyber-threat training for all employees.
+governance_committees:
+- Security Committee
+- Global Financial Crime Governance Committee
+- Risk & Compliance Committee
+corporate:
+  entity: Copper Markets (Switzerland) AG
+  registration: CHE 477.629.838
+  address: Theilerstrasse 1A, 6300 Zug, Switzerland
+trust_portal:
+  exists: false
+  note: >-
+    No trust.copper.co or security.copper.co subdomain exists (neither resolves in DNS).
+    The security posture is published as a marketing page, not a trust centre with
+    downloadable evidence.
+evidence:
+- source: https://copper.co/en/security
+  keywords:
+  - SOC 2
+  - ISO 27001
+  - NIST Cybersecurity Framework
+  - penetration testing
+  - Security Operations Centre
+  fetched: '2026-08-04'

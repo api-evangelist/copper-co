@@ -1,0 +1,104 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/api-reference/getting-started
+sources:
+- https://developer.copper.co/api-reference/getting-started
+- https://developer.copper.co/api-reference/authentication
+- https://developer.copper.co/api-reference/errors
+- https://developer.copper.co/.well-known/agent-skills/copperco/skill.md
+- openapi/copper-co-platform-openapi.json
+authentication:
+  style: api-key-plus-hmac-signature
+  headers:
+  - Authorization
+  - X-Signature
+  - X-Timestamp
+  detail: authentication/copper-co-authentication.yml
+idempotency:
+  supported: true
+  mechanism: client-supplied external order identifier
+  field: externalOrderId
+  location: request body
+  scope: order creation (POST /orders, POST /orders/bulk)
+  description: >-
+    Copper documents externalOrderId as the idempotency control for order creation:
+    "Always include externalOrderId in order creation requests. If a request times out
+    and you retry, the same externalOrderId prevents duplicate orders."
+  evidence:
+  - source: https://developer.copper.co/.well-known/agent-skills/copperco/skill.md
+    quote: Include `externalOrderId` for idempotency (prevents duplicate orders if request retries)
+  - source: openapi/copper-co-platform-openapi.json
+    note: externalOrderId appears as a request/response property on the order schemas
+  retention: not published
+  header_based: false
+  note: >-
+    Idempotency is body-field based and scoped to orders only. There is no general-purpose
+    Idempotency-Key request header covering all write operations.
+pagination:
+  style: limit-and-cursor
+  params:
+  - name: limit
+    description: Maximum number of records to return.
+  - name: pageSize
+    description: Page size on endpoints that page by size.
+  note: >-
+    Pagination parameters vary by endpoint; consult each operation in
+    openapi/copper-co-platform-openapi.json. Copper does not publish a single
+    cross-cutting pagination contract.
+serialization:
+  numeric_values: >-
+    All numeric values are returned as STRINGS to prevent floating-point precision loss.
+    Parse as strings and use a decimal library for arithmetic.
+  date_time: >-
+    All date and time values are timestamps in MILLISECONDS since the Unix epoch
+    (1970-01-01T00:00:00Z), not seconds.
+  content_type: application/json
+error_envelope:
+  format: custom-json
+  rfc9457: false
+  media_type: application/json
+  shape:
+    error: machine-readable error code (string), e.g. bad-request
+    message: human-readable message providing more details about the error
+  detail: errors/copper-co-problem-types.yml
+rate_limiting:
+  documented: true
+  detail: rate-limits/copper-co-rate-limits.yml
+  retry_guidance: >-
+    Implement exponential backoff on 429; prefer webhooks over tight polling loops.
+versioning:
+  scheme: unversioned-path
+  detail: >-
+    The base path is /platform with no version segment. Breaking and additive changes
+    are communicated through the dated API updates changelog rather than a version
+    identifier.
+  detail_artifact: lifecycle/copper-co-lifecycle.yml
+request_tracing:
+  request_id_header: null
+  note: Copper does not document a request-id/correlation header for API responses.
+webhooks:
+  supported: true
+  detail: asyncapi/copper-co-webhooks.yml
+terminology:
+  - ui_term: Account
+    api_term: Portfolio
+    note: The Copper Web Platform calls them "Accounts"; the API calls them "Portfolios".
+approval_workflow:
+  description: >-
+    Orders may require additional steps before execution, surfaced as order status.
+  statuses:
+  - status: co-sign-required
+    action: PATCH /orders/{coSignOrderId} to approve (co-sign).
+  - status: master-password-required
+    action: PATCH /orders/{orderId} with the SHA-256 hash of the master password.
+  - status: signing-required
+    action: PATCH /orders/{startSigningOrderId} with the signature.
+  terminal_statuses:
+  - EXECUTED
+  - CANCELED
+  - LIQUIDATED
+  - ERROR
+  - BLOCKED
+  - DECLINED
+  - SUSPENDED
+  - REJECTED

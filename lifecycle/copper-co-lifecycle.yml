@@ -1,0 +1,68 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/changelog
+versioning:
+  scheme: unversioned-path
+  current: null
+  docs: https://developer.copper.co/api-reference/getting-started
+  note: >-
+    The API base path is https://api.copper.co/platform with no version segment, and the
+    OpenAPI info.version on the public document is the literal string "latest". Copper
+    publishes no API version identifier and no version-negotiation header. Change
+    communication is entirely through the dated API updates changelog.
+deprecation:
+  policy_url: https://developer.copper.co/changelog
+  formal_policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Copper has NO published deprecation policy document — no stated notice period, no
+    RFC 8594 Sunset/Deprecation header support, and no deprecation schedule. What it does
+    have is demonstrated deprecation PRACTICE, communicated in the changelog, plus a
+    dedicated deprecated-API OpenAPI document that isolates retired surface.
+  practice_evidence:
+  - date: '2026-01-29'
+    description: >-
+      Eight lending loan types deprecated and renamed, with automatic migration to
+      replacements and a stated intent to remove the old types after migration.
+    source: https://developer.copper.co/changelog
+  deprecated_api_spec:
+    file: openapi/copper-co-deprecated-openapi.json
+    title: Copper Platform Deprecated API
+    source: https://developer.copper.co/deprecated-api-open-api.json
+    note: >-
+      Copper publishes a separate OpenAPI document titled "Copper Platform Deprecated Spec"
+      carrying the retired surface (1 path). Isolating deprecated operations into their own
+      machine-readable document is good practice and is stronger than most of the catalog.
+deprecated_operations:
+  method: derived
+  source: openapi/copper-co-platform-openapi.json
+  count: 0
+  note: >-
+    No operation in the public OpenAPI carries `deprecated: true`. Deprecated surface is
+    instead separated into openapi/copper-co-deprecated-openapi.json.
+status_page:
+  url: https://copper.co/en/status
+  http_status: 200
+  hosted: self-hosted
+  note: >-
+    Copper serves its status page on its own marketing domain at /en/status rather than a
+    third-party status host. There is no status.copper.co subdomain (DNS does not resolve)
+    and no machine-readable status API or status RSS/Atom feed was found.
+  machine_readable: false
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment is published. Copper is an institutional provider;
+    service levels are expected to sit in bilateral client contracts rather than on the
+    public site.
+support:
+  docs: https://developer.copper.co/guides/support
+  knowledge_base: https://help.copper.co
+  channel: >-
+    Existing clients contact their relationship manager. Prospects email hello@copper.co.
+    There is no public developer support forum, community, or ticketing portal.
+changelog:
+  artifact: changelog/copper-co-changelog.yml
+  url: https://developer.copper.co/changelog

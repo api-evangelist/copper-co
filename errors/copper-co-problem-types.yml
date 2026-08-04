@@ -1,0 +1,84 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/api-reference/errors
+docs: https://developer.copper.co/api-reference/errors
+format: custom-json
+rfc9457: false
+media_type: application/json
+envelope:
+  description: >-
+    Copper Platform API returns machine-readable errors and human-readable messages.
+    Errors are plain application/json, not RFC 9457 application/problem+json.
+  fields:
+  - field: error
+    type: string
+    description: The machine-readable error code.
+    example: bad-request
+  - field: message
+    type: string
+    description: A human-readable message providing more details about the error.
+  example:
+    error: bad-request
+    message: Can't execute request
+problems:
+- status: 400
+  code: bad-request
+  title: Bad Request
+  detail: 'Validation errors: empty required fields, unsupported values.'
+  remediation: Correct the request payload; check required fields and enum values against the OpenAPI schema.
+  source: https://developer.copper.co/api-reference/errors
+- status: 401
+  title: Unauthorized
+  detail: Invalid API Key.
+  remediation: >-
+    Verify the Authorization header is "ApiKey {API_KEY}" and that X-Signature and
+    X-Timestamp are present and correctly computed. Note that 30 failed auth attempts
+    per hour per API key + IP pair triggers a 15-minute lockout.
+  source: https://developer.copper.co/api-reference/errors
+- status: 403
+  title: Forbidden
+  detail: Access to the requested resource is denied.
+  remediation: >-
+    Check the service account has the required permission (Trader, Withdrawal Operator,
+    Loan Manager, Approver) for the action, on the relevant portfolio.
+  source: https://developer.copper.co/api-reference/errors
+- status: 404
+  title: Not Found
+  detail: The requested endpoint has not been found.
+  remediation: Verify the path includes the /platform prefix and the resource identifier exists.
+  source: https://developer.copper.co/api-reference/errors
+- status: 409
+  title: Conflict
+  detail: Validation error, or the request cannot be completed due to an internal issue. Documented elsewhere as "business logic error".
+  remediation: >-
+    Inspect the error code and message. 60 failed business-logic requests per minute
+    per User ID triggers a 3-minute lockout.
+  source: https://developer.copper.co/api-reference/errors
+- status: 429
+  title: Request Limit Exceeded
+  detail: The request rate limit is exceeded. Request processing is temporarily blocked.
+  remediation: Back off exponentially and retry. See rate-limits/copper-co-rate-limits.yml.
+  source: https://developer.copper.co/api-reference/errors
+- status: 500
+  title: Internal Server Error
+  detail: Problems with the Copper platform server.
+  remediation: Retry with backoff; contact your Copper relationship manager if persistent.
+  source: https://developer.copper.co/api-reference/errors
+spec_coverage:
+  method: derived
+  source: openapi/copper-co-platform-openapi.json
+  note: >-
+    Derived from the published OpenAPI. Every one of the 88 operations declares exactly
+    three error responses — 400, 403 and 409 — each with the {error, message} schema
+    and application/json media type. 401, 404, 429 and 500 are documented in the error
+    reference but are NOT declared in the OpenAPI responses, so an agent reading only
+    the spec will not anticipate them.
+  declared_in_spec:
+    '400': 87
+    '403': 87
+    '409': 87
+  documented_but_not_in_spec:
+  - 401
+  - 404
+  - 429
+  - 500

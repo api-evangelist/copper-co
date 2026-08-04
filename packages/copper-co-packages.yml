@@ -1,0 +1,67 @@
+generated: '2026-08-04'
+method: searched
+found: false
+source: registry searches on 2026-08-04
+summary: >-
+  NEGATIVE RESULT, recorded so the search is not repeated. Copper publishes NO first-party
+  client SDK in any public package registry, and maintains no discoverable public GitHub
+  organization. Integration is expected to be hand-rolled against the REST API using the
+  published OpenAPI and Postman collection, with the HMAC-SHA256 signature implemented by
+  the client. Copper does publish signature-generation code EXAMPLES in five languages in
+  its authentication docs, but these are snippets, not distributed libraries.
+  Because no official SDK exists, NO `SDKs` pointer is wired into apis.yml.
+packages: []
+registries_searched:
+- registry: npm
+  result: none
+  note: No @copper/* or copper-co scoped or named first-party package. Matches are unrelated third parties.
+- registry: pypi
+  result: none
+  probed:
+  - copper-sdk
+  - coppersdk
+  - copper-co
+  - copper-api
+  note: All 404.
+- registry: github
+  result: none
+  note: >-
+    No github.com/copper-co or github.com/copperco organization (GitHub API returns 404 for
+    both). No first-party repositories found via code search.
+- registry: maven-central
+  result: none
+- registry: nuget
+  result: none
+- registry: pkg.go.dev
+  result: none
+- registry: rubygems
+  result: none
+- registry: packagist
+  result: none
+- registry: crates.io
+  result: none
+official_alternatives:
+- name: Postman collection
+  url: https://developer.copper.co/copper-postman-collection.json
+  docs: https://developer.copper.co/api-reference/try-it-out#postman-collection
+  official: true
+  description: >-
+    Official Postman collection generated from the OpenAPI spec, with a pre-request script
+    that computes the HMAC-SHA256 X-Signature. The closest thing Copper ships to a client
+    library.
+- name: OpenAPI specification
+  url: https://developer.copper.co/copper-open-api-public.json
+  official: true
+  description: >-
+    OpenAPI 3.1 document usable for client generation — though the absence of operationIds
+    means generated method names will be synthesized from paths rather than
+    provider-controlled.
+code_examples:
+  docs: https://developer.copper.co/api-reference/authentication
+  languages:
+  - bash
+  - python
+  - java
+  - go
+  - scala
+  note: Signature-generation examples only, published inline in the docs. Not packaged libraries.

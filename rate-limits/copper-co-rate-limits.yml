@@ -1,0 +1,43 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/.well-known/agent-skills/copperco/skill.md
+docs: https://developer.copper.co/api-reference/errors
+limit_count: 4
+response_code: 429
+rate_limits:
+- name: per-ip-request-rate
+  limit_count: 30000
+  window: 5 minutes
+  scope: IP address
+  description: 30,000 requests per 5 minutes per IP address.
+- name: per-user-org-request-rate
+  limit_count: 1000
+  window: 5 minutes
+  scope: User ID + Organization ID pair
+  description: 1,000 requests per 5 minutes per User ID and Organization ID pair.
+- name: failed-authentication
+  limit_count: 30
+  window: 1 hour
+  scope: API Key + IP pair
+  penalty: 15-minute lockout
+  description: 30 failed authentication attempts per hour per API key + IP pair triggers a 15-minute lockout.
+- name: failed-business-logic
+  limit_count: 60
+  window: 1 minute
+  scope: User ID
+  penalty: 3-minute lockout
+  description: 60 failed business-logic requests per minute per User ID triggers a 3-minute lockout.
+exceeded_behavior:
+  status: 429
+  meaning: Request Limit Exceeded — request processing is temporarily blocked.
+headers:
+  documented: false
+  note: >-
+    Copper does not publish the names of any rate-limit response headers
+    (no documented X-RateLimit-Limit / -Remaining / -Reset or Retry-After contract).
+    The agent skill advises "Log API response headers for rate limit info" but does not
+    name them, so a client cannot pre-emptively throttle from a documented contract.
+guidance:
+  - Implement exponential backoff for 429 responses.
+  - Avoid tight polling loops; use webhooks for order state changes instead.
+  - Wait for the lockout period to elapse — 5 minutes for user-ID limits.

@@ -1,0 +1,150 @@
+generated: '2026-08-04'
+method: derived
+source: mcp/copper-co-mcp.yml + openapi/copper-co-platform-openapi.json
+summary: >-
+  Copper has BOTH a live MCP server and a published OpenAPI, but they do not overlap at
+  all. The MCP server is the Mintlify documentation server bundled with the developer
+  portal: its three tools search and read the docs. The OpenAPI describes 88 REST
+  operations over custody, orders, lending and ClearLoop. Not one MCP tool binds to a REST
+  operation, so the crosswalk[] is empty by observation, not by omission — every MCP tool
+  is mcp_only and every REST operation is rest_only. This is the honest, and the
+  interesting, result: an agent can READ Copper's docs over MCP but cannot ACT on Copper's
+  platform over MCP.
+surfaces:
+  openapi:
+    file: openapi/copper-co-platform-openapi.json
+    source: https://developer.copper.co/copper-open-api-public.json
+    version: 3.1.0
+    operations: 88
+    paths: 78
+    gated: false
+    operation_ids: false
+    operation_ids_note: >-
+      CRITICAL for binding: not a single one of the 88 operations declares an operationId.
+      Any crosswalk row would have to bind to "METHOD path" rather than a stable
+      operationId, and any generated SDK/tool name would be synthesized rather than
+      provider-controlled. Operations are identified here by method + path.
+  graphql:
+    endpoint: null
+    note: Copper publishes no GraphQL surface.
+  mcp:
+    url: https://developer.copper.co/mcp
+    gated: false
+    tools_list: 200 anonymous — real tool set with inputSchema retrieved live
+    scope: documentation only
+crosswalk: []
+crosswalk_note: >-
+  Empty by observation. No MCP tool is backed by a Copper Platform API operation.
+mcp_only:
+- tool: search_copper_developer_portal
+  reason: >-
+    Documentation full-text search over the Mintlify knowledge base. Backed by the docs
+    index, not by any Copper Platform REST operation.
+- tool: query_docs_filesystem_copper_developer_portal
+  reason: >-
+    Read-only virtual filesystem over documentation pages and OpenAPI specs. Backed by the
+    docs corpus, not by any Copper Platform REST operation.
+- tool: submit_feedback
+  reason: >-
+    Writes documentation feedback to the Mintlify docs pipeline. No public REST operation
+    exists for it, and it does not touch the Copper platform.
+rest_only:
+- capability: lending
+  operation_count: 36
+  note: Agency and bilateral loan lifecycle — create, approve, accept, repay, rerate, rebalance, top up, extend, default, early terminate.
+  representative_operations:
+  - POST /organizations/{organizationId}/loans
+  - GET /organizations/{organizationId}/loans
+  - GET /organizations/{organizationId}/loans/{loanId}
+  - PATCH /organizations/{organizationId}/loans/{approveLoanId}
+  - PATCH /organizations/{organizationId}/loans/{repayLoanId}
+- capability: orders
+  operation_count: 10
+  note: Order creation, bulk creation, dry run, cancel, co-sign, master password, start signing, retrieval.
+  representative_operations:
+  - POST /orders
+  - POST /orders/
+  - POST /dry-run-orders
+  - GET /orders
+  - GET /orders/{orderId}
+  - PATCH /orders/{cancelOrderId}
+  - PATCH /orders/{coSignOrderId}
+  - PATCH /orders/{startSigningOrderId}
+- capability: clearloop
+  operation_count: 9
+  note: Read-only views over ClearLoop actions, balances, exchanges, portfolios and settlements.
+  representative_operations:
+  - GET /clearloop/balances
+  - GET /clearloop/settlements
+  - GET /clearloop/portfolios
+- capability: reports
+  operation_count: 6
+  representative_operations:
+  - POST /reports/lending
+  - POST /reports/orders/net
+  - POST /reports/wallets/net-asset-values
+- capability: address-book
+  operation_count: 4
+  representative_operations:
+  - GET /crypto-addresses
+  - POST /crypto-addresses
+  - DELETE /crypto-addresses/{cryptoAddressId}
+- capability: portfolios
+  operation_count: 4
+  representative_operations:
+  - GET /portfolios
+  - POST /portfolios
+  - GET /portfolios/{portfolioId}
+- capability: currencies
+  operation_count: 3
+  representative_operations:
+  - GET /currencies
+  - GET /currencies/{currency}-{mainCurrency}/trading-fees
+- capability: deposit-targets
+  operation_count: 3
+  representative_operations:
+  - GET /deposit-targets
+  - POST /deposit-targets
+- capability: organizations
+  operation_count: 3
+  representative_operations:
+  - GET /organizations
+  - GET /organizations/{organizationId}/members
+  - GET /organizations/{organizationId}/activities
+- capability: stake
+  operation_count: 3
+  representative_operations:
+  - GET /staking/active-stakes
+  - GET /staking/pending-stakes
+  - GET /staking/outstanding-stakes
+- capability: wallets
+  operation_count: 3
+  representative_operations:
+  - GET /wallets
+  - POST /wallets
+  - GET /wallets/{walletId}
+- capability: blockchain
+  operation_count: 1
+  representative_operations:
+  - POST /blockchain/validate-address
+- capability: network
+  operation_count: 1
+  representative_operations:
+  - GET /organizations/{organizationId}/counterparties
+- capability: files
+  operation_count: 1
+  representative_operations:
+  - GET /files/{fileId}
+- capability: untagged
+  operation_count: 1
+  note: Hyperliquid exchange action passthrough; carries no tag in the spec.
+  representative_operations:
+  - POST /exchange
+coverage:
+  mcp_tools_named: 3
+  mcp_tools_bound_to_rest: 0
+  mcp_only: 3
+  rest_operations_total: 88
+  rest_operations_with_a_tool: 0
+  rest_only: 88
+  binding_rate: 0.0

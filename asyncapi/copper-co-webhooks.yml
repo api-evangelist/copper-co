@@ -1,0 +1,155 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/guides/webhooks/webhook-event
+spec_type: Webhooks
+asyncapi_published: false
+asyncapi_note: >-
+  Copper documents a complete webhook event catalog but publishes NO AsyncAPI document.
+  Searched the developer portal, the llms.txt OpenAPI Specs index (which lists every
+  machine-readable document Copper serves), and the docs host for /asyncapi.yaml or an
+  event-catalog spec — none exists. The webhook catalog below is captured from the
+  documentation verbatim; no AsyncAPI has been fabricated.
+docs:
+  introduction: https://developer.copper.co/guides/webhooks/introduction
+  how_to_setup: https://developer.copper.co/guides/webhooks/how-to-setup
+  validate_signature: https://developer.copper.co/guides/webhooks/validate-signature
+  events: https://developer.copper.co/guides/webhooks/webhook-event
+transport:
+  protocol: HTTP
+  method: POST
+  delivery: >-
+    Requests are sent to a subscriber-supplied URL, which must be reachable from the
+    public internet and must respond 200 OK to confirm receipt.
+  retries: true
+  retry_note: Copper retries failed webhooks. Delivery logs are visible in the Copper Platform UI.
+  subscription_management: Copper Platform UI — Settings > Webhooks
+  filtering: Subscriptions may be filtered by portfolio and by selected event types.
+headers:
+- header: X-Signature
+  description: Signature of the request.
+- header: X-Timestamp
+  description: Timestamp of the request in Unix timestamp format (milliseconds).
+- header: X-Id
+  description: The identifier of the webhook subscription.
+security:
+  signature_algorithms:
+  - name: HMAC-SHA256
+    description: Sign the concatenated string with your API Secret using HMAC-SHA256, hex encoded.
+  - name: ECDSA
+    description: >-
+      Compute the SHA-256 hash of the concatenated string, then verify the signature with
+      the ECDSA public key, hex encoded.
+  string_to_sign: '{X-Timestamp}{eventId}{full_request_body}'
+  string_to_sign_note: >-
+    Concatenate the X-Timestamp header value, the eventId from the request body, then all
+    fields of the request body.
+  replay_protection: >-
+    Validate that the timestamp is recent to prevent replay attacks.
+  source_ip_allowlist:
+    supported: true
+    environment: Production only
+    note: Copper states these addresses can change in the future.
+    addresses:
+    - 63.33.117.167
+    - 99.80.177.29
+    - 52.215.155.205
+payload:
+  fields:
+  - eventId
+  - event
+  - subscriptionId
+  - payload
+event_count: 28
+events:
+- category: Organization & API Keys
+  events:
+  - event: member-created
+    description: Team member is added
+    object: OrganizationMember
+  - event: member-deactivated
+    description: Team member is deactivated
+    object: OrganizationMember
+  - event: member-updated
+    description: Team member is updated
+    object: OrganizationMember
+  - event: api-key-generated
+    description: A new API Key was created
+    object: User
+- category: Address Book
+  events:
+  - event: crypto-address-created
+    description: A new address added
+    object: CryptoAddressCreated
+  - event: crypto-address-deactivated
+    description: An address deactivated
+    object: CryptoAddressDeactivated
+  - event: crypto-address-approved
+    description: A new address approved
+    object: CryptoAddress
+  - event: crypto-address-declined
+    description: A new address declined
+    object: CryptoAddress
+  - event: crypto-address-updated
+    description: An address updated
+    object: CryptoAddressUpdated
+  - event: crypto-address-travel-rule-info-updated
+    description: Travel Rule info updated
+    object: TravelRuleInfoUpdatedEvent
+- category: Deposits & Withdrawals
+  events:
+  - event: deposit-created
+    description: Deposit order is created
+    object: Order
+  - event: deposit-completed
+    description: Deposit order is completed
+    object: Order
+  - event: withdraw-created
+    description: Withdraw order is created
+    object: Order
+  - event: withdraw-completed
+    description: Withdraw order is completed
+    object: Order
+  - event: withdraw-failed
+    description: Withdraw order failed
+    object: Order
+  - event: withdraw-transaction-sent
+    description: Withdraw order is sent to blockchain
+    object: Order
+  - event: order-master-password-required
+    description: Master password is required
+    object: Order
+  - event: order-completed
+    description: Order is completed. No filtering by order type; all order types (deposits, withdrawals, buy, sell, etc.) are included.
+    object: Order
+- category: ClearLoop
+  events:
+  - event: clearloop-delegation-created
+    description: Delegation order is created
+    object: Order
+  - event: clearloop-undelegation-created
+    description: Undelegation order is created
+    object: Order
+  - event: clearloop-delegation-completed
+    description: Delegation order is completed
+    object: Order
+  - event: clearloop-undelegation-completed
+    description: Undelegation order is completed
+    object: Order
+  - event: clearloop-delegation-failed
+    description: Delegation order failed
+    object: Order
+  - event: clearloop-undelegation-failed
+    description: Undelegation order failed
+    object: Order
+  - event: clearloop-undelegation-blocked
+    description: Undelegation order is blocked
+    object: UndelegationRestriction
+  - event: clearloop-undelegation-unblocked
+    description: Undelegation order is unblocked
+    object: UndelegationRestriction
+  - event: clearloop-delegation-blocked
+    description: Delegation order is blocked
+    object: DelegationRestriction
+  - event: clearloop-delegation-unblocked
+    description: Delegation order is unblocked
+    object: DelegationRestriction

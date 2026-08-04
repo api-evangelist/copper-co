@@ -1,0 +1,166 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Copper Unlimited Online API",
+    "description": "API for signing transactions asynchronously with Copper Unlimited Online",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://0.0.0.0:3010",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/sign-async": {
+      "post": {
+        "summary": "Sign transaction asynchronously",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignAsyncRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Transaction signed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignAsyncResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sign-async/{transactionRequestId}": {
+      "get": {
+        "summary": "Get status of the sign request",
+        "parameters": [
+          {
+            "name": "transactionRequestId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status of the sign request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SignAsyncStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SignAsyncRequest": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "request"
+            ]
+          },
+          "keyPassword": {
+            "description": "The password from the shard",
+            "type": "string"
+          },
+          "keyFilename": {
+            "description": "The filename of the key",
+            "type": "string"
+          },
+          "transactionRequestId": {
+            "description": "The transaction request id",
+            "type": "string"
+          },
+          "masterPassword": {
+            "description": "The organization master password",
+            "type": "string"
+          },
+          "apiKey": {
+            "description": "The Copper's Platform API Key",
+            "type": "string"
+          },
+          "apiSecret": {
+            "description": "The Copper's Platform API Key",
+            "type": "string"
+          },
+          "signRequest": {
+            "description": "All this fields from order.extra.transactionRequest",
+            "type": "object"
+          }
+        },
+        "required": [
+          "type",
+          "keyPassword",
+          "keyFilename",
+          "transactionRequestId",
+          "masterPassword",
+          "apiKey",
+          "apiSecret",
+          "signRequest"
+        ]
+      },
+      "SignAsyncResponse": {
+        "type": "object",
+        "properties": {
+          "transactionRequestId": {
+            "type": "string"
+          },
+          "sessionKey": {
+            "type": "string"
+          },
+          "sessionTimestamp": {
+            "type": "string",
+            "examples": [
+              "1608296004000"
+            ]
+          }
+        }
+      },
+      "SignAsyncStatusResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/SignAsyncStatus",
+            "type": "string"
+          },
+          "message": {
+            "type": "string",
+            "examples": [
+              "AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0="
+            ]
+          }
+        }
+      },
+      "SignAsyncStatus": {
+        "type": "object",
+        "enum": [
+          "starting",
+          "session-established",
+          "in-progress",
+          "completed",
+          "error"
+        ],
+        "description": "* `starting`: The request is accepted for processing\n* `session-established`: The CU session has been established\n* `in-progress`: The signature is being generated\n* `completed`: The transaction has been signed\n* `error`: Something went wrong, see the message field"
+      }
+    }
+  }
+}

@@ -1,0 +1,230 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/copper-co-platform-openapi.json
+docs: https://developer.copper.co/api-reference/getting-started
+summary: >-
+  Entity-relationship graph derived from the 179 component schemas in Copper's public
+  OpenAPI, by following id-reference fields between schemas. Copper's model is rooted at
+  Organization; everything else hangs off it, and Portfolio is the pivot entity that
+  nearly every other object references. Relationships are inferred from *Id field names
+  (portfolioId appears on 25 schemas, organizationId on 17) rather than from $ref links,
+  because the spec models references as bare string ids rather than nested objects.
+schema_count: 179
+id_prefixes:
+  published: false
+  note: >-
+    Copper does not publish typed/prefixed identifiers (no cus_/ord_ style prefixes).
+    Identifiers are opaque strings; the referencing field name is the only type signal.
+terminology:
+  note: The Copper Web Platform calls a Portfolio an "Account". They are the same entity.
+entities:
+- name: Organization
+  description: Root tenant. Every other entity is scoped to an organization.
+  identifier: organizationId
+  key_fields:
+  - organizationId
+  - organizationName
+  - organizationType
+  - alias
+  - reportingCurrency
+  - createdAt
+  relationships:
+  - type: has_many
+    target: Portfolio
+    via: organizationId
+  - type: has_many
+    target: OrganizationMember
+    via: organizationId
+  - type: has_many
+    target: Loan
+    via: organizationId
+  - type: has_many
+    target: CryptoAddress
+    via: organizationId
+  - type: has_many
+    target: Order
+    via: organizationId
+- name: Portfolio
+  description: >-
+    The pivot entity — a segregated account holding wallets. Called "Account" in the UI.
+    Portfolios can nest via parentPortfolioId.
+  identifier: portfolioId
+  key_fields:
+  - portfolioId
+  - portfolioName
+  - portfolioDescription
+  - portfolioType
+  - organizationId
+  - status
+  - isActive
+  relationships:
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+  - type: has_many
+    target: Wallet
+    via: portfolioId
+  - type: has_many
+    target: Order
+    via: portfolioId
+  - type: belongs_to
+    target: Portfolio
+    via: parentPortfolioId
+    note: Self-referencing hierarchy.
+- name: Wallet
+  description: >-
+    Per-currency balance holder inside a portfolio. Carries available, locked, reserve,
+    stakeBalance and totalBalance. All numeric values are strings.
+  identifier: walletId
+  key_fields:
+  - walletId
+  - currency
+  - mainCurrency
+  - balance
+  - available
+  - locked
+  - reserve
+  - stakeBalance
+  - totalBalance
+  relationships:
+  - type: belongs_to
+    target: Portfolio
+    via: portfolioId
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+  - type: belongs_to
+    target: Currency
+    via: currency
+- name: Order
+  description: >-
+    Unit of movement — transfers, withdrawals, staking, smart calls, settlements. Carries
+    the client-supplied externalOrderId used for idempotency.
+  identifier: orderId
+  key_fields:
+  - orderId
+  - externalOrderId
+  - orderType
+  - status
+  - amount
+  - baseCurrency
+  - quoteCurrency
+  - mainCurrency
+  - limitType
+  - createdBy
+  - terminatedAt
+  relationships:
+  - type: belongs_to
+    target: Portfolio
+    via: portfolioId
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+  - type: has_one
+    target: Portfolio
+    via: toPortfolioId
+    note: Destination portfolio on internal transfers.
+  - type: has_one
+    target: CryptoAddress
+    via: toCryptoAddressId
+    note: Destination address on withdrawals.
+  - type: has_one
+    target: Counterparty
+    via: toCounterpartyId
+    note: Destination counterparty on Copper Network settlements.
+  terminal_statuses:
+  - EXECUTED
+  - CANCELED
+  - LIQUIDATED
+  - ERROR
+  - BLOCKED
+  - DECLINED
+  - SUSPENDED
+  - REJECTED
+- name: Loan
+  description: >-
+    Agency or bilateral loan. The single largest capability in the API (36 operations)
+    covering the full lifecycle: create, approve, accept, secure collateral, top up,
+    rebalance, rerate, pay interest, repay, extend, default and early terminate.
+  identifier: loanId
+  key_fields:
+  - loanId
+  - loanType
+  - status
+  - marginCallExpiryPeriod
+  relationships:
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+  - type: has_one
+    target: Portfolio
+    via: borrowerPortfolioId
+  - type: has_one
+    target: Portfolio
+    via: collateralPortfolioId
+  - type: has_many
+    target: LoanAllocation
+    via: loanAllocationId
+- name: CryptoAddress
+  description: Address-book entry. Approval-gated, and carries Travel Rule information.
+  identifier: cryptoAddressId
+  relationships:
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+  - type: referenced_by
+    target: Order
+    via: toCryptoAddressId
+- name: DepositTarget
+  description: Deposit destination for a currency within a portfolio.
+  identifier: depositTargetId
+  relationships:
+  - type: belongs_to
+    target: Portfolio
+    via: portfolioId
+  - type: belongs_to
+    target: Currency
+    via: currency
+- name: OrganizationMember
+  description: A user within an organization.
+  identifier: userId
+  relationships:
+  - type: belongs_to
+    target: Organization
+    via: organizationId
+- name: Currency
+  description: Supported asset, keyed by currency plus mainCurrency (chain).
+  identifier: currency
+  composite_key:
+  - currency
+  - mainCurrency
+- name: ClearLoopPortfolio
+  description: >-
+    Portfolio delegated to a connected exchange through ClearLoop, Copper's off-exchange
+    settlement network. Carries settlementStatus for the last settlement cycle.
+  identifier: clearLoopPortfolioId
+  relationships:
+  - type: belongs_to
+    target: Portfolio
+    via: portfolioId
+  - type: belongs_to
+    target: Exchange
+    via: exchangeId
+- name: Counterparty
+  description: Participant in the Copper Network, the destination of network settlements.
+  identifier: counterpartyId
+graph_root: Organization
+most_referenced:
+- field: portfolioId
+  schemas_referencing: 25
+- field: organizationId
+  schemas_referencing: 17
+- field: clientAccountId
+  schemas_referencing: 6
+- field: exchangeId
+  schemas_referencing: 5
+- field: loanId
+  schemas_referencing: 5
+- field: depositTargetId
+  schemas_referencing: 5
+subway: null

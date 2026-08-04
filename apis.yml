@@ -1,18 +1,76 @@
 aid: copper-co
 name: Copper.co
-description: 'Copper.co is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Copper is an institutional digital asset infrastructure provider headquartered
+  in Zug, Switzerland, offering custody, prime services and collateral management to
+  hedge funds, trading firms, exchanges, ETP providers, foundations and miners. Its
+  Copper Platform API is a REST API over portfolios (called "accounts" in the UI),
+  wallets, orders, transfers, withdrawals, staking, agency and bilateral lending, and
+  ClearLoop — Copper''s off-exchange settlement and collateral network that lets clients
+  trade on connected exchanges while assets remain in custody. The API authenticates
+  with an API key plus a per-request HMAC-SHA256 signature, publishes OpenAPI 3.1 specifications
+  and a Postman collection, and offers a webhook system for real-time order, deposit,
+  withdrawal, ClearLoop and address-book events.'
+image: https://cdn.sanity.io/images/ih0ldmk7/production/7362d67a23ba5de367175e92536225788ede190c-2400x1181.jpg
 url: https://raw.githubusercontent.com/api-evangelist/copper-co/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
 - Company
-apis: []
+- Digital Asset Custody
+- Cryptocurrency
+- Financial Services
+- Institutional Finance
+- Prime Brokerage
+- Collateral Management
+- Lending
+- Settlement
+- Staking
+- Blockchain
+- Treasury Management
+apis:
+- aid: copper-co-platform-api
+  name: Copper Platform API
+  description: 'REST API for the Copper institutional digital asset platform. Covers
+    organizations, portfolios, wallets and balances, the crypto address book, orders
+    (transfers, withdrawals, staking, smart calls, settlements), deposit targets, currencies,
+    reports, blockchain address validation, agency and bilateral lending, and ClearLoop
+    off-exchange settlement. Authenticated with an API key plus a per-request HMAC-SHA256
+    signature over timestamp + method + path + body.'
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - Digital Asset Custody
+  - Orders
+  - Wallets
+  - Lending
+  - ClearLoop
+  - Staking
+  - Settlement
+  properties:
+  - type: OpenAPI
+    name: Copper Platform API (public)
+    url: openapi/copper-co-platform-openapi.json
+  - type: OpenAPI
+    name: Copper Platform API (lending)
+    url: openapi/copper-co-lending-openapi.json
+  - type: OpenAPI
+    name: Copper Platform API (trades)
+    url: openapi/copper-co-trades-openapi.json
+  - type: OpenAPI
+    name: Copper Unlimited Online API
+    url: openapi/copper-co-unlimited-openapi.json
+  - type: OpenAPI
+    name: Copper Platform Deprecated API
+    url: openapi/copper-co-deprecated-openapi.json
+  - type: Overlay
+    url: overlays/copper-co-platform-overlay.yaml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -20,4 +78,71 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: https://augment.market/c/copper-co
+  url: https://copper.co/
+- type: DeveloperPortal
+  url: https://developer.copper.co/
+- type: Documentation
+  url: https://developer.copper.co/guides/introduction
+- type: APIReference
+  url: https://developer.copper.co/api-reference/getting-started
+- type: GettingStarted
+  url: https://developer.copper.co/api-reference/getting-started
+- type: Authentication
+  url: authentication/copper-co-authentication.yml
+- type: Support
+  url: https://help.copper.co
+- type: Blog
+  url: https://copper.co/en/insights/company-news
+- type: Pricing
+  url: https://copper.co/en/pricing
+- type: TermsOfService
+  url: https://copper.co/en/terms
+- type: PrivacyPolicy
+  url: https://copper.co/en/privacy
+- type: Postman
+  url: https://developer.copper.co/api-reference/try-it-out#postman-collection
+- type: ChangeLog
+  url: changelog/copper-co-changelog.yml
+- type: Lifecycle
+  url: lifecycle/copper-co-lifecycle.yml
+- type: StatusPage
+  url: https://copper.co/en/status
+- type: Deprecation
+  url: lifecycle/copper-co-lifecycle.yml
+- type: Conventions
+  url: conventions/copper-co-conventions.yml
+- type: Idempotency
+  url: conventions/copper-co-conventions.yml
+- type: ErrorCatalog
+  url: errors/copper-co-problem-types.yml
+- type: RateLimits
+  url: rate-limits/copper-co-rate-limits.yml
+- type: Sandbox
+  url: sandbox/copper-co-sandbox.yml
+- type: Webhooks
+  url: asyncapi/copper-co-webhooks.yml
+- type: MCPServer
+  url: mcp/copper-co-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgentCard
+  url: a2a/copper-co-a2a.yml
+- type: LLMsTxt
+  url: llms/copper-co-llms.txt
+- type: WellKnown
+  url: well-known/copper-co-well-known.yml
+- type: Conformance
+  url: conformance/copper-co-conformance.yml
+- type: Compliance
+  url: https://copper.co/en/security
+- type: TrustCenter
+  url: security/copper-co-trust-center.yml
+- type: DomainSecurity
+  url: security/copper-co-domain-security.yml
+- type: Packages
+  url: packages/copper-co-packages.yml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 26
+  pass: local-v1

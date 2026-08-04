@@ -1,0 +1,77 @@
+generated: '2026-08-04'
+method: probed
+source: https://developer.copper.co/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: developer.copper.co
+  note: >-
+    Found at the A2A 1.0.0 / RFC 8615 canonical path on the developer portal host. The
+    legacy /.well-known/agent.json path on the same host returns 404. Note that
+    www.copper.co answers HTTP 200 with the SPA HTML shell for EVERY /.well-known/* path
+    probed — that host was rejected as a false positive and is not the source of this card.
+conformance:
+  spec: A2A 1.0.0
+  grade: near-conformant
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  hard_checks:
+    capabilities_is_object: true
+    protocol_version_present: true
+    skills_is_array: true
+  optional_fields_present:
+  - preferredTransport
+  - defaultInputModes
+  - defaultOutputModes
+  - provider
+  - documentationUrl
+  deviations:
+  - id: supportedInterfaces-instead-of-additionalInterfaces
+    detail: >-
+      The card declares `supportedInterfaces` where A2A 1.0.0 specifies
+      `additionalInterfaces`. A strict 1.0.0 consumer will not read the interface list.
+  - id: pre-1.0-protocolVersion
+    detail: >-
+      protocolVersion is "0.3", a pre-1.0 revision of the A2A protocol, and is given as
+      "0.3" rather than a full semver triple such as "0.3.0".
+  grading_note: >-
+    All three hard checks pass, so this is not `flavored` under the enumerated hard-check
+    definition, and every optional field the `near-conformant` row lists as commonly
+    missing is in fact present. It is graded `near-conformant` rather than `conformant`
+    because the card carries the non-canonical `supportedInterfaces` field, which the
+    rubric names explicitly as a flavored marker. Recorded here so the call is auditable
+    and can be re-graded upward if the rubric intends the hard checks to be exhaustive.
+card:
+  name: Copper Developer Portal
+  url: https://developer.copper.co/
+  version: 1.0.0
+  provider_organization: Copper Developer Portal
+  documentation_url: https://developer.copper.co/
+  capabilities:
+    streaming: false
+    push_notifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills: 1
+  file: copper-co-agent-card.json
+scope_note: >-
+  This card describes the DEVELOPER PORTAL as an agent surface, not the Copper Platform API
+  itself. Its single skill points at a provider-published Agent Skill document
+  (/.well-known/agent-skills/copperco/skill.md) which teaches an agent how to call the
+  Platform API; the card's own `url` resolves to the docs site. There is no A2A task
+  endpoint for custody operations.
+linked_skill:
+  id: copperco
+  name: Copperco
+  url: https://developer.copper.co/.well-known/agent-skills/copperco/skill.md
+  harvested_to: skills/copper-co-copperco.md
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://developer.copper.co/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  body_bytes: 972
+  legacy_path_checked: https://developer.copper.co/.well-known/agent.json
+  legacy_path_status: 404

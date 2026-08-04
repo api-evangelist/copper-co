@@ -1,0 +1,202 @@
+# Copper Developer Portal
+
+## Docs
+
+- [Create Crypto Address](https://developer.copper.co/api-reference/address-book/create-crypto-address.md): Create a new crypto address in an organization's address book
+- [Deactivate Crypto Address](https://developer.copper.co/api-reference/address-book/deactivate-crypto-address.md): Deactivate a crypto address in an organization's address book
+- [Get Crypto Address by ID](https://developer.copper.co/api-reference/address-book/get-crypto-address-by-id.md): Retrieve information about a crypto address in an organization's address book
+- [Get Crypto Addresses](https://developer.copper.co/api-reference/address-book/get-crypto-addresses.md): Retrieve information about crypto addresses in an organization's address book
+- [Authentication](https://developer.copper.co/api-reference/authentication.md)
+- [Validate Address](https://developer.copper.co/api-reference/blockchain/validate-address.md)
+- [Get ClearLoop Action by ID](https://developer.copper.co/api-reference/clearloop/get-clearloop-action-by-id.md)
+- [Get ClearLoop Actions](https://developer.copper.co/api-reference/clearloop/get-clearloop-actions.md)
+- [Get ClearLoop Balances](https://developer.copper.co/api-reference/clearloop/get-clearloop-balances.md)
+- [Get ClearLoop Exchange by ID](https://developer.copper.co/api-reference/clearloop/get-clearloop-exchange-by-id.md)
+- [Get ClearLoop Exchanges](https://developer.copper.co/api-reference/clearloop/get-clearloop-exchanges.md)
+- [Get ClearLoop Portfolio by Id](https://developer.copper.co/api-reference/clearloop/get-clearloop-portfolio-by-id.md)
+- [Get ClearLoop Portfolios](https://developer.copper.co/api-reference/clearloop/get-clearloop-portfolios.md)
+- [Get ClearLoop Settlement by ID](https://developer.copper.co/api-reference/clearloop/get-clearloop-settlement-by-id.md)
+- [Get ClearLoop Settlements](https://developer.copper.co/api-reference/clearloop/get-clearloop-settlements.md)
+- [Create an API key](https://developer.copper.co/api-reference/create-api-key.md)
+- [Currency Trading Fees for Amount](https://developer.copper.co/api-reference/currencies/currency-trading-fees-for-amount.md): Calculates trading fees for a given amount and a currency pair
+- [Get Currencies](https://developer.copper.co/api-reference/currencies/get-currencies.md)
+- [Get Currency](https://developer.copper.co/api-reference/currencies/get-currency.md)
+- [Activate Deposit Target Currency](https://developer.copper.co/api-reference/deposit-targets/activate-deposit-target-currency.md): Update deposit target
+- [Create Deposit Target](https://developer.copper.co/api-reference/deposit-targets/create-deposit-target.md): Create a new deposit target
+- [Get Deposit Targets](https://developer.copper.co/api-reference/deposit-targets/get-deposit-targets.md): Retrieve information about all deposit targets in an organization
+- [Errors](https://developer.copper.co/api-reference/errors.md)
+- [Execute exchange action](https://developer.copper.co/api-reference/execute-exchange-action.md): Execute Hyperliquid exchange action. Mimics https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/exchange-endpoint
+- [Download Files](https://developer.copper.co/api-reference/files/download-files.md)
+- [Getting started](https://developer.copper.co/api-reference/getting-started.md)
+- [Accept Loan](https://developer.copper.co/api-reference/lending/accept-loan.md): Accept a loan. This action can only be carried out by the borrower.
+- [Accept Loan Interest Payment](https://developer.copper.co/api-reference/lending/accept-loan-interest-payment.md): Accept the loan interest payment request.
+- [Accept Loan Rebalance](https://developer.copper.co/api-reference/lending/accept-loan-rebalance.md): Accept the loan rebalance request. Only a lender can carry out this action.
+- [Accept Loan Repayment](https://developer.copper.co/api-reference/lending/accept-loan-repayment.md): Accept the full or partial loan repayment request. Only requests that were initiated by the counterparty can be accepted.
+- [Accept Loan Rerate](https://developer.copper.co/api-reference/lending/accept-loan-rerate.md): Accept the loan interest rerate request. Only the borrower can carry out this action.
+- [Accept Loan Term Extension](https://developer.copper.co/api-reference/lending/accept-loan-term-extension.md): Accept the loan term extension request. Only requests that were initiated by the counterparty can be accepted.
+- [Accept Loan Top Up](https://developer.copper.co/api-reference/lending/accept-loan-top-up.md): Accept the loan top up request. Only a borrower can carry out this action.
+- [Approve Loan](https://developer.copper.co/api-reference/lending/approve-loan.md): Approve a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.
+- [Calculate Loan LTV Dry Run](https://developer.copper.co/api-reference/lending/calculate-loan-ltv-dry-run.md): Obtain the loan LTV or needed collateral amount for given loan parameters.
+- [Cancel Loan](https://developer.copper.co/api-reference/lending/cancel-loan.md): Cancel a loan that is awaiting acceptance. This action can be carried out by the lender or the borrower.
+- [Cancel Loan Default](https://developer.copper.co/api-reference/lending/cancel-loan-default.md): Cancel a default request for loan. This action can only be carried out by the lender.
+- [Cancel Loan Interest Payment](https://developer.copper.co/api-reference/lending/cancel-loan-interest-payment.md): Cancel the loan interest payment request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
+- [Cancel Loan Rebalance](https://developer.copper.co/api-reference/lending/cancel-loan-rebalance.md): Cancel the loan rebalance request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
+- [Cancel Loan Repayment](https://developer.copper.co/api-reference/lending/cancel-loan-repayment.md): Cancel the full or partial loan repayment. This action can be carried out by the borrower or the lender.
+- [Cancel Loan Rerate](https://developer.copper.co/api-reference/lending/cancel-loan-rerate.md): Cancel the loan interest rerate request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
+- [Cancel Loan Term Extension](https://developer.copper.co/api-reference/lending/cancel-loan-term-extension.md): Cancel the loan term extension request. This action can be carried out by the borrower or the lender.
+- [Cancel Loan Top Up](https://developer.copper.co/api-reference/lending/cancel-loan-top-up.md): Cancel the loan top up request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
+- [Confirm External Disbursement](https://developer.copper.co/api-reference/lending/confirm-external-disbursement.md): Confirm the external disbursement of an off-platform managed loan. Only the lender can carry out this action.
+- [Confirm External Interest Payment](https://developer.copper.co/api-reference/lending/confirm-external-interest-payment.md): Confirm the external payment of interest. Only the lender can carry out this action.
+- [Confirm External Repayment](https://developer.copper.co/api-reference/lending/confirm-external-repayment.md): Confirm the external repayment of an off-platform managed loan. Only the lender can carry out this action.
+- [Confirm External Top Up](https://developer.copper.co/api-reference/lending/confirm-external-top-up.md): Confirm the external top up of an off-platform managed loan. Only the lender can carry out this action.
+- [Create Loan](https://developer.copper.co/api-reference/lending/create-loan.md): Initiate loan creation. This action can only be carried out by the lender.
+- [Default Loan](https://developer.copper.co/api-reference/lending/default-loan.md): Default a loan that is in a defaultable state. This action can only be carried out by the lender.
+- [Early Terminate Loan](https://developer.copper.co/api-reference/lending/early-terminate-loan.md): Early terminate ClearLoop loans within the same portfolio. This action can only be initiated by the Agency Desk.
+- [Estimate Loan Leverage Ratio](https://developer.copper.co/api-reference/lending/estimate-loan-leverage-ratio.md): Obtain an estimated loan leverage ratio after taking into account requested loan amount and/or collateral amount adjustments.
+- [Estimate Loan LTV](https://developer.copper.co/api-reference/lending/estimate-loan-ltv.md): Obtain an estimated loan LTV after taking into account requested loan amount and/or collateral amount adjustments.
+- [Extend Loan Term](https://developer.copper.co/api-reference/lending/extend-loan-term.md): Request loan term extension. Loan term extension can only be requested within five days of the loan reaching maturity. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
+- [Get Loan by ID](https://developer.copper.co/api-reference/lending/get-loan-by-id.md): Retrieve a loan by its ID
+- [Get Loans](https://developer.copper.co/api-reference/lending/get-loans.md): Retrieve loans
+- [Pay Loan Interest](https://developer.copper.co/api-reference/lending/pay-loan-interest.md): Create an interest payment request.
+- [Rebalance Loan](https://developer.copper.co/api-reference/lending/rebalance-loan.md): Create a loan rebalance request. This action can only be carried out by the borrower and must be accepted by the lender.
+- [Reject Loan](https://developer.copper.co/api-reference/lending/reject-loan.md): Reject a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.
+- [Repay Loan](https://developer.copper.co/api-reference/lending/repay-loan.md): Request the partial or full repayment of a loan. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
+- [Rerate Loan](https://developer.copper.co/api-reference/lending/rerate-loan.md): Request a new loan interest rerate. The new interest rate must be stated in BPS. This action can only be carried out by the lender.
+- [Secure Collateral Loan](https://developer.copper.co/api-reference/lending/secure-collateral-loan.md): Secure collateral for a loan. This action can only be carried out by the borrower and should be invoked for both initial and subsequent collateral top ups.
+- [Top Up Loan](https://developer.copper.co/api-reference/lending/top-up-loan.md): Request a loan top up. This action can only be carried out by the lender and must be accepted by the borrower.
+- [Get Counterparties](https://developer.copper.co/api-reference/network/get-counterparties.md): Find participant of the Copper Network
+- [Accept Order](https://developer.copper.co/api-reference/orders/accept-order.md): Accept counterparty settlement order
+- [Approve (co-sign) Order](https://developer.copper.co/api-reference/orders/approve-co-sign-order.md)
+- [Cancel Order](https://developer.copper.co/api-reference/orders/cancel-order.md)
+- [Create Multiple Orders](https://developer.copper.co/api-reference/orders/create-multiple-orders.md): Bulk orders creation. If the execution of an order fails, it will not affect the execution of other orders. Failed orders will be returned in the response. The bulk size should be less than 50 orders.
+- [Create Order](https://developer.copper.co/api-reference/orders/create-order.md)
+- [Dry Run Order](https://developer.copper.co/api-reference/orders/dry-run-order.md)
+- [Get Order by ID](https://developer.copper.co/api-reference/orders/get-order-by-id.md)
+- [Get Orders](https://developer.copper.co/api-reference/orders/get-orders.md)
+- [Provide master password for Order](https://developer.copper.co/api-reference/orders/provide-master-password-for-order.md)
+- [Start Signing](https://developer.copper.co/api-reference/orders/start-signing.md): Start crypto signing for an order
+- [Get Activities](https://developer.copper.co/api-reference/organizations/get-activities.md): Retrieve information about all activities in the organization
+- [Get Organization Members](https://developer.copper.co/api-reference/organizations/get-organization-members.md): Retrieve information about organization members
+- [Get Organizations](https://developer.copper.co/api-reference/organizations/get-organizations.md): Retrieve information about organizations
+- [Archive Portfolio](https://developer.copper.co/api-reference/portfolios/archive-portfolio.md)
+- [Create Portfolio](https://developer.copper.co/api-reference/portfolios/create-portfolio.md): Create a new portfolio
+- [Get Portfolios](https://developer.copper.co/api-reference/portfolios/get-portfolios.md): Retrieve your portfolios (in UI terms - accounts)
+- [Retrieve Portfolio by ID](https://developer.copper.co/api-reference/portfolios/retrieve-portfolio-by-id.md)
+- [Rate limits](https://developer.copper.co/api-reference/rate-limits.md)
+- [Create Balance Report](https://developer.copper.co/api-reference/reports/create-balance-report.md)
+- [Create Lending Report](https://developer.copper.co/api-reference/reports/create-lending-report.md)
+- [Create Orders NET Report](https://developer.copper.co/api-reference/reports/create-orders-net-report.md)
+- [Create Position Statement Report](https://developer.copper.co/api-reference/reports/create-position-statement-report.md)
+- [Create Stake Orders Report](https://developer.copper.co/api-reference/reports/create-stake-orders-report.md)
+- [Create Stake Rewards Report](https://developer.copper.co/api-reference/reports/create-stake-rewards-report.md)
+- [Service accounts](https://developer.copper.co/api-reference/service-accounts.md)
+- [Get Active Stakes](https://developer.copper.co/api-reference/stake/get-active-stakes.md)
+- [Get Outstanding Stakes](https://developer.copper.co/api-reference/stake/get-outstanding-stakes.md)
+- [Get Pending Stakes](https://developer.copper.co/api-reference/stake/get-pending-stakes.md)
+- [Try it out](https://developer.copper.co/api-reference/try-it-out.md)
+- [Create Wallet](https://developer.copper.co/api-reference/wallets/create-wallet.md): Create a new wallet
+- [Get Wallet by ID](https://developer.copper.co/api-reference/wallets/get-wallet-by-id.md): Fetch wallet details
+- [Get Wallets](https://developer.copper.co/api-reference/wallets/get-wallets.md): When you perform a request without specifying any additional filters like `portfolioId` or `currency`, the method returns all wallets which have non-zero balances only.
+- [API updates](https://developer.copper.co/changelog/changelog.md): New features and improvements
+- [Connect Exchange Account](https://developer.copper.co/guides/clearloop/binding.md)
+- [Delegate (lock) funds](https://developer.copper.co/guides/clearloop/delegate-funds.md)
+- [Fetch delegated balances](https://developer.copper.co/guides/clearloop/fetch-delegated-balances.md)
+- [Introduction](https://developer.copper.co/guides/clearloop/introduction.md)
+- [ClearLoop Settlements](https://developer.copper.co/guides/clearloop/settlements.md)
+- [Undelegate (unlock) funds](https://developer.copper.co/guides/clearloop/undelegate-funds.md)
+- [Introduction](https://developer.copper.co/guides/copper-network/introduction.md)
+- [Accept a settlement order](https://developer.copper.co/guides/copper-network/settlements/accept-settle-order.md): Accept counterparty settlement order
+- [Cancel a settlement order](https://developer.copper.co/guides/copper-network/settlements/cancel-settle-order.md)
+- [Create a settlement order](https://developer.copper.co/guides/copper-network/settlements/create-settlement-order.md)
+- [Find supported currencies](https://developer.copper.co/guides/copper-network/settlements/find-supported-currencies.md)
+- [Retrieve Network participants](https://developer.copper.co/guides/copper-network/settlements/retrieve-network-participants.md): Find participant of the Copper Network
+- [Sign a settlement order](https://developer.copper.co/guides/copper-network/settlements/sign-settle-order.md): Start crypto signing for an order
+- [Approve transfer](https://developer.copper.co/guides/copper-network/transfers/approve-transfer-order.md)
+- [Create transfer](https://developer.copper.co/guides/copper-network/transfers/create-transfer-order.md)
+- [Retrieve Network participants](https://developer.copper.co/guides/copper-network/transfers/retrieve-network-participants.md): Find participant of the Copper Network
+- [Create a withdrawal order](https://developer.copper.co/guides/copper-unlimited-online/create-withdraw-order.md)
+- [Enabling SSL/TLS](https://developer.copper.co/guides/copper-unlimited-online/enabling-ssl-tls.md)
+- [Example of the service](https://developer.copper.co/guides/copper-unlimited-online/example-of-the-service.md)
+- [Get Copper Unlimited Transaction](https://developer.copper.co/guides/copper-unlimited-online/get-cu-transaction.md)
+- [How to launch](https://developer.copper.co/guides/copper-unlimited-online/how-to-launch.md)
+- [Sign transaction](https://developer.copper.co/guides/copper-unlimited-online/sign-transaction.md)
+- [Start signing](https://developer.copper.co/guides/copper-unlimited-online/start-signing-flow.md): Start crypto signing for an order
+- [Create a multi-smart-call order](https://developer.copper.co/guides/defi/create-multi-smart-call-order.md)
+- [Create a smart-call order](https://developer.copper.co/guides/defi/create-smart-call-order.md)
+- [How to launch](https://developer.copper.co/guides/fees-vaults/how-to-launch.md)
+- [What are Fees Vaults](https://developer.copper.co/guides/fees-vaults/introduction.md)
+- [Fetch balances](https://developer.copper.co/guides/fetch-balances-and-transactions/fetch-balances.md): When you perform a request without specifying any additional filters like `portfolioId` or `currency`, the method returns all wallets which have non-zero balances only.
+- [Fetch orders](https://developer.copper.co/guides/fetch-balances-and-transactions/fetch-orders.md)
+- [Fetch transfers](https://developer.copper.co/guides/fetch-balances-and-transactions/fetch-transfers.md)
+- [Fetch updated transfer or orders](https://developer.copper.co/guides/fetch-balances-and-transactions/fetch-updated-orders.md)
+- [Approve (co-sign) an order](https://developer.copper.co/guides/funds-transfers/approve-transfer-order.md)
+- [Cancel order](https://developer.copper.co/guides/funds-transfers/cancel-order.md)
+- [Chain of withdrawals](https://developer.copper.co/guides/funds-transfers/chain-of-withdrawals.md)
+- [Enter the master password for an order](https://developer.copper.co/guides/funds-transfers/enter-master-password-order.md)
+- [Move funds between exchanges](https://developer.copper.co/guides/funds-transfers/move-funds-between-exchanges.md)
+- [Move funds between portfolios](https://developer.copper.co/guides/funds-transfers/move-funds-between-portfolios.md)
+- [Move funds between exchange subaccounts](https://developer.copper.co/guides/funds-transfers/move-funds-between-subaccount.md)
+- [Sign order](https://developer.copper.co/guides/funds-transfers/sign-order.md): Start crypto signing for an order
+- [Withdraw to an Address Book address](https://developer.copper.co/guides/funds-transfers/withdraw-to-address-book.md)
+- [Introduction](https://developer.copper.co/guides/introduction.md)
+- [Create staking order](https://developer.copper.co/guides/staking/create-staking-order.md)
+- [Get active stakes](https://developer.copper.co/guides/staking/get-active-stakes.md)
+- [Get outstanding stakes](https://developer.copper.co/guides/staking/get-outstanding-stakes.md)
+- [Get pending stakes](https://developer.copper.co/guides/staking/get-pending-stakes.md)
+- [Get staking reward orders](https://developer.copper.co/guides/staking/get-staking-reward-orders.md)
+- [Support](https://developer.copper.co/guides/support.md)
+- [How to set up](https://developer.copper.co/guides/webhooks/how-to-setup.md)
+- [Introduction](https://developer.copper.co/guides/webhooks/introduction.md)
+- [Validate signature](https://developer.copper.co/guides/webhooks/validate-signature.md)
+- [Webhook events](https://developer.copper.co/guides/webhooks/webhook-event.md)
+
+## OpenAPI Specs
+
+- [copper-open-api-public](https://developer.copper.co/copper-open-api-public.json)
+- [copper-open-api-get-orders-get-transfers](https://developer.copper.co/extensions/copper-open-api-get-orders-get-transfers.json)
+- [copper-open-api-get-orders-get-staking-rewards](https://developer.copper.co/extensions/copper-open-api-get-orders-get-staking-rewards.json)
+- [copper-open-api-get-orders-get-orders](https://developer.copper.co/extensions/copper-open-api-get-orders-get-orders.json)
+- [copper-open-api-create-order-staking-order](https://developer.copper.co/extensions/copper-open-api-create-order-staking-order.json)
+- [copper-open-api-create-order-smart-call](https://developer.copper.co/extensions/copper-open-api-create-order-smart-call.json)
+- [copper-open-api-create-order-multi-smart-call](https://developer.copper.co/extensions/copper-open-api-create-order-multi-smart-call.json)
+- [copper-open-api-create-order-move-funds-to-crypto-address](https://developer.copper.co/extensions/copper-open-api-create-order-move-funds-to-crypto-address.json)
+- [copper-open-api-create-order-move-funds-between-portfolios](https://developer.copper.co/extensions/copper-open-api-create-order-move-funds-between-portfolios.json)
+- [copper-open-api-create-order-generic-withdraw-order](https://developer.copper.co/extensions/copper-open-api-create-order-generic-withdraw-order.json)
+- [copper-open-api-create-order-delegate-or-undelegate](https://developer.copper.co/extensions/copper-open-api-create-order-delegate-or-undelegate.json)
+- [copper-open-api-create-order-create-network-transfer](https://developer.copper.co/extensions/copper-open-api-create-order-create-network-transfer.json)
+- [copper-open-api-create-order-create-network-settlement](https://developer.copper.co/extensions/copper-open-api-create-order-create-network-settlement.json)
+- [copper-open-api-create-order-chain-of-transfers](https://developer.copper.co/extensions/copper-open-api-create-order-chain-of-transfers.json)
+- [copper-open-api-hidden-trades](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-trades.json)
+- [package](https://developer.copper.co/package.json)
+- [package-lock](https://developer.copper.co/package-lock.json)
+- [manifest](https://developer.copper.co/manifest.yml)
+- [copper-postman-collection](https://developer.copper.co/copper-postman-collection.json)
+- [openapi](https://developer.copper.co/api-reference/openapi.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.top-up-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.top-up-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.secure-collateral+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.secure-collateral+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.rerate-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.rerate-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.repay-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.repay-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.reject-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.reject-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.pay-loan-interest+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.pay-loan-interest+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.extend-loan-term+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.extend-loan-term+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.estimate-loan-ltv+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.estimate-loan-ltv+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.estimate-loan-leverage-ratio+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.estimate-loan-leverage-ratio+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.default-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.default-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-repayment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-repayment+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-interest-payment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-interest-payment+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-disbursement+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.confirm-external-disbursement+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-rerate+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-rerate+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-repayment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-repayment+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-rebalance+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan-rebalance+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-interest-payment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.cancel-interest-payment+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.approve-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.approve-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-top-up+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-top-up+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-rerate+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-rerate+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-repayment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-repayment+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-rebalance+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan-rebalance+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-loan+json.json)
+- [copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-interest-payment+json](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-patch-organizations-organizationid-loans-loanid-application-vnd.accept-interest-payment+json.json)
+- [copper-open-api-hidden-lending](https://developer.copper.co/extensions/hidden/copper-open-api-hidden-lending.json)
+- [deprecated-api-open-api](https://developer.copper.co/deprecated-api-open-api.json)
+- [copper-unlimited-open-api](https://developer.copper.co/copper-unlimited-open-api.json)

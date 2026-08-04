@@ -1,0 +1,106 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/changelog
+docs: https://developer.copper.co/changelog
+raw: https://developer.copper.co/changelog/changelog.md
+title: API updates
+subtitle: New features and improvements
+scheme:
+  style: dated-entries
+  versioned: false
+  note: >-
+    Copper does not publish API version numbers. The API base path (/platform) carries no
+    version segment; change communication is entirely through this dated changelog, which
+    is tagged either "New features" or "Improvements".
+  tags:
+  - New features
+  - Improvements
+rss:
+  advertised: true
+  note: Entries carry rss metadata (title/description) in the source, so the changelog is syndicated.
+current_version: null
+window: 2025-10-15 through 2026-06-05 (most recent 9 entries as published)
+entries:
+- date: '2026-06-05'
+  tags:
+  - Improvements
+  title: 'Documentation update: Highlighted terminal order statuses'
+  breaking: false
+  highlights:
+  - Order status descriptions updated to note that a completed order enters a final "terminal" status.
+  - 'Terminal statuses at time of writing: EXECUTED, CANCELED, LIQUIDATED, ERROR, BLOCKED, DECLINED, SUSPENDED, REJECTED.'
+- date: '2026-03-10'
+  tags:
+  - New features
+  title: New order-completed webhook event
+  breaking: false
+  additions:
+  - New webhook event `order-completed`, covering orders with status `executed`.
+  - No filters applied — all order types (deposits, withdrawals, buy, sell, etc.) are included.
+- date: '2026-02-16'
+  tags:
+  - Improvements
+  title: Added updatedAt field in ClearLoop actions endpoint
+  breaking: false
+  additions:
+  - '`updatedAt` field added to the clearloop/actions endpoint returning ClearLoop delegations/undelegations.'
+- date: '2026-01-29'
+  tags:
+  - Improvements
+  title: Lending API improvements
+  breaking: true
+  breaking_note: >-
+    Eight loan types were deprecated and renamed. Deprecated types are automatically
+    migrated to their replacements; old types will be removed from the API and
+    documentation following the migration.
+  deprecations:
+  - from: agency-lending-parent-loan
+    to: agency-inventory
+  - from: agency-lending-collateralised-child-loan
+    to: agency-title-transfer-collateralised-loan
+  - from: agency-lending-pledge-collateralised-child-loan
+    to: agency-pledge-collateralised-loan
+  - from: agency-lending-uncollateralised-child-loan
+    to: agency-uncollateralised-loan
+  - from: agency-lending-first-lien-child-loan
+    to: agency-clearloop-loan
+  - from: bilateral-lending-title-transfer-collateralised-loan
+    to: bilateral-title-transfer-collateralised-loan
+  - from: bilateral-lending-pledge-collateralised-loan
+    to: bilateral-pledge-collateralised-loan
+  - from: bilateral-lending-uncollateralised-loan
+    to: bilateral-uncollateralised-loan
+  additions:
+  - '`marginCallExpiryPeriod` field (1-24 hours) and `marginCall` object added to the Lending API, for collateralised non-ClearLoop loans.'
+- date: '2026-01-28'
+  tags:
+  - Improvements
+  title: New settlementStatus field in ClearLoop portfolio responses
+  breaking: false
+  additions:
+  - '`settlementStatus` field added to responses returning ClearLoop portfolios, carrying the status of the last settlement cycle.'
+- date: '2026-01-05'
+  tags:
+  - New features
+  title: Early termination of ClearLoop loans
+  breaking: false
+  additions:
+  - 'New endpoint PATCH /platform/organizations/{organizationId}/loans/{earlyTerminationLoanId} allowing Copper''s Agency Desk to recall outstanding loans on breach of terms.'
+  - 'New LoanStatus values: early-termination-in-progress, early-termination-completed.'
+- date: '2025-11-13'
+  tags:
+  - New features
+  title: New blockchain transaction types
+  breaking: false
+  additions:
+  - 'New BlockchainTransactionType values accept-deposit and reject-deposit for accepting or rejecting deposits on-chain.'
+- date: '2025-11-05'
+  tags:
+  - Improvements
+  title: ClearLoop documentation improvements
+  breaking: false
+- date: '2025-10-15'
+  tags:
+  - Improvements
+  title: API key rate limits improvements
+  breaking: false

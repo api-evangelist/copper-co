@@ -1,0 +1,4857 @@
+{
+  "components" : {
+    "schemas" : {
+      "AcceptLoan" : {
+        "properties" : {
+          "borrowerPortfolioId" : {
+            "description" : "The account where the loan will be disbursed into",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "ActionLoan" : {
+        "properties" : {
+          "collateralPortfolioId" : {
+            "description" : "The account where the collateral is to be returned to if accepted by the borrower and repaid in full",
+            "type" : "string"
+          },
+          "loanAllocationId" : {
+            "description" : "The id of the loan allocation",
+            "type" : "string"
+          }
+        },
+        "required" : [ "loanAllocationId" ],
+        "type" : "object"
+      },
+      "AddCollateral" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of collateral that is to be secured",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being used for collateral",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the collateral",
+            "type" : "string"
+          },
+          "portfolioId" : {
+            "description" : "The account from which the collateral shall be transferred from",
+            "type" : "string"
+          }
+        },
+        "required" : [ "portfolioId", "amount", "currency", "mainCurrency" ],
+        "type" : "object"
+      },
+      "AddressCategory" : {
+        "enum" : [ "smart-contract", "payable-smart-contract", "mining", "unknown", "self-hosted", "vasp" ],
+        "type" : "string"
+      },
+      "AddressType" : {
+        "enum" : [ "externally-owned-account", "internal-account", "smart-contract", "payable-smart-contract" ],
+        "type" : "string"
+      },
+      "Collateral" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of the transferred collateral",
+            "type" : "string"
+          },
+          "collateralId" : {
+            "description" : "Unique identifier of the collateral",
+            "type" : "string"
+          },
+          "createdAt" : {
+            "description" : "Timestamp in epoch milliseconds of the collateral creation",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being used for collateral",
+            "type" : "string"
+          },
+          "loanId" : {
+            "description" : "The id of the loan",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the collateral",
+            "type" : "string"
+          },
+          "portfolioId" : {
+            "description" : "The account where the collateral is being held",
+            "type" : "string"
+          },
+          "unrealisedAmount" : {
+            "description" : "The amount of pending collateral funds. Can be positive or negative",
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the last collateral update",
+            "type" : "string"
+          }
+        },
+        "required" : [ "collateralId", "loanId", "amount", "currency", "mainCurrency", "createdAt" ],
+        "type" : "object"
+      },
+      "Counterparty" : {
+        "properties" : {
+          "backgroundImageId" : {
+            "description" : "Background image id",
+            "type" : "string"
+          },
+          "counterpartyDescription" : {
+            "description" : "Counterparty description",
+            "type" : "string"
+          },
+          "counterpartyId" : {
+            "description" : "Counterparty ID",
+            "type" : "string"
+          },
+          "counterpartyName" : {
+            "description" : "Counterparty name",
+            "type" : "string"
+          },
+          "counterpartyType" : {
+            "$ref" : "#/components/schemas/CounterpartyType",
+            "description" : "Counterparty type. [See details](/enums/CounterpartyType)"
+          },
+          "extra" : {
+            "$ref" : "#/components/schemas/CounterpartyExtra",
+            "description" : "Counterparty additional information",
+            "type" : "object"
+          },
+          "imageId" : {
+            "description" : "Image id",
+            "type" : "string"
+          },
+          "networkTag" : {
+            "description" : "Counterparty network handle",
+            "type" : "string"
+          },
+          "priority" : {
+            "description" : "Counterparty priority indicator. The higher the value, the higher the priority",
+            "type" : "string"
+          },
+          "tags" : {
+            "description" : "Counterparty tags. [See details](/enums/CounterpartyTag)",
+            "items" : {
+              "$ref" : "#/components/schemas/CounterpartyTag"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "counterpartyId", "counterpartyName", "networkTag", "counterpartyType" ],
+        "type" : "object"
+      },
+      "CounterpartyExtra" : {
+        "properties" : {
+          "exchangeId" : {
+            "description" : "Counterparty exchange id",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "CounterpartyTag" : {
+        "enum" : [ "featured" ],
+        "type" : "string"
+      },
+      "CounterpartyType" : {
+        "enum" : [ "standard", "clearloop-exchange", "agency-desk" ],
+        "type" : "string"
+      },
+      "CreateLoan" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of the loan",
+            "type" : "string"
+          },
+          "counterpartyId" : {
+            "description" : "The counterparty id of the borrower",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being lent",
+            "type" : "string"
+          },
+          "defaultThreshold" : {
+            "description" : "The LTV threshold at which the loan is in default",
+            "type" : "string"
+          },
+          "externalId" : {
+            "description" : "Unique identifier for externally originated loans, must be unique",
+            "type" : "string"
+          },
+          "loanType" : {
+            "$ref" : "#/components/schemas/LoanType",
+            "description" : "The type of loan. [See details](/enums/LoanType)"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the asset",
+            "type" : "string"
+          },
+          "marginCallThreshold" : {
+            "description" : "The LTV threshold at which the loan is in margin call",
+            "type" : "string"
+          },
+          "maturityDate" : {
+            "description" : "Timestamp in epoch milliseconds of the maturity date",
+            "type" : "string"
+          },
+          "portfolioId" : {
+            "description" : "The id of the account which is to be used for disbursing the loan to the borrower",
+            "type" : "string"
+          },
+          "rebalanceThreshold" : {
+            "description" : "The LTV threshold at which the borrower can request a rebalance",
+            "type" : "string"
+          },
+          "requiredCollaterals" : {
+            "description" : "The amount of the collateral required. Currently only a single collateral currency is supported",
+            "items" : {
+              "$ref" : "#/components/schemas/RequiredCollateral"
+            },
+            "type" : "array"
+          },
+          "startDate" : {
+            "description" : "Timestamp in epoch milliseconds the loan is meant to be disbursed and activated",
+            "type" : "string"
+          }
+        },
+        "required" : [ "externalId", "counterpartyId", "loanType", "amount", "currency", "mainCurrency" ],
+        "type" : "object"
+      },
+      "CryptoAddress" : {
+        "properties" : {
+          "acceptTokens" : {
+            "description" : "Indicates an address can be used for tokens on the same blockchain network",
+            "type" : "boolean"
+          },
+          "address" : {
+            "description" : "Address",
+            "type" : "string"
+          },
+          "addressType" : {
+            "$ref" : "#/components/schemas/AddressType",
+            "description" : "Address type. [See details](/enums/AddressType)"
+          },
+          "category" : {
+            "$ref" : "#/components/schemas/AddressCategory",
+            "description" : "Address category. [See details](/enums/AddressCategory)"
+          },
+          "createdAt" : {
+            "description" : "Created at timestamp",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "description" : "Created by user id",
+            "type" : "string"
+          },
+          "cryptoAddressId" : {
+            "description" : "Crypto address id",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency of an address",
+            "type" : "string"
+          },
+          "extra" : {
+            "$ref" : "#/components/schemas/CryptoAddressExtra",
+            "description" : "Extra information for an address",
+            "type" : "object"
+          },
+          "isWhitelist" : {
+            "description" : "Indicates, if an address is whitelisted",
+            "type" : "boolean"
+          },
+          "lastUsedAt" : {
+            "description" : "Last used at",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Main currency of an address",
+            "type" : "string"
+          },
+          "memo" : {
+            "description" : "Address memo (destination tag for XRP)",
+            "type" : "string"
+          },
+          "name" : {
+            "description" : "Name of an address",
+            "type" : "string"
+          },
+          "organizationId" : {
+            "description" : "Organization id",
+            "type" : "string"
+          },
+          "portfolioIds" : {
+            "description" : "Portfolio ids, if address set for particular portfolios",
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "updatedAt" : {
+            "description" : "Last updated Updated at timestamp",
+            "type" : "string"
+          },
+          "updatedBy" : {
+            "description" : "Updated by user id",
+            "type" : "string"
+          }
+        },
+        "required" : [ "cryptoAddressId", "currency", "name", "address", "createdBy", "createdAt", "isWhitelist", "addressType" ],
+        "type" : "object"
+      },
+      "CryptoAddressCreated" : {
+        "properties" : {
+          "cryptoAddress" : {
+            "$ref" : "#/components/schemas/CryptoAddress",
+            "type" : "object"
+          }
+        },
+        "required" : [ "cryptoAddress" ],
+        "type" : "object"
+      },
+      "CryptoAddressDeactivated" : {
+        "properties" : {
+          "cryptoAddress" : {
+            "$ref" : "#/components/schemas/CryptoAddress",
+            "type" : "object"
+          },
+          "deactivatedBy" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "cryptoAddress", "deactivatedBy" ],
+        "type" : "object"
+      },
+      "CryptoAddressExtra" : {
+        "properties" : { },
+        "type" : "object"
+      },
+      "CryptoAddressUpdated" : {
+        "properties" : {
+          "oldCryptoAddress" : {
+            "$ref" : "#/components/schemas/CryptoAddress",
+            "type" : "object"
+          },
+          "updatedCryptoAddress" : {
+            "$ref" : "#/components/schemas/CryptoAddress",
+            "type" : "object"
+          }
+        },
+        "required" : [ "oldCryptoAddress", "updatedCryptoAddress" ],
+        "type" : "object"
+      },
+      "DebtRatioStatus" : {
+        "enum" : [ ],
+        "type" : "string"
+      },
+      "EstimateLoanLeverageRatio" : {
+        "properties" : {
+          "includeUnrealisedAmount" : {
+            "default" : "false",
+            "examples" : [ "false" ],
+            "type" : "boolean"
+          },
+          "loanAdjustmentAmount" : {
+            "type" : "string"
+          },
+          "ownedAdjustmentAmount" : {
+            "type" : "string"
+          },
+          "ownedAdjustmentCurrency" : {
+            "type" : "string"
+          },
+          "ownedAdjustmentMainCurrency" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "EstimateLoanLtv" : {
+        "properties" : {
+          "amount" : {
+            "type" : "string"
+          },
+          "collaterals" : {
+            "items" : {
+              "$ref" : "#/components/schemas/RequiredCollateral"
+            },
+            "type" : "array"
+          },
+          "includeInterest" : {
+            "description" : "Include owed interest in LTV calculation. Only supported for Bilateral loans.",
+            "type" : "boolean"
+          }
+        },
+        "type" : "object"
+      },
+      "ExtendLoan" : {
+        "properties" : { },
+        "type" : "object"
+      },
+      "InterestPaymentAction" : {
+        "properties" : { },
+        "type" : "object"
+      },
+      "Loan" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of the loan",
+            "type" : "string"
+          },
+          "borrowerCounterpartyId" : {
+            "description" : "The counterparty id of the borrower",
+            "type" : "string"
+          },
+          "borrowerOrganizationId" : {
+            "description" : "The organization id of the borrower. Obfuscated for lender",
+            "type" : "string"
+          },
+          "borrowerPortfolioId" : {
+            "description" : "The id of the account which is to be the destination of disbursed funds. Obfuscated for lender",
+            "type" : "string"
+          },
+          "createdAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan creation",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "description" : "The id of the user that created the loan",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being lent",
+            "type" : "string"
+          },
+          "debtRatio" : {
+            "description" : "The LTV of the loan",
+            "type" : "string"
+          },
+          "debtRatioStatus" : {
+            "$ref" : "#/components/schemas/DebtRatioStatus",
+            "description" : "The LTV status of the loan (healthy, margin-call, default)"
+          },
+          "debtRatioUpdatedAt" : {
+            "description" : "Timestamp in epoch milliseconds when the LTV was last updated",
+            "type" : "string"
+          },
+          "embedded" : {
+            "$ref" : "#/components/schemas/LoanEmbedded",
+            "description" : "Additional data linked to the loan",
+            "type" : "object"
+          },
+          "externalId" : {
+            "description" : "Unique identifier for externally originated loans, must be unique",
+            "type" : "string"
+          },
+          "extra" : {
+            "$ref" : "#/components/schemas/LoanExtra",
+            "description" : "Additional data for the loan",
+            "type" : "object"
+          },
+          "interestRate" : {
+            "description" : "The interest rate for the loan in basis points (BPS)",
+            "type" : "string"
+          },
+          "lenderCounterpartyId" : {
+            "description" : "The counterparty id of the lender",
+            "type" : "string"
+          },
+          "lenderOrganizationId" : {
+            "description" : "The organization id of the lender. Obfuscated for borrower",
+            "type" : "string"
+          },
+          "lenderPortfolioId" : {
+            "description" : "The id of the account which is to be used for disbursing the loan to the borrower. Obfuscated for borrower",
+            "type" : "string"
+          },
+          "loanId" : {
+            "description" : "Unique identifier of the loan",
+            "type" : "string"
+          },
+          "loanType" : {
+            "$ref" : "#/components/schemas/LoanType",
+            "description" : "The type of the loan. [See details](/enums/LoanType)"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the asset",
+            "type" : "string"
+          },
+          "maturityDate" : {
+            "description" : "Timestamp in epoch milliseconds of the maturity date",
+            "type" : "string"
+          },
+          "startDate" : {
+            "description" : "Timestamp in epoch milliseconds the loan is meant to be disbursed and activated",
+            "type" : "string"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/LoanStatus",
+            "description" : "The status of the loan. [See details](/enums/LoanStatus)"
+          },
+          "terminatedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan termination",
+            "type" : "string"
+          },
+          "unrealisedAmount" : {
+            "description" : "The amount of pending loan funds; can be positive and negative",
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the most recent loan update",
+            "type" : "string"
+          }
+        },
+        "required" : [ "loanId", "externalId", "status", "loanType", "amount", "currency", "mainCurrency", "lenderOrganizationId", "lenderCounterpartyId", "borrowerOrganizationId", "borrowerCounterpartyId", "createdBy" ],
+        "type" : "object"
+      },
+      "LoanAllocation" : {
+        "properties" : {
+          "allocationType" : {
+            "$ref" : "#/components/schemas/LoanAllocationType",
+            "description" : "The type of the allocation. [See details](/enums/LoanAllocationType)"
+          },
+          "amount" : {
+            "description" : "The amount of the loan allocation",
+            "type" : "string"
+          },
+          "counterpartyOrderId" : {
+            "description" : "The underlying deposit id",
+            "type" : "string"
+          },
+          "createdAt" : {
+            "description" : "Timestamp in epoch milliseconds of the allocation creation",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "description" : "The id of the user whose action resulted in the creation of the allocation",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being used for collateral",
+            "type" : "string"
+          },
+          "externalFailureDescription" : {
+            "description" : "The failure description of an allocation. Only populated when status is \"failed\" and the failure reason is known",
+            "type" : "string"
+          },
+          "extra" : {
+            "$ref" : "#/components/schemas/LoanAllocationExtra",
+            "description" : "Additional data for the allocation",
+            "type" : "object"
+          },
+          "fromPortfolioId" : {
+            "description" : "The account that funds are transferred out of. Obfuscated depending on allocation type and requestor",
+            "type" : "string"
+          },
+          "loanAllocationId" : {
+            "description" : "Unique identifier of the loan allocation",
+            "type" : "string"
+          },
+          "loanId" : {
+            "description" : "The id of the loan",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the collateral",
+            "type" : "string"
+          },
+          "orderId" : {
+            "description" : "The underlying withdrawal id",
+            "type" : "string"
+          },
+          "requestorCounterpartyId" : {
+            "description" : "The id of the counterparty whose action resulted in the creation of the allocation",
+            "type" : "string"
+          },
+          "status" : {
+            "$ref" : "#/components/schemas/LoanAllocationStatus",
+            "description" : "The status of the allocation. [See details](/enums/LoanAllocationStatus)"
+          },
+          "terminatedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the allocation termination",
+            "type" : "string"
+          },
+          "toPortfolioId" : {
+            "description" : "The account that funds are transferred to. Obfuscated depending on allocation type and requestor",
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the last allocation update",
+            "type" : "string"
+          }
+        },
+        "required" : [ "loanAllocationId", "loanId", "amount", "currency", "mainCurrency", "status", "allocationType", "extra", "createdAt" ],
+        "type" : "object"
+      },
+      "LoanAllocationExtra" : {
+        "properties" : {
+          "acceptedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the allocation acceptance",
+            "type" : "string"
+          },
+          "acceptedBy" : {
+            "description" : "The id of the user that accepted the allocation",
+            "type" : "string"
+          },
+          "cancelledAt" : {
+            "description" : "Timestamp in epoch milliseconds of the allocation cancellation",
+            "type" : "string"
+          },
+          "cancelledBy" : {
+            "description" : "The id of the user that cancelled the allocation",
+            "type" : "string"
+          },
+          "confirmedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the allocation confirmation. Only applicable for off-platform loans",
+            "type" : "string"
+          },
+          "confirmedBy" : {
+            "description" : "The id of the user that confirmed the allocation. Only applicable for off-platform loans",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "LoanAllocationStatus" : {
+        "enum" : [ "new", "awaiting-acceptance", "accepted", "cancelled", "order-created", "awaiting-confirmation", "confirmed", "awaiting-funds", "awaiting-signature", "completed", "failed" ],
+        "type" : "string"
+      },
+      "LoanAllocationType" : {
+        "enum" : [ "disburse", "top-up", "repay", "rebalance", "secure-collateral", "release-collateral", "disburse-externally", "top-up-externally", "repay-externally" ],
+        "type" : "string"
+      },
+      "LoanEmbedded" : {
+        "properties" : {
+          "childLoans" : {
+            "description" : "The list of child loans - Only applicable for agency lending parent loans",
+            "items" : {
+              "$ref" : "#/components/schemas/Loan"
+            },
+            "type" : "array"
+          },
+          "collaterals" : {
+            "description" : "The list of collaterals allocated to their respective loans",
+            "items" : {
+              "$ref" : "#/components/schemas/Collateral"
+            },
+            "type" : "array"
+          },
+          "counterparties" : {
+            "description" : "The list of counterparties",
+            "items" : {
+              "$ref" : "#/components/schemas/Counterparty"
+            },
+            "type" : "array"
+          },
+          "loanAllocations" : {
+            "description" : "The list of transactions allocated to their respective loans",
+            "items" : {
+              "$ref" : "#/components/schemas/LoanAllocation"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "LoanExtra" : {
+        "properties" : {
+          "acceptedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan acceptance",
+            "type" : "string"
+          },
+          "acceptedBy" : {
+            "description" : "The id of the user that accepted the loan",
+            "type" : "string"
+          },
+          "approvedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan approval",
+            "type" : "string"
+          },
+          "approvedBy" : {
+            "description" : "The id of the user that approved the loan",
+            "type" : "string"
+          },
+          "cancelledAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan cancellation",
+            "type" : "string"
+          },
+          "cancelledBy" : {
+            "description" : "The id of the user that cancelled the loan",
+            "type" : "string"
+          },
+          "defaultReason" : {
+            "description" : "The reason for the loan default",
+            "type" : "string"
+          },
+          "defaultThreshold" : {
+            "description" : "The LTV threshold at which the loan is in default",
+            "type" : "string"
+          },
+          "defaultedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan default",
+            "type" : "string"
+          },
+          "defaultedBy" : {
+            "description" : "The id of the user that defaulted the loan",
+            "type" : "string"
+          },
+          "disbursedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan disbursal",
+            "type" : "string"
+          },
+          "externalDisbursal" : {
+            "description" : "Boolean representing if the loan funds are disbursed and managed off-platform",
+            "type" : "boolean"
+          },
+          "externalInterestPayment" : {
+            "description" : "Boolean representing if interest payments are managed off-platform",
+            "type" : "boolean"
+          },
+          "initialLtv" : {
+            "description" : "The LTV based off the initial collateral requirement",
+            "type" : "string"
+          },
+          "initiallyRequiredCollateralUsd" : {
+            "description" : "The value of the initially required collateral denominated in US Dollars",
+            "type" : "string"
+          },
+          "marginCallThreshold" : {
+            "description" : "The LTV threshold at which the loan is in margin call",
+            "type" : "string"
+          },
+          "rebalanceThreshold" : {
+            "description" : "The LTV threshold at which the borrower can request a rebalance",
+            "type" : "string"
+          },
+          "rejectedAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan rejection",
+            "type" : "string"
+          },
+          "rejectedBy" : {
+            "description" : "The id of the user that rejected the loan",
+            "type" : "string"
+          },
+          "repaidAt" : {
+            "description" : "Timestamp in epoch milliseconds of the loan repayment",
+            "type" : "string"
+          },
+          "repaidBy" : {
+            "description" : "The id of the user that repaid the loan",
+            "type" : "string"
+          },
+          "requiredCollaterals" : {
+            "description" : "The amount of the collateral required. Currently only a single collateral currency is supported",
+            "items" : {
+              "$ref" : "#/components/schemas/RequiredCollateral"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "LoanModificationAction" : {
+        "properties" : {
+          "loanModificationId" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "loanModificationId" ],
+        "type" : "object"
+      },
+      "LoanSide" : {
+        "enum" : [ "lend", "borrow" ],
+        "type" : "string"
+      },
+      "LoanStatus" : {
+        "enum" : [ "awaiting-approval", "awaiting-acceptance", "awaiting-collateral", "awaiting-interest-payment", "disbursing", "active", "repaying", "defaulting", "defaulted", "cancelled", "rejected", "errored", "repaid", "repaying-interest", "interest-repaid", "securing-collateral", "collateral-secured", "releasing-collateral", "collateral-released", "closed" ],
+        "type" : "string"
+      },
+      "LoanType" : {
+        "enum" : [ "bilateral-lending-title-transfer-collateralised-loan" ],
+        "type" : "string"
+      },
+      "Loans" : {
+        "properties" : {
+          "loans" : {
+            "description" : "The list of loans",
+            "items" : {
+              "$ref" : "#/components/schemas/Loan"
+            },
+            "type" : "array"
+          }
+        },
+        "required" : [ "loans" ],
+        "type" : "object"
+      },
+      "MemberType" : {
+        "enum" : [ "user", "service" ],
+        "type" : "string"
+      },
+      "OrganizationMember" : {
+        "properties" : {
+          "_embedded" : {
+            "$ref" : "#/components/schemas/OrganizationMemberEmbedded",
+            "description" : "Additional data about the member",
+            "type" : "object"
+          },
+          "createdAt" : {
+            "description" : "Created at timestamp in milliseconds",
+            "type" : "string"
+          },
+          "deactivatedAt" : {
+            "description" : "Deactivated at timestamp in milliseconds",
+            "type" : "string"
+          },
+          "isActive" : {
+            "description" : "Indicates, whether the member is active",
+            "type" : "boolean"
+          },
+          "memberType" : {
+            "$ref" : "#/components/schemas/MemberType",
+            "description" : "The member type. [See details](/enums/MemberType)"
+          },
+          "organizationId" : {
+            "description" : "The organization ID",
+            "type" : "string"
+          },
+          "updatedAt" : {
+            "description" : "Last updated at timestamp in milliseconds",
+            "type" : "string"
+          },
+          "userId" : {
+            "description" : "The user ID",
+            "type" : "string"
+          }
+        },
+        "required" : [ "organizationId", "userId", "isActive" ],
+        "type" : "object"
+      },
+      "OrganizationMemberEmbedded" : {
+        "properties" : {
+          "permissionGroups" : {
+            "description" : "List of permission groups the member belongs to",
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User",
+            "description" : "Member's user information",
+            "type" : "object"
+          }
+        },
+        "type" : "object"
+      },
+      "PayInterest" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of given currency to pay as interest",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset used to pay the interest",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the asset",
+            "type" : "string"
+          },
+          "portfolioId" : {
+            "description" : "The account from/to which the interest is to be paid.",
+            "type" : "string"
+          }
+        },
+        "required" : [ "currency", "mainCurrency" ],
+        "type" : "object"
+      },
+      "RebalanceLoan" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of collateral that is requested to be released",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being used for collateral",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the collateral",
+            "type" : "string"
+          },
+          "portfolioId" : {
+            "description" : "The account in which the collateral shall be delivered to",
+            "type" : "string"
+          }
+        },
+        "required" : [ "amount", "portfolioId", "currency", "mainCurrency" ],
+        "type" : "object"
+      },
+      "RepayLoan" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount to be repaid. Can be in part or in full",
+            "type" : "string"
+          },
+          "collateralPortfolioId" : {
+            "description" : "The account where the collateral is to be returned to if initiated by the borrower and repaid in full",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "RequiredCollateral" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The amount of the collateral required",
+            "type" : "string"
+          },
+          "amountInUsd" : {
+            "description" : "The value of the collateral denominated in US Dollars",
+            "type" : "string"
+          },
+          "currency" : {
+            "description" : "Currency code of the asset being used for collateral",
+            "type" : "string"
+          },
+          "mainCurrency" : {
+            "description" : "Currency code of the network being used to transfer the collateral",
+            "type" : "string"
+          }
+        },
+        "required" : [ "amount", "currency", "mainCurrency" ],
+        "type" : "object"
+      },
+      "RerateLoan" : {
+        "properties" : {
+          "newInterestRate" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "newInterestRate" ],
+        "type" : "object"
+      },
+      "SortingDirection" : {
+        "enum" : [ "ASC", "DESC" ],
+        "type" : "string"
+      },
+      "TopUpLoan" : {
+        "properties" : {
+          "amount" : {
+            "description" : "The agreed upon amount the lender wishes to top up the loan by",
+            "type" : "string"
+          }
+        },
+        "required" : [ "amount" ],
+        "type" : "object"
+      },
+      "TravelRuleInfoUpdatedEvent" : {
+        "properties" : {
+          "cryptoAddress" : {
+            "$ref" : "#/components/schemas/CryptoAddress",
+            "type" : "object"
+          }
+        },
+        "required" : [ "cryptoAddress" ],
+        "type" : "object"
+      },
+      "UndelegationRestrictionEntity" : {
+        "properties" : {
+          "blocked" : {
+            "type" : "boolean"
+          },
+          "id" : {
+            "type" : "string"
+          },
+          "portfolioIds" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "User" : {
+        "properties" : {
+          "createdAt" : {
+            "description" : "Created at timestamp in milliseconds",
+            "type" : "string"
+          },
+          "firstName" : {
+            "description" : "The user's first name",
+            "type" : "string"
+          },
+          "lastName" : {
+            "description" : "The user's last name",
+            "type" : "string"
+          },
+          "userId" : {
+            "description" : "The user ID",
+            "type" : "string"
+          }
+        },
+        "required" : [ "userId" ],
+        "type" : "object"
+      },
+      "WebhookEvent" : {
+        "properties" : {
+          "event" : {
+            "description" : "Webhook event type",
+            "type" : "string"
+          },
+          "eventId" : {
+            "description" : "Webhook event id",
+            "type" : "string"
+          },
+          "payload" : {
+            "description" : "Webhook payload",
+            "type" : "object"
+          },
+          "subscriptionId" : {
+            "description" : "Webhook subscription id",
+            "type" : "string"
+          }
+        },
+        "required" : [ "eventId", "event", "subscriptionId", "payload" ],
+        "type" : "object"
+      }
+    }
+  },
+  "info" : {
+    "description" : "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+    "title" : "Copper Platform API",
+    "version" : "latest"
+  },
+  "openapi" : "3.1.0",
+  "paths" : {
+    "/organizations/{organizationId}/loans" : {
+      "get" : {
+        "description" : "Retrieve loans",
+        "parameters" : [ {
+          "description" : "The account to filter by",
+          "in" : "query",
+          "name" : "portfolioId",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "loanIds",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "type" : "string"
+            },
+            "type" : "array"
+          }
+        }, {
+          "description" : "The loan side to filter by. [See details](/enums/LoanSide)",
+          "example" : [ "lend" ],
+          "in" : "query",
+          "name" : "loanSide",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/LoanSide",
+            "type" : "string"
+          }
+        }, {
+          "description" : "[See details](/enums/LoanType)",
+          "in" : "query",
+          "name" : "loanTypes",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LoanType"
+            },
+            "type" : "array"
+          }
+        }, {
+          "description" : "The loan status to filter by. [See details](/enums/LoanStatus)",
+          "example" : [ "disbursing,active" ],
+          "in" : "query",
+          "name" : "statuses",
+          "required" : false,
+          "schema" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LoanStatus"
+            },
+            "type" : "array"
+          }
+        }, {
+          "description" : "Flag to filter out open loans",
+          "in" : "query",
+          "name" : "isOpen",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "description" : "Flag indicating if collaterals should be included in embedded",
+          "in" : "query",
+          "name" : "includeCollaterals",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "description" : "Flag indicating if counterparties should be included in embedded",
+          "in" : "query",
+          "name" : "includeCounterparties",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "description" : "The number of loans to include in the response",
+          "in" : "query",
+          "name" : "limit",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "The number of loans to skip in the response",
+          "in" : "query",
+          "name" : "offset",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "description" : "The field to sort by. Currently supported: updatedAt",
+          "in" : "query",
+          "name" : "sortBy",
+          "required" : false,
+          "schema" : {
+            "default" : "LoanStatus by relevance",
+            "type" : "string"
+          }
+        }, {
+          "description" : "The direction to sort by - must be used in conjunction with sortBy. [See details](/enums/SortingDirection)",
+          "in" : "query",
+          "name" : "sortDirection",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/components/schemas/SortingDirection",
+            "default" : "desc",
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loans"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Get Loans",
+        "tags" : [ "lending" ]
+      },
+      "post" : {
+        "description" : "Initiate loan creation. This action can only be carried out by the lender.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/CreateLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Create Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptExtensionLoanId}" : {
+      "patch" : {
+        "description" : "Accept the loan term extension request. Only requests that were initiated by the counterparty can be accepted.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan-term-extension+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptExtensionLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan-term-extension+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtendLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan-term-extension+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Term Extension",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptInterestLoanId}" : {
+      "patch" : {
+        "description" : "Accept the loan interest payment request.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-interest-payment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptInterestLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-interest-payment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/InterestPaymentAction"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-interest-payment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Interest Payment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptLoanId}" : {
+      "patch" : {
+        "description" : "Accept a loan. This action can only be carried out by the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AcceptLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptRebalanceLoanId}" : {
+      "patch" : {
+        "description" : "Accept the loan rebalance request. Only a lender can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan-rebalance+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptRebalanceLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan-rebalance+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan-rebalance+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Rebalance",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptRepaymentLoanId}" : {
+      "patch" : {
+        "description" : "Accept the full or partial loan repayment request. Only requests that were initiated by the counterparty can be accepted.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan-repayment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptRepaymentLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan-repayment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RepayLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan-repayment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Repayment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptRerateLoanId}" : {
+      "patch" : {
+        "description" : "Accept the loan interest rerate request. Only the borrower can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan-rerate+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptRerateLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan-rerate+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoanModificationAction"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan-rerate+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Rerate",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{acceptTopUpLoanId}" : {
+      "patch" : {
+        "description" : "Accept the loan top up request. Only a borrower can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.accept-loan-top-up+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "acceptTopUpLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.accept-loan-top-up+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.accept-loan-top-up+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Accept Loan Top Up",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{approveLoanId}" : {
+      "patch" : {
+        "description" : "Approve a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.",
+        "parameters" : [ {
+          "description" : "application/vnd.approve-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "approveLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.approve-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Approve Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelExtensionLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the loan term extensino request. This action can be carried out by the borrower or the lender.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan-term-extension+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelExtensionLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-loan-term-extension+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtendLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan-term-extension+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Term Extension",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelInterestLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the loan interest payment request that is awaiting acceptance. This action can be carried out by the lender or the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-interest-payment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelInterestLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-interest-payment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/InterestPaymentAction"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-interest-payment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Interest Payment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelLoanId}" : {
+      "patch" : {
+        "description" : "Cancel a loan that is awaiting acceptance. This action can be carried out by the lender or the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelRebalanceLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the loan rebalance request that is awaiting acceptance. This action can be carried out by the lender or the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan-rebalance+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelRebalanceLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-loan-rebalance+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan-rebalance+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Rebalance",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelRepaymentLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the full or partial loan repayment. This action can be carried out by the borrower or the lender.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan-repayment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelRepaymentLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-loan-repayment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RepayLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan-repayment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Repayment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelRerateLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the loan interest rerate request that is awaiting acceptance. This action can be carried out by the lender or the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan-rerate+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelRerateLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-loan-rerate+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/LoanModificationAction"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan-rerate+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Rerate",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{cancelTopUpLoanId}" : {
+      "patch" : {
+        "description" : "Cancel the loan top up request that is awaiting acceptance. This action can be carried out by the lender or the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.cancel-loan-top-up+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "cancelTopUpLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.cancel-loan-top-up+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.cancel-loan-top-up+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Cancel Loan Top Up",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{confirmDisbursementLoanId}" : {
+      "patch" : {
+        "description" : "Confirm the external disbursement of an off-platform managed loan. Only the lender can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.confirm-external-disbursement+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "confirmDisbursementLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.confirm-external-disbursement+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.confirm-external-disbursement+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Confirm External Disbursement",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{confirmInterestLoanId}" : {
+      "patch" : {
+        "description" : "Confirm the external payment of interest. Only the lender can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.confirm-external-interest-payment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "confirmInterestLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.confirm-external-interest-payment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/InterestPaymentAction"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.confirm-external-interest-payment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Confirm External Interest Payment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{confirmRepaymentLoanId}" : {
+      "patch" : {
+        "description" : "Confirm the external repayment of an off-platform managed loan. Only the lender can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.confirm-external-repayment+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "confirmRepaymentLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.confirm-external-repayment+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.confirm-external-repayment+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Confirm External Repayment",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{confirmTopUpLoanId}" : {
+      "patch" : {
+        "description" : "Confirm the external top up of an off-platform managed loan. Only the lender can carry out this action.",
+        "parameters" : [ {
+          "description" : "application/vnd.confirm-external-top-up+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "confirmTopUpLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.confirm-external-top-up+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ActionLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.confirm-external-top-up+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Confirm External Top Up",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{defaultLoanId}" : {
+      "patch" : {
+        "description" : "Default a loan that is in a defaultable state. This action can only be carried out by the lender.",
+        "parameters" : [ {
+          "description" : "application/vnd.default-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "defaultLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.default-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Default Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{estimateLeverageLoanId}" : {
+      "patch" : {
+        "description" : "Obtain an estimated loan leverage ratio after taking into account requested loan amount and/or collateral amount adjustments.",
+        "parameters" : [ {
+          "description" : "application/vnd.estimate-loan-leverage-ratio+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "estimateLeverageLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.estimate-loan-leverage-ratio+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EstimateLoanLeverageRatio"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.estimate-loan-leverage-ratio+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Estimate Loan Leverage Ratio",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{estimateLtvLoanId}" : {
+      "patch" : {
+        "description" : "Obtain an estimated loan LTV after taking into account requested loan amount and/or collateral amount adjustments.",
+        "parameters" : [ {
+          "description" : "application/vnd.estimate-loan-ltv+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "estimateLtvLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.estimate-loan-ltv+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/EstimateLoanLtv"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.estimate-loan-ltv+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Estimate Loan LTV",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{extendTermLoanId}" : {
+      "patch" : {
+        "description" : "Request loan term extension. Loan term extension can only be requested within five days of the loan reaching maturity. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.",
+        "parameters" : [ {
+          "description" : "application/vnd.extend-loan-term+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "extendTermLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.extend-loan-term+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ExtendLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.extend-loan-term+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Extend Loan Term",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{loanId}" : {
+      "get" : {
+        "description" : "Retrieve a loan by its ID",
+        "parameters" : [ {
+          "description" : "Flag indicating if collaterals should be included in embedded",
+          "in" : "query",
+          "name" : "includeCollaterals",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "description" : "Flag indicating if counterparties should be included in embedded",
+          "in" : "query",
+          "name" : "includeCounterparties",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "description" : "Flag indicating if allocations should be included in embedded",
+          "in" : "query",
+          "name" : "includeLoanAllocations",
+          "required" : false,
+          "schema" : {
+            "default" : "false",
+            "type" : "boolean"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "loanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Get Loan by ID",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{payInterestLoanId}" : {
+      "patch" : {
+        "description" : "Create an interest payment request.",
+        "parameters" : [ {
+          "description" : "application/vnd.pay-loan-interest+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "payInterestLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.pay-loan-interest+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PayInterest"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.pay-loan-interest+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Pay Loan Interest",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{rebalanceLoanId}" : {
+      "patch" : {
+        "description" : "Create a loan rebalance request. This action can only be carried out by the borrower and must be accepted by the lender.",
+        "parameters" : [ {
+          "description" : "application/vnd.rebalance-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "rebalanceLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.rebalance-loan+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RebalanceLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.rebalance-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Rebalance Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{rejectLoanId}" : {
+      "patch" : {
+        "description" : "Reject a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.",
+        "parameters" : [ {
+          "description" : "application/vnd.reject-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "rejectLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.reject-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Reject Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{repayLoanId}" : {
+      "patch" : {
+        "description" : "Request the partial or full repayment of a loan. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.",
+        "parameters" : [ {
+          "description" : "application/vnd.repay-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "repayLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.repay-loan+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RepayLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.repay-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Repay Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{rerateLoanId}" : {
+      "patch" : {
+        "description" : "Request a new loan interest rerate. The new interest rate must be stated in BPS. This action can only be carried out by the lender.",
+        "parameters" : [ {
+          "description" : "application/vnd.rerate-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "rerateLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.rerate-loan+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/RerateLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.rerate-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Rerate Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{secureCollateralLoanId}" : {
+      "patch" : {
+        "description" : "Secure collateral for a loan. This action can only be carried out by the borrower and should be invoked for both initial and subsequent collateral top ups.",
+        "parameters" : [ {
+          "description" : "application/vnd.secure-collateral+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "secureCollateralLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.secure-collateral+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AddCollateral"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.secure-collateral+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Secure Collateral Loan",
+        "tags" : [ "lending" ]
+      }
+    },
+    "/organizations/{organizationId}/loans/{topUpLoanId}" : {
+      "patch" : {
+        "description" : "Request a loan top up. This action can only be carried out by the lender and must be accepted by the borrower.",
+        "parameters" : [ {
+          "description" : "application/vnd.top-up-loan+json",
+          "in" : "header",
+          "name" : "Content-Type",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "organizationId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "topUpLoanId",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/vnd.top-up-loan+json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/TopUpLoan"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/vnd.top-up-loan+json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Loan"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "bad-request" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Bad Request"
+          },
+          "403" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "forbidden" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Forbidden"
+          },
+          "409" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "properties" : {
+                    "error" : {
+                      "description" : "The machine-readable error code",
+                      "examples" : [ "conflict" ],
+                      "type" : "string"
+                    },
+                    "message" : {
+                      "description" : "A human-readable message providing more details about the error",
+                      "type" : "string"
+                    }
+                  },
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "Conflict"
+          }
+        },
+        "summary" : "Top Up Loan",
+        "tags" : [ "lending" ]
+      }
+    }
+  },
+  "servers" : [ {
+    "description" : "platform.copper.co",
+    "url" : "https://api.copper.co/platform"
+  }, {
+    "description" : "demo.copper.co",
+    "url" : "https://api.stage.copper.co/platform"
+  }, {
+    "description" : "testnet.copper.co",
+    "url" : "https://api.testnet.copper.co/platform"
+  } ],
+  "tags" : [ {
+    "name" : "lending"
+  } ]
+}

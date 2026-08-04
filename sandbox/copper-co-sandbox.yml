@@ -1,0 +1,67 @@
+generated: '2026-08-04'
+method: searched
+source: https://developer.copper.co/api-reference/getting-started
+docs: https://developer.copper.co/api-reference/getting-started
+summary: >-
+  Copper publishes two non-production environments — a staging/demo environment and a
+  blockchain testnet environment — each with its own platform UI host and API base URL.
+  Separation is by HOST, not by key prefix: there is no test-vs-live key prefix
+  convention, and credentials are issued per environment in that environment's platform UI.
+environments:
+- name: production
+  platform_url: https://platform.copper.co
+  api_base_url: https://api.copper.co/platform
+  description: Live environment operating on real assets.
+- name: staging
+  aliases:
+  - demo
+  platform_url: https://demo.copper.co
+  api_base_url: https://api.stage.copper.co/platform
+  description: >-
+    Staging/demo environment, separate from production and safe for testing. Copper
+    advises verifying order creation, approval and webhook delivery here before
+    production deployment.
+- name: testnet
+  platform_url: https://testnet.copper.co
+  api_base_url: https://api.testnet.copper.co/platform
+  description: >-
+    Blockchain testnet environment. Blockchain transactions do not affect real assets.
+key_separation:
+  style: per-environment-host
+  test_key_prefix: null
+  live_key_prefix: null
+  note: >-
+    Copper does not publish test/live key prefixes. API keys are created in the platform
+    UI for the environment being targeted (Settings > API Keys) and the environment is
+    selected by base URL.
+test_values:
+  published: false
+  note: >-
+    Copper publishes no magic test values — no test card numbers, test addresses, test
+    IBANs or seeded fixture identifiers. Testing is done against real testnet blockchains
+    and staging portfolios provisioned for the client. No test values have been invented here.
+test_clock:
+  supported: false
+  note: No time-simulation or test-clock facility is documented.
+tooling:
+- name: Postman collection
+  url: https://developer.copper.co/api-reference/try-it-out#postman-collection
+  download: https://developer.copper.co/copper-postman-collection.json
+  description: >-
+    Official Postman collection generated from the OpenAPI spec. Ships a pre-request
+    script that computes the HMAC-SHA256 X-Signature automatically; set copperApiKey and
+    copperApiSecret as variables. Also carries a baseUrl variable so the collection can be
+    pointed at staging or testnet.
+- name: OpenAPI specification
+  url: https://developer.copper.co/api-reference/try-it-out#openapi-specification
+  download: https://developer.copper.co/copper-open-api-public.json
+  description: Downloadable OpenAPI 3.1 document, also rendered as an interactive API reference.
+- name: Developer portal AI assistant
+  url: https://developer.copper.co/
+  description: In-docs assistant (Cmd+I / Ctrl+I) for querying the documentation.
+onboarding:
+  self_serve: false
+  note: >-
+    Sandbox access is not self-serve. Copper is an institutional provider: existing clients
+    contact their relationship manager, and prospects email hello@copper.co to book a demo.
+    There is no public sign-up flow that yields API credentials.
