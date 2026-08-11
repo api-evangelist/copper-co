@@ -31,42 +31,254 @@ tags:
 - Blockchain
 - Treasury Management
 apis:
-- aid: copper-co-platform-api
-  name: Copper Platform API
-  description: 'REST API for the Copper institutional digital asset platform. Covers
-    organizations, portfolios, wallets and balances, the crypto address book, orders
-    (transfers, withdrawals, staking, smart calls, settlements), deposit targets, currencies,
-    reports, blockchain address validation, agency and bilateral lending, and ClearLoop
-    off-exchange settlement. Authenticated with an API key plus a per-request HMAC-SHA256
-    signature over timestamp + method + path + body.'
+- aid: copper-co:copper-co-accounts-api
+  name: Copper.co Accounts API
+  description: The Accounts API from Copper.co — 1 operation(s) for accounts.
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
-  - Digital Asset Custody
-  - Orders
-  - Wallets
-  - Lending
-  - ClearLoop
-  - Staking
-  - Settlement
+  - Accounts
   properties:
   - type: OpenAPI
-    name: Copper Platform API (public)
-    url: openapi/copper-co-platform-openapi.json
+    url: openapi/copper-co-accounts-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-address-book-api
+  name: Copper.co Address Book API
+  description: The address-book API from Copper.co — 2 operation(s) for address-book.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - address-book
+  properties:
   - type: OpenAPI
-    name: Copper Platform API (lending)
-    url: openapi/copper-co-lending-openapi.json
+    url: openapi/copper-co-address-book-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-blockchain-api
+  name: Copper.co Blockchain API
+  description: The blockchain API from Copper.co — 1 operation(s) for blockchain.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - blockchain
+  properties:
   - type: OpenAPI
-    name: Copper Platform API (trades)
-    url: openapi/copper-co-trades-openapi.json
+    url: openapi/copper-co-blockchain-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-clearloop-api
+  name: Copper.co Clearloop API
+  description: The clearloop API from Copper.co — 9 operation(s) for clearloop.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - clearloop
+  properties:
   - type: OpenAPI
-    name: Copper Unlimited Online API
-    url: openapi/copper-co-unlimited-openapi.json
+    url: openapi/copper-co-clearloop-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-currencies-api
+  name: Copper.co Currencies API
+  description: The currencies API from Copper.co — 3 operation(s) for currencies.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - currencies
+  properties:
   - type: OpenAPI
-    name: Copper Platform Deprecated API
-    url: openapi/copper-co-deprecated-openapi.json
-  - type: Overlay
-    url: overlays/copper-co-platform-overlay.yaml
+    url: openapi/copper-co-currencies-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-deposit-targets-api
+  name: Copper.co Deposit Targets API
+  description: The deposit-targets API from Copper.co — 2 operation(s) for deposit-targets.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - deposit-targets
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-deposit-targets-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-exchange-api
+  name: Copper.co Exchange API
+  description: The Exchange API from Copper.co — 1 operation(s) for exchange.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - Exchange
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-exchange-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-files-api
+  name: Copper.co Files API
+  description: The files API from Copper.co — 1 operation(s) for files.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - files
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-files-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-lending-api
+  name: Copper.co Lending API
+  description: The lending API from Copper.co — 34 operation(s) for lending.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - lending
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-lending-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-network-api
+  name: Copper.co Network API
+  description: The network API from Copper.co — 1 operation(s) for network.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - network
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-network-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-orders-api
+  name: Copper.co Orders API
+  description: The orders API from Copper.co — 8 operation(s) for orders.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-orders-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-organizations-api
+  name: Copper.co Organizations API
+  description: The organizations API from Copper.co — 3 operation(s) for organizations.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-organizations-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-portfolios-api
+  name: Copper.co Portfolios API
+  description: The portfolios API from Copper.co — 2 operation(s) for portfolios.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - portfolios
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-portfolios-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-reports-api
+  name: Copper.co Reports API
+  description: The reports API from Copper.co — 6 operation(s) for reports.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - reports
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-reports-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-sign-async-api
+  name: Copper.co Sign Async API
+  description: The Sign Async API from Copper.co — 2 operation(s) for sign async.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - Sign Async
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-sign-async-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-stake-api
+  name: Copper.co Stake API
+  description: The stake API from Copper.co — 3 operation(s) for stake.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - stake
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-stake-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-trades-api
+  name: Copper.co Trades API
+  description: The trades API from Copper.co — 19 operation(s) for trades.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - trades
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-trades-api-openapi.yml
+  - type: DataModel
+    url: data-model/copper-co-data-model.yml
+  - type: ToolCrosswalk
+    url: mcp/copper-co-tool-crosswalk.yml
+- aid: copper-co:copper-co-wallets-api
+  name: Copper.co Wallets API
+  description: The wallets API from Copper.co — 2 operation(s) for wallets.
+  humanURL: https://developer.copper.co/api-reference/getting-started
+  baseURL: https://api.copper.co/platform
+  tags:
+  - wallets
+  properties:
+  - type: OpenAPI
+    url: openapi/copper-co-wallets-api-openapi.yml
   - type: DataModel
     url: data-model/copper-co-data-model.yml
   - type: ToolCrosswalk
@@ -77,6 +289,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/copper-co-platform-overlay.yaml
 - type: Website
   url: https://copper.co/
 - type: DeveloperPortal
