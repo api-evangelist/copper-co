@@ -1,0 +1,504 @@
+{
+  "item": [
+    {
+      "id": "1187a755-e715-4e9e-9976-208875c80100",
+      "name": "network",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f023bfb6-d476-45d5-a175-7680fe2b1d61",
+          "name": "Get Counterparties",
+          "request": {
+            "name": "Get Counterparties",
+            "description": {
+              "content": "Find participant of the Copper Network",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organizations",
+                ":organizationId",
+                "counterparties"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search string"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "isConnected",
+                  "value": "<boolean>",
+                  "description": "Filter by connection status"
+                },
+                {
+                  "disabled": false,
+                  "key": "counterpartyIds",
+                  "value": "<string>",
+                  "description": "Filter by counterparty IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "counterpartyIds",
+                  "value": "<string>",
+                  "description": "Filter by counterparty IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "counterpartyTypes",
+                  "value": "<string>",
+                  "description": "Counterparty types list. [See details](/enums/CounterpartyType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "counterpartyTypes",
+                  "value": "<string>",
+                  "description": "Counterparty types list. [See details](/enums/CounterpartyType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeRelatedCounterpartyIds",
+                  "value": "true",
+                  "description": "Include related counterparty IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeConnections",
+                  "value": "true",
+                  "description": "Include connections"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeCounterpartyDetails",
+                  "value": "true",
+                  "description": "Include counterparty details"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organizationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ae4faf0-e2c0-44c7-9dc1-e56e752512ec",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "isConnected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeRelatedCounterpartyIds",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeConnections",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCounterpartyDetails",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"counterparties\": [\n    {\n      \"counterpartyId\": \"string\",\n      \"counterpartyName\": \"string\",\n      \"networkTag\": \"string\",\n      \"counterpartyType\": \"<string>\",\n      \"backgroundImageId\": \"string\",\n      \"counterpartyDescription\": \"string\",\n      \"extra\": {\n        \"exchangeId\": \"string\"\n      },\n      \"imageId\": \"string\",\n      \"priority\": \"string\",\n      \"tags\": [\n        \"featured\",\n        \"featured\"\n      ]\n    },\n    {\n      \"counterpartyId\": \"string\",\n      \"counterpartyName\": \"string\",\n      \"networkTag\": \"string\",\n      \"counterpartyType\": \"<string>\",\n      \"backgroundImageId\": \"string\",\n      \"counterpartyDescription\": \"string\",\n      \"extra\": {\n        \"exchangeId\": \"string\"\n      },\n      \"imageId\": \"string\",\n      \"priority\": \"string\",\n      \"tags\": [\n        \"featured\",\n        \"featured\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65823572-039b-4211-8f63-1bbca8157e8b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "isConnected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeRelatedCounterpartyIds",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeConnections",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCounterpartyDetails",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62da53ff-04a8-4145-a068-52c71c581d17",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "isConnected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeRelatedCounterpartyIds",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeConnections",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCounterpartyDetails",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b1e50e85-a829-42db-85aa-9530d06f5f3f",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organizations",
+                    ":organizationId",
+                    "counterparties"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "isConnected",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "counterpartyTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeRelatedCounterpartyIds",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeConnections",
+                      "value": "true"
+                    },
+                    {
+                      "key": "includeCounterpartyDetails",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organizationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "06d1b6b8-a93f-4fc8-bcd2-7c352270046f",
+    "name": "Copper Platform Network API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}

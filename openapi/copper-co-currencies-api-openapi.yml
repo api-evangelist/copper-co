@@ -1,0 +1,356 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Currencies API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: currencies
+paths:
+  /currencies:
+    get:
+      parameters:
+      - description: Provide currency to get rate for it. For now, USD is the only allowed value
+        in: query
+        name: rateFor
+        required: false
+        schema:
+          type: string
+      - description: Filter by main currency
+        in: query
+        name: mainCurrency
+        required: false
+        schema:
+          type: string
+      - description: Filer by currencies
+        in: query
+        name: currencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter by currency tags. [See details](/enums/CurrencyTag)
+        example:
+        - deposit-custody
+        in: query
+        name: tags
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/CurrencyTag'
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrenciesData'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Currencies
+      tags:
+      - currencies
+  /currencies/{currency}-{mainCurrency}:
+    get:
+      parameters:
+      - in: path
+        name: currency
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: mainCurrency
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrencyData'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Currency
+      tags:
+      - currencies
+  /currencies/{currency}-{mainCurrency}/trading-fees:
+    get:
+      description: Calculates trading fees for a given amount and a currency pair
+      parameters:
+      - description: The amount of which will be withdrawn
+        example:
+        - '0.1'
+        in: query
+        name: sendAmount
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: currency
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: mainCurrency
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeesLevels'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Currency Trading Fees for Amount
+      tags:
+      - currencies
+components:
+  schemas:
+    UniverseCurrencyExtra:
+      properties: {}
+      type: object
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    FeesLevels:
+      properties:
+        feesLevels:
+          items:
+            $ref: '#/components/schemas/FeesLevel'
+          type: array
+      type: object
+    CurrenciesData:
+      properties:
+        currencies:
+          description: Currencies list
+          items:
+            $ref: '#/components/schemas/CurrencyData'
+          type: array
+      required:
+      - currencies
+      type: object
+    CurrencyData:
+      properties:
+        confirmations:
+          description: Number of confirmations
+          type: string
+        crossChainNetworks:
+          description: Available networks for cross chain transfer
+          items:
+            type: string
+          type: array
+        currency:
+          description: Currency
+          type: string
+        decimal:
+          description: Currency decimal
+          type: string
+        extra:
+          $ref: '#/components/schemas/UniverseCurrencyExtra'
+          description: Currency additional information
+          type: object
+        fiat:
+          description: Indicates if currency is fiat
+          type: boolean
+        mainCurrency:
+          description: Main currency
+          type: string
+        name:
+          description: Currency name
+          type: string
+        networkName:
+          description: Network name
+          type: string
+        protocol:
+          description: Currency protocol
+          type: string
+        stableCoin:
+          description: Indicates if currency is stable coin
+          type: boolean
+        tags:
+          description: Currency tags. [See details](/enums/CurrencyTag)
+          items:
+            $ref: '#/components/schemas/CurrencyTag'
+          type: array
+      required:
+      - currency
+      - mainCurrency
+      - name
+      type: object
+    CurrencyTag:
+      enum:
+      - deposit-custody
+      - deposit-trading-vault
+      - deposit-trading
+      - deposit-external
+      - withdraw-custody
+      - withdraw-trading-vault
+      - withdraw-trading
+      - withdraw-external
+      - show-custody
+      - show-trading-vault
+      - show-trading
+      - show-external
+      - show-fees-vault
+      - show-clearloop
+      - defi-allowed
+      type: string
+    FeesLevel:
+      properties:
+        currency:
+          type: string
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: '[See details](/enums/FeeLevel)'
+        value:
+          type: string
+      type: object

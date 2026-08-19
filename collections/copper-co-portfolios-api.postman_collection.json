@@ -1,0 +1,1108 @@
+{
+  "item": [
+    {
+      "id": "05a65b16-ef06-40df-9182-2cfa55020eb9",
+      "name": "portfolios",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "baaca6ae-fcab-41b6-afed-aae0c1dc5748",
+          "name": "Get Portfolios",
+          "request": {
+            "name": "Get Portfolios",
+            "description": {
+              "content": "Retrieve your portfolios (in UI terms - accounts)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "portfolios"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedPortfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter by portfolio types not in. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedPortfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter by portfolio types not in. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Filter by portfolio id"
+                },
+                {
+                  "disabled": false,
+                  "key": "organizationId",
+                  "value": "<string>",
+                  "description": "Filter by organization id"
+                },
+                {
+                  "disabled": false,
+                  "key": "isActive",
+                  "value": "true",
+                  "description": "Filter by is active"
+                },
+                {
+                  "disabled": false,
+                  "key": "isDefiVault",
+                  "value": "<boolean>",
+                  "description": "Filter only DeFi vaults"
+                },
+                {
+                  "disabled": false,
+                  "key": "signingFlowType",
+                  "value": "<string>",
+                  "description": "Filter by signing enabled signing flow type"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": "Limit for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "04550315-a468-4d71-8e8a-448bb2deb481",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "isDefiVault",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "signingFlowType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"portfolios\": [\n    {\n      \"portfolioId\": \"string\",\n      \"portfolioName\": \"string\",\n      \"portfolioType\": \"<string>\",\n      \"createdBy\": \"string\",\n      \"createdAt\": \"string\",\n      \"isActive\": false,\n      \"extra\": {\n        \"autodiscoveredAccountStatus\": \"undefined\",\n        \"baseCurrency\": \"string\",\n        \"clearLoopDelegationsBlocked\": true,\n        \"clearLoopPortfolioId\": \"string\",\n        \"clearLoopUnDelegationsBlocked\": false,\n        \"clientAccountId\": \"string\",\n        \"customerId\": \"string\",\n        \"exchange\": \"string\",\n        \"exchangeAccountType\": \"undefined\",\n        \"externalAccountId\": \"string\",\n        \"parentPortfolioId\": \"string\",\n        \"quoteCurrency\": \"string\",\n        \"showWalletBalance\": \"real\",\n        \"usdWithdrawalLimit\": \"string\"\n      },\n      \"organizationId\": \"string\",\n      \"portfolioDescription\": \"string\",\n      \"status\": \"undefined\",\n      \"updatedAt\": \"string\",\n      \"updatedBy\": \"string\"\n    },\n    {\n      \"portfolioId\": \"string\",\n      \"portfolioName\": \"string\",\n      \"portfolioType\": \"<string>\",\n      \"createdBy\": \"string\",\n      \"createdAt\": \"string\",\n      \"isActive\": false,\n      \"extra\": {\n        \"autodiscoveredAccountStatus\": \"undefined\",\n        \"baseCurrency\": \"string\",\n        \"clearLoopDelegationsBlocked\": false,\n        \"clearLoopPortfolioId\": \"string\",\n        \"clearLoopUnDelegationsBlocked\": false,\n        \"clientAccountId\": \"string\",\n        \"customerId\": \"string\",\n        \"exchange\": \"string\",\n        \"exchangeAccountType\": \"undefined\",\n        \"externalAccountId\": \"string\",\n        \"parentPortfolioId\": \"string\",\n        \"quoteCurrency\": \"string\",\n        \"showWalletBalance\": \"margin\",\n        \"usdWithdrawalLimit\": \"string\"\n      },\n      \"organizationId\": \"string\",\n      \"portfolioDescription\": \"string\",\n      \"status\": \"undefined\",\n      \"updatedAt\": \"string\",\n      \"updatedBy\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ad94d0e3-5057-4a2a-9b36-3071dc756551",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "isDefiVault",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "signingFlowType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3fbae61-e07c-4c72-a32e-718553547ea5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "isDefiVault",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "signingFlowType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "221f2453-c211-4056-b560-8c44633a64a0",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isActive",
+                      "value": "true"
+                    },
+                    {
+                      "key": "isDefiVault",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "signingFlowType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84558cf8-38a4-4043-ae41-78f8984f7ccd",
+          "name": "Create Portfolio",
+          "request": {
+            "name": "Create Portfolio",
+            "description": {
+              "content": "Create a new portfolio",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "portfolios"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"portfolioId\": \"<string>\",\n  \"portfolioName\": \"<string>\",\n  \"portfolioType\": \"<string>\",\n  \"isDefiVault\": \"<boolean>\",\n  \"organizationId\": \"<string>\",\n  \"parentPortfolioId\": \"<string>\",\n  \"portfolioDescription\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10f01c15-ae7f-4885-804e-6de3dfdb4472",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"portfolioId\": \"<string>\",\n  \"portfolioName\": \"<string>\",\n  \"portfolioType\": \"<string>\",\n  \"isDefiVault\": \"<boolean>\",\n  \"organizationId\": \"<string>\",\n  \"parentPortfolioId\": \"<string>\",\n  \"portfolioDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"portfolioId\": \"string\",\n  \"portfolioName\": \"string\",\n  \"portfolioType\": \"<string>\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"string\",\n  \"isActive\": true,\n  \"extra\": {\n    \"autodiscoveredAccountStatus\": \"undefined\",\n    \"baseCurrency\": \"string\",\n    \"clearLoopDelegationsBlocked\": false,\n    \"clearLoopPortfolioId\": \"string\",\n    \"clearLoopUnDelegationsBlocked\": false,\n    \"clientAccountId\": \"string\",\n    \"customerId\": \"string\",\n    \"exchange\": \"string\",\n    \"exchangeAccountType\": \"undefined\",\n    \"externalAccountId\": \"string\",\n    \"parentPortfolioId\": \"string\",\n    \"quoteCurrency\": \"string\",\n    \"showWalletBalance\": \"margin\",\n    \"usdWithdrawalLimit\": \"string\"\n  },\n  \"organizationId\": \"string\",\n  \"portfolioDescription\": \"string\",\n  \"status\": \"undefined\",\n  \"updatedAt\": \"string\",\n  \"updatedBy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ee90e04-84b2-49ef-ab79-4501177b000a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"portfolioId\": \"<string>\",\n  \"portfolioName\": \"<string>\",\n  \"portfolioType\": \"<string>\",\n  \"isDefiVault\": \"<boolean>\",\n  \"organizationId\": \"<string>\",\n  \"parentPortfolioId\": \"<string>\",\n  \"portfolioDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "868a65c1-fa85-4571-ba2e-29dd6ee70c9c",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"portfolioId\": \"<string>\",\n  \"portfolioName\": \"<string>\",\n  \"portfolioType\": \"<string>\",\n  \"isDefiVault\": \"<boolean>\",\n  \"organizationId\": \"<string>\",\n  \"parentPortfolioId\": \"<string>\",\n  \"portfolioDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8de3a0a5-f844-44e9-9fb2-3d15463e32bc",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"portfolioId\": \"<string>\",\n  \"portfolioName\": \"<string>\",\n  \"portfolioType\": \"<string>\",\n  \"isDefiVault\": \"<boolean>\",\n  \"organizationId\": \"<string>\",\n  \"parentPortfolioId\": \"<string>\",\n  \"portfolioDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ecd67f9b-3dbd-49ed-b036-4e11b9d8414c",
+          "name": "Archive Portfolio",
+          "request": {
+            "name": "Archive Portfolio",
+            "description": {},
+            "url": {
+              "path": [
+                "portfolios",
+                ":portfolioId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "portfolioId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1455b1a7-f95f-47cf-84d0-0ea4da75db66",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c13e761d-7ec1-4e7c-a861-678975c1f3aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c0ec14fc-419c-49e2-aa4a-1b1a4399fd13",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f9f85d6-92ef-410b-95ef-6c9ae305e09b",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f624370b-8b5c-415f-8a12-0c13b536f67d",
+          "name": "Retrieve Portfolio by ID",
+          "request": {
+            "name": "Retrieve Portfolio by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "portfolios",
+                ":portfolioId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "portfolioId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "df3deac2-de04-45d2-b4e8-0c62b5962746",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"portfolioId\": \"string\",\n  \"portfolioName\": \"string\",\n  \"portfolioType\": \"<string>\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"string\",\n  \"isActive\": true,\n  \"extra\": {\n    \"autodiscoveredAccountStatus\": \"undefined\",\n    \"baseCurrency\": \"string\",\n    \"clearLoopDelegationsBlocked\": false,\n    \"clearLoopPortfolioId\": \"string\",\n    \"clearLoopUnDelegationsBlocked\": false,\n    \"clientAccountId\": \"string\",\n    \"customerId\": \"string\",\n    \"exchange\": \"string\",\n    \"exchangeAccountType\": \"undefined\",\n    \"externalAccountId\": \"string\",\n    \"parentPortfolioId\": \"string\",\n    \"quoteCurrency\": \"string\",\n    \"showWalletBalance\": \"margin\",\n    \"usdWithdrawalLimit\": \"string\"\n  },\n  \"organizationId\": \"string\",\n  \"portfolioDescription\": \"string\",\n  \"status\": \"undefined\",\n  \"updatedAt\": \"string\",\n  \"updatedBy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c448959-9c86-4695-8192-0139cf3c98f0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "958a4f76-c46c-47e9-813c-37875e3b5d47",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3932893e-2f5c-4b00-9e6c-777684d28d3b",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c029acdd-f7d2-4d9b-a3bd-95caeeaa684a",
+    "name": "Copper Platform Portfolios API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}

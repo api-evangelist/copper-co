@@ -1,0 +1,1160 @@
+{
+  "item": [
+    {
+      "id": "43495a17-46e0-4058-8061-f915e96aff2d",
+      "name": "address-book",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d1601561-e821-45d7-a133-b9cf3827c4e9",
+          "name": "Get Crypto Addresses",
+          "request": {
+            "name": "Get Crypto Addresses",
+            "description": {
+              "content": "Retrieve information about crypto addresses in an organization's address book",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crypto-addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cryptoAddressIds",
+                  "value": "<string>",
+                  "description": "Filter by crypto address ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "cryptoAddressIds",
+                  "value": "<string>",
+                  "description": "Filter by crypto address ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "currencies",
+                  "value": "<string>",
+                  "description": "Filter by currencies"
+                },
+                {
+                  "disabled": false,
+                  "key": "currencies",
+                  "value": "<string>",
+                  "description": "Filter by currencies"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrencies",
+                  "value": "<string>",
+                  "description": "Filter by main currencies"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrencies",
+                  "value": "<string>",
+                  "description": "Filter by main currencies"
+                },
+                {
+                  "disabled": false,
+                  "key": "addressTags",
+                  "value": "<string>",
+                  "description": "Filter by address tags"
+                },
+                {
+                  "disabled": false,
+                  "key": "addressTags",
+                  "value": "<string>",
+                  "description": "Filter by address tags"
+                },
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "Filter by addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "addresses",
+                  "value": "<string>",
+                  "description": "Filter by addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "memo",
+                  "value": "<string>",
+                  "description": "Filter by memo"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "500",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "isWhitelist",
+                  "value": "false",
+                  "description": "Filter only whitelisted addresses"
+                },
+                {
+                  "disabled": false,
+                  "key": "addressTypes",
+                  "value": "<string>",
+                  "description": "Filter by address types. [See details](/enums/AddressType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "addressTypes",
+                  "value": "<string>",
+                  "description": "Filter by address types. [See details](/enums/AddressType)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "792021df-d7cb-4d3d-a7fe-ab3a9334b48d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "address1,address2"
+                    },
+                    {
+                      "key": "memo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isWhitelist",
+                      "value": "false"
+                    },
+                    {
+                      "key": "addressTypes",
+                      "value": "smart-contract"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cryptoAddresses\": [\n    {\n      \"cryptoAddressId\": \"string\",\n      \"currency\": \"string\",\n      \"name\": \"string\",\n      \"address\": \"string\",\n      \"createdBy\": \"string\",\n      \"createdAt\": \"string\",\n      \"isWhitelist\": false,\n      \"addressType\": \"<string>\",\n      \"_embedded\": {\n        \"currencyConfigurations\": [\n          {\n            \"currencyConfigurationId\": \"string\",\n            \"cryptoAddressId\": \"string\",\n            \"currency\": \"string\",\n            \"createdBy\": \"string\",\n            \"createdAt\": \"string\",\n            \"isWhitelist\": true,\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastUsedAt\": \"string\",\n            \"portfolioIds\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"updatedAt\": \"string\",\n            \"updatedBy\": \"string\"\n          },\n          {\n            \"currencyConfigurationId\": \"string\",\n            \"cryptoAddressId\": \"string\",\n            \"currency\": \"string\",\n            \"createdBy\": \"string\",\n            \"createdAt\": \"string\",\n            \"isWhitelist\": false,\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastUsedAt\": \"string\",\n            \"portfolioIds\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"updatedAt\": \"string\",\n            \"updatedBy\": \"string\"\n          }\n        ]\n      },\n      \"acceptTokens\": false,\n      \"addressTags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"category\": \"vasp\",\n      \"extra\": {},\n      \"lastUsedAt\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"memo\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updatedAt\": \"string\",\n      \"updatedBy\": \"string\"\n    },\n    {\n      \"cryptoAddressId\": \"string\",\n      \"currency\": \"string\",\n      \"name\": \"string\",\n      \"address\": \"string\",\n      \"createdBy\": \"string\",\n      \"createdAt\": \"string\",\n      \"isWhitelist\": true,\n      \"addressType\": \"<string>\",\n      \"_embedded\": {\n        \"currencyConfigurations\": [\n          {\n            \"currencyConfigurationId\": \"string\",\n            \"cryptoAddressId\": \"string\",\n            \"currency\": \"string\",\n            \"createdBy\": \"string\",\n            \"createdAt\": \"string\",\n            \"isWhitelist\": false,\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastUsedAt\": \"string\",\n            \"portfolioIds\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"updatedAt\": \"string\",\n            \"updatedBy\": \"string\"\n          },\n          {\n            \"currencyConfigurationId\": \"string\",\n            \"cryptoAddressId\": \"string\",\n            \"currency\": \"string\",\n            \"createdBy\": \"string\",\n            \"createdAt\": \"string\",\n            \"isWhitelist\": true,\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"lastUsedAt\": \"string\",\n            \"portfolioIds\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"updatedAt\": \"string\",\n            \"updatedBy\": \"string\"\n          }\n        ]\n      },\n      \"acceptTokens\": false,\n      \"addressTags\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"category\": \"payable-smart-contract\",\n      \"extra\": {},\n      \"lastUsedAt\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"memo\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"updatedAt\": \"string\",\n      \"updatedBy\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "add945a0-2b24-48e6-9878-8fa614368ada",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "address1,address2"
+                    },
+                    {
+                      "key": "memo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isWhitelist",
+                      "value": "false"
+                    },
+                    {
+                      "key": "addressTypes",
+                      "value": "smart-contract"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f80e9c87-4880-458f-845d-73011c97cc94",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "address1,address2"
+                    },
+                    {
+                      "key": "memo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isWhitelist",
+                      "value": "false"
+                    },
+                    {
+                      "key": "addressTypes",
+                      "value": "smart-contract"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c528cdfe-582e-4214-b6d2-4587a05724df",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cryptoAddressIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addressTags",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "addresses",
+                      "value": "address1,address2"
+                    },
+                    {
+                      "key": "memo",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "500"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "isWhitelist",
+                      "value": "false"
+                    },
+                    {
+                      "key": "addressTypes",
+                      "value": "smart-contract"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c056c7df-cae0-4eb4-9067-113949742469",
+          "name": "Create Crypto Address",
+          "request": {
+            "name": "Create Crypto Address",
+            "description": {
+              "content": "Create a new crypto address in an organization's address book",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crypto-addresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cryptoAddressId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"acceptTokens\": \"<boolean>\",\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"addressType\": \"<string>\",\n  \"isWhitelist\": \"false\",\n  \"mainCurrency\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"portfolioIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d35ddff-17d6-4c67-acbb-0684be36a0d9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAddressId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"acceptTokens\": \"<boolean>\",\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"addressType\": \"<string>\",\n  \"isWhitelist\": \"false\",\n  \"mainCurrency\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"portfolioIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cryptoAddressId\": \"string\",\n  \"currency\": \"string\",\n  \"name\": \"string\",\n  \"address\": \"string\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"string\",\n  \"isWhitelist\": true,\n  \"addressType\": \"<string>\",\n  \"_embedded\": {\n    \"currencyConfigurations\": [\n      {\n        \"currencyConfigurationId\": \"string\",\n        \"cryptoAddressId\": \"string\",\n        \"currency\": \"string\",\n        \"createdBy\": \"string\",\n        \"createdAt\": \"string\",\n        \"isWhitelist\": true,\n        \"extra\": {},\n        \"lastUsedAt\": \"string\",\n        \"portfolioIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"updatedAt\": \"string\",\n        \"updatedBy\": \"string\"\n      },\n      {\n        \"currencyConfigurationId\": \"string\",\n        \"cryptoAddressId\": \"string\",\n        \"currency\": \"string\",\n        \"createdBy\": \"string\",\n        \"createdAt\": \"string\",\n        \"isWhitelist\": false,\n        \"extra\": {},\n        \"lastUsedAt\": \"string\",\n        \"portfolioIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"updatedAt\": \"string\",\n        \"updatedBy\": \"string\"\n      }\n    ]\n  },\n  \"acceptTokens\": true,\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"category\": \"unknown\",\n  \"extra\": {},\n  \"lastUsedAt\": \"string\",\n  \"mainCurrency\": \"string\",\n  \"memo\": \"string\",\n  \"organizationId\": \"string\",\n  \"portfolioIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"updatedAt\": \"string\",\n  \"updatedBy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "337be547-716c-47cb-b2d5-cdde544daf4a",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAddressId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"acceptTokens\": \"<boolean>\",\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"addressType\": \"<string>\",\n  \"isWhitelist\": \"false\",\n  \"mainCurrency\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"portfolioIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "adb33288-38de-4384-88f8-661253c489a4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAddressId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"acceptTokens\": \"<boolean>\",\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"addressType\": \"<string>\",\n  \"isWhitelist\": \"false\",\n  \"mainCurrency\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"portfolioIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2f3ff6a-a97f-4bd0-b027-1977a3ba67fa",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cryptoAddressId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"acceptTokens\": \"<boolean>\",\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"addressType\": \"<string>\",\n  \"isWhitelist\": \"false\",\n  \"mainCurrency\": \"<string>\",\n  \"memo\": \"<string>\",\n  \"portfolioIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b92367d3-3cae-4a3d-a5c3-0ca55285d331",
+          "name": "Deactivate Crypto Address",
+          "request": {
+            "name": "Deactivate Crypto Address",
+            "description": {
+              "content": "Deactivate a crypto address in an organization's address book",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crypto-addresses",
+                ":cryptoAddressId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cryptoAddressId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c3cdb0cc-577a-4763-bca0-f2f40a1aceb1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "590554a1-0c9f-4da9-853e-023d86bcecd4",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e9ce449-3fae-40ab-986d-271f2d1517ca",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c89c5de-8379-4eab-8de9-6d7ace940eea",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59506909-323e-41c0-919e-50a5532b18af",
+          "name": "Get Crypto Address by ID",
+          "request": {
+            "name": "Get Crypto Address by ID",
+            "description": {
+              "content": "Retrieve information about a crypto address in an organization's address book",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "crypto-addresses",
+                ":cryptoAddressId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cryptoAddressId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95574d08-fdcb-4356-a4bf-d24394c941bc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cryptoAddressId\": \"string\",\n  \"currency\": \"string\",\n  \"name\": \"string\",\n  \"address\": \"string\",\n  \"createdBy\": \"string\",\n  \"createdAt\": \"string\",\n  \"isWhitelist\": true,\n  \"addressType\": \"<string>\",\n  \"_embedded\": {\n    \"currencyConfigurations\": [\n      {\n        \"currencyConfigurationId\": \"string\",\n        \"cryptoAddressId\": \"string\",\n        \"currency\": \"string\",\n        \"createdBy\": \"string\",\n        \"createdAt\": \"string\",\n        \"isWhitelist\": true,\n        \"extra\": {},\n        \"lastUsedAt\": \"string\",\n        \"portfolioIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"updatedAt\": \"string\",\n        \"updatedBy\": \"string\"\n      },\n      {\n        \"currencyConfigurationId\": \"string\",\n        \"cryptoAddressId\": \"string\",\n        \"currency\": \"string\",\n        \"createdBy\": \"string\",\n        \"createdAt\": \"string\",\n        \"isWhitelist\": false,\n        \"extra\": {},\n        \"lastUsedAt\": \"string\",\n        \"portfolioIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"updatedAt\": \"string\",\n        \"updatedBy\": \"string\"\n      }\n    ]\n  },\n  \"acceptTokens\": true,\n  \"addressTags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"category\": \"unknown\",\n  \"extra\": {},\n  \"lastUsedAt\": \"string\",\n  \"mainCurrency\": \"string\",\n  \"memo\": \"string\",\n  \"organizationId\": \"string\",\n  \"portfolioIds\": [\n    \"string\",\n    \"string\"\n  ],\n  \"updatedAt\": \"string\",\n  \"updatedBy\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf5ab333-13de-4815-beea-85bb24a737aa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14397a46-e7c5-4e6f-9111-c370671ec580",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3604a77f-2e60-43e3-89d7-a6c07f1d05d0",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "crypto-addresses",
+                    ":cryptoAddressId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cryptoAddressId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "faf48ab1-8938-4b3e-9230-96f34e502939",
+    "name": "Copper Platform Address Book API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Unlimited Online Sign Async API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sign Async",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Sign transaction asynchronously",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "http://0.0.0.0:3010/sign-async",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sign transaction asynchronously"
+        },
+        {
+          "info": {
+            "name": "Get status of the sign request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "http://0.0.0.0:3010/sign-async/:transactionRequestId",
+            "params": [
+              {
+                "name": "transactionRequestId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get status of the sign request"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

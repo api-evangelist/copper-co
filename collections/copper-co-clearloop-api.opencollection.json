@@ -1,0 +1,295 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Clearloop API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "clearloop",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get ClearLoop Actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/actions",
+            "params": [
+              {
+                "name": "fromTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp (in milliseconds) to retrieve records from this point in time"
+              },
+              {
+                "name": "toTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp (in milliseconds) to retrieve records up to this point in time"
+              },
+              {
+                "name": "clientAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Unique identifier of the exchange account for which records are retrieved"
+              },
+              {
+                "name": "portfolioIds",
+                "value": "",
+                "type": "query",
+                "description": "List of Copper portfolio IDs to filter records"
+              },
+              {
+                "name": "actionType",
+                "value": "",
+                "type": "query",
+                "description": "Type of action: `add-funds` (delegate to the exchange) or `remove-funds` (undelegate from the exchange)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (pagination limit)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip before starting to return results (pagination offset)"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for results: `asc` for ascending or `desc` for descending"
+              },
+              {
+                "name": "filterExecuted",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return records for actions that have been successfully executed (i.e., funds have been successfully added or removed).If false, include all records regardless of execution status"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Actions"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Action by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/actions/:actionId",
+            "params": [
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Action by ID"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Balances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/balances",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Copper account identifier for which records can be retrieved"
+              },
+              {
+                "name": "nonEmpty",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, only balances with non-zero values will be returned"
+              },
+              {
+                "name": "fetchSubaccounts",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, includes `totalAvailableBalanceToUndelegate` across both the main account and subaccounts"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Balances"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Exchanges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/exchanges"
+          },
+          "docs": "Get ClearLoop Exchanges"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Exchange by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/exchanges/:exchangeId",
+            "params": [
+              {
+                "name": "exchangeId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Exchange by ID"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Portfolios",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/portfolios"
+          },
+          "docs": "Get ClearLoop Portfolios"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Portfolio by Id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/portfolios/:portfolioId",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Portfolio by Id"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Settlements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/settlements",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query",
+                "description": "Unique Copper account identifier for which records can be retrieved"
+              },
+              {
+                "name": "clientAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Exchange account unique identifier for which records can be retrieved"
+              },
+              {
+                "name": "exchangeSettlementId",
+                "value": "",
+                "type": "query",
+                "description": "Unique exchange settlement identifier per instruction, defined by client account and settlement currency. Guaranteed to be unique within each exchange."
+              },
+              {
+                "name": "createdAfter",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp in milliseconds to filter settlements created after this time"
+              },
+              {
+                "name": "createdBefore",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp in milliseconds to filter settlements created before this time"
+              },
+              {
+                "name": "cycleStartTimestamp",
+                "value": "",
+                "type": "query",
+                "description": "Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started"
+              },
+              {
+                "name": "cycles",
+                "value": "",
+                "type": "query",
+                "description": "The number of most recent cycles that you want to retrieve for every exchange. For example, specifying 1 will return the last settlement for every queried exchange"
+              },
+              {
+                "name": "clearLoopSettlementStatuses",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list with statuses to be included. [See details](/enums/ClearLoopSettlementStatus)"
+              },
+              {
+                "name": "clearLoopSettlementStatusesNotIn",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list with statuses not to be included. [See details](/enums/ClearLoopSettlementStatus)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (pagination limit)"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The sorting order of settlement records, which are sorted by their `createdAt` field: `asc` (ascending) or `desc` (descending)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to skip before starting to return results (pagination offset)"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Settlements"
+        },
+        {
+          "info": {
+            "name": "Get ClearLoop Settlement by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/clearloop/settlements/:settlementId",
+            "params": [
+              {
+                "name": "settlementId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get ClearLoop Settlement by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

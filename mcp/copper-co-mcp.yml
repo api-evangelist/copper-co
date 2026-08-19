@@ -8,28 +8,23 @@ server:
   url: https://developer.copper.co/mcp
   protocol: MCP JSON-RPC 2.0 over HTTP with SSE responses
   authentication: none
-  auth_note: >-
-    tools/list returned HTTP 200 anonymously — no OAuth challenge, no invalid_token. The
-    real tool set with full inputSchema was retrieved live, not inferred.
+  auth_note: tools/list returned HTTP 200 anonymously — no OAuth challenge, no invalid_token. The real
+    tool set with full inputSchema was retrieved live, not inferred.
   vendor: Mintlify
-  vendor_note: >-
-    This is the Mintlify-hosted documentation MCP server that ships with the developer
-    portal, not a hand-built Copper server. It is genuinely published and callable at
-    Copper's own hostname, but its scope is DOCUMENTATION SEARCH, not custody operations.
+  vendor_note: This is the Mintlify-hosted documentation MCP server that ships with the developer portal,
+    not a hand-built Copper server. It is genuinely published and callable at Copper's own hostname, but
+    its scope is DOCUMENTATION SEARCH, not custody operations.
 scope: documentation
-scope_note: >-
-  IMPORTANT: no MCP tool exposes any Copper Platform API operation. An agent can use this
-  server to read Copper's docs and OpenAPI specs; it cannot use it to list portfolios,
-  create orders, move funds or manage loans. Those remain REST-only and require API key +
-  HMAC signature. See mcp/copper-co-tool-crosswalk.yml.
+scope_note: 'IMPORTANT: no MCP tool exposes any Copper Platform API operation. An agent can use this server
+  to read Copper''s docs and OpenAPI specs; it cannot use it to list portfolios, create orders, move funds
+  or manage loans. Those remain REST-only and require API key + HMAC signature. See mcp/copper-co-tool-crosswalk.yml.'
 tool_count: 3
 tools:
 - name: search_copper_developer_portal
   title: Search documentation
-  description: >-
-    Search across the Copper Developer Portal knowledge base to find relevant information,
-    code examples, API references, and guides. Returns contextual content with titles and
-    direct links to documentation pages.
+  description: Search across the Copper Developer Portal knowledge base to find relevant information,
+    code examples, API references, and guides. Returns contextual content with titles and direct links
+    to documentation pages.
   input_schema:
     type: object
     properties:
@@ -44,10 +39,9 @@ tools:
     idempotentHint: true
     openWorldHint: false
 - name: query_docs_filesystem_copper_developer_portal
-  description: >-
-    Run a read-only shell-like query against a virtualized, in-memory filesystem rooted at
-    "/" containing ONLY the Copper Developer Portal documentation pages and OpenAPI specs.
-    Used to head/cat a specific page path (append .mdx to a path returned from search).
+  description: Run a read-only shell-like query against a virtualized, in-memory filesystem rooted at
+    "/" containing ONLY the Copper Developer Portal documentation pages and OpenAPI specs. Used to head/cat
+    a specific page path (append .mdx to a path returned from search).
   input_schema:
     type: object
     properties:
@@ -62,9 +56,8 @@ tools:
     openWorldHint: false
 - name: submit_feedback
   title: Submit documentation feedback
-  description: >-
-    Report a problem with this documentation site so the docs team can fix it. Use when a
-    documentation page is incorrect, outdated, confusing, incomplete, or has a broken example.
+  description: Report a problem with this documentation site so the docs team can fix it. Use when a documentation
+    page is incorrect, outdated, confusing, incomplete, or has a broken example.
   input_schema:
     type: object
     properties:
@@ -85,3 +78,11 @@ x-evidence:
   http_status: 200
   content_type: text/event-stream
   tools_returned: 3
+deployment:
+  mode: remote
+  endpoint: https://developer.copper.co/mcp
+  verified: probed
+  probe: live
+  tools: 3
+  checked: '2026-08-12'
+  source: catalog MCP census

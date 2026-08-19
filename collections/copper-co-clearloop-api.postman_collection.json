@@ -1,0 +1,2414 @@
+{
+  "item": [
+    {
+      "id": "a019b7dd-1ded-48b5-8fc3-e54de8fe76e8",
+      "name": "clearloop",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "044e4fa6-31d5-42d9-80a8-bca6725e1e4b",
+          "name": "Get ClearLoop Actions",
+          "request": {
+            "name": "Get ClearLoop Actions",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "actions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fromTimestamp",
+                  "value": "<string>",
+                  "description": "Unix timestamp (in milliseconds) to retrieve records from this point in time"
+                },
+                {
+                  "disabled": false,
+                  "key": "toTimestamp",
+                  "value": "<string>",
+                  "description": "Unix timestamp (in milliseconds) to retrieve records up to this point in time"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientAccountId",
+                  "value": "<string>",
+                  "description": "Unique identifier of the exchange account for which records are retrieved"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioIds",
+                  "value": "<string>",
+                  "description": "List of Copper portfolio IDs to filter records"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioIds",
+                  "value": "<string>",
+                  "description": "List of Copper portfolio IDs to filter records"
+                },
+                {
+                  "disabled": false,
+                  "key": "actionType",
+                  "value": "<string>",
+                  "description": "Type of action: `add-funds` (delegate to the exchange) or `remove-funds` (undelegate from the exchange)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": "Maximum number of records to return (pagination limit)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Number of records to skip before starting to return results (pagination offset)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "Sort order for results: `asc` for ascending or `desc` for descending"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterExecuted",
+                  "value": "false",
+                  "description": "If true, only return records for actions that have been successfully executed (i.e., funds have been successfully added or removed).If false, include all records regardless of execution status"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ff2bb33-72b5-4a46-939c-a99f8bcd4ed8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "filterExecuted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"actions\": [\n    {\n      \"delegatedOrganizationId\": \"string\",\n      \"organizationId\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"action\": \"string\",\n      \"currency\": \"string\",\n      \"amount\": \"string\",\n      \"createdAt\": \"string\",\n      \"clearLoopPortfolioId\": \"string\",\n      \"completedAt\": \"string\",\n      \"exchangeId\": \"string\",\n      \"network\": \"string\",\n      \"orderId\": \"string\",\n      \"status\": \"string\",\n      \"updatedAt\": \"string\",\n      \"usdAmount\": \"string\"\n    },\n    {\n      \"delegatedOrganizationId\": \"string\",\n      \"organizationId\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"action\": \"string\",\n      \"currency\": \"string\",\n      \"amount\": \"string\",\n      \"createdAt\": \"string\",\n      \"clearLoopPortfolioId\": \"string\",\n      \"completedAt\": \"string\",\n      \"exchangeId\": \"string\",\n      \"network\": \"string\",\n      \"orderId\": \"string\",\n      \"status\": \"string\",\n      \"updatedAt\": \"string\",\n      \"usdAmount\": \"string\"\n    }\n  ],\n  \"pagination\": {\n    \"limit\": \"string\",\n    \"page\": \"string\",\n    \"pages\": \"string\",\n    \"totalItems\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3e4582f-3bcc-49ca-b5d3-f19075620947",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "filterExecuted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99a69d39-7041-4009-98cd-2578091721d2",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "filterExecuted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb3443e4-2cac-4e3a-b022-2abaefe2d7a2",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fromTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "toTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "actionType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "filterExecuted",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62ce0089-71f3-43a1-90be-1bca14f86a8b",
+          "name": "Get ClearLoop Action by ID",
+          "request": {
+            "name": "Get ClearLoop Action by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "actions",
+                ":actionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "actionId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8af2decb-f61c-4278-aaee-87a81b76c88e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions",
+                    ":actionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"delegatedOrganizationId\": \"string\",\n  \"organizationId\": \"string\",\n  \"clientAccountId\": \"string\",\n  \"action\": \"string\",\n  \"currency\": \"string\",\n  \"amount\": \"string\",\n  \"createdAt\": \"string\",\n  \"clearLoopPortfolioId\": \"string\",\n  \"completedAt\": \"string\",\n  \"exchangeId\": \"string\",\n  \"network\": \"string\",\n  \"orderId\": \"string\",\n  \"status\": \"string\",\n  \"updatedAt\": \"string\",\n  \"usdAmount\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0aba4574-6231-4a96-9362-74d61ddef699",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions",
+                    ":actionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f13dfa39-fe7e-4929-ac8d-dafe85c3f1c3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions",
+                    ":actionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6b1168be-4561-4282-9d65-bd80e9cdb296",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "actions",
+                    ":actionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "actionId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f677caec-0fdf-4468-9e75-fd2bf219d967",
+          "name": "Get ClearLoop Balances",
+          "request": {
+            "name": "Get ClearLoop Balances",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "balances"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Unique Copper account identifier for which records can be retrieved"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonEmpty",
+                  "value": "true",
+                  "description": "If `true`, only balances with non-zero values will be returned"
+                },
+                {
+                  "disabled": false,
+                  "key": "fetchSubaccounts",
+                  "value": "false",
+                  "description": "If `true`, includes `totalAvailableBalanceToUndelegate` across both the main account and subaccounts"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "29d46235-db42-496f-b84a-32ccbfc5a06b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "true"
+                    },
+                    {
+                      "key": "fetchSubaccounts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"balances\": [\n    {\n      \"currency\": \"string\",\n      \"balance\": \"string\",\n      \"amount\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"available\": \"string\",\n      \"delegatedOrganizationId\": \"string\",\n      \"exchangeId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"reserve\": \"string\",\n      \"totalAvailableToUndelegate\": \"string\"\n    },\n    {\n      \"currency\": \"string\",\n      \"balance\": \"string\",\n      \"amount\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"available\": \"string\",\n      \"delegatedOrganizationId\": \"string\",\n      \"exchangeId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"reserve\": \"string\",\n      \"totalAvailableToUndelegate\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ccb70a15-6d6c-4dd1-bb47-e2edf7efc94e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "true"
+                    },
+                    {
+                      "key": "fetchSubaccounts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ca40b1f-e077-4a2d-af97-d91efa9fa011",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "true"
+                    },
+                    {
+                      "key": "fetchSubaccounts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "326c974b-b302-4194-ad28-f4ee2fd07220",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "balances"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "true"
+                    },
+                    {
+                      "key": "fetchSubaccounts",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2db873ed-8812-46cd-9162-72825931870d",
+          "name": "Get ClearLoop Exchanges",
+          "request": {
+            "name": "Get ClearLoop Exchanges",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "exchanges"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03972c75-7136-473d-b7af-37c8fa9aaf42",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clearLoopExchanges\": [\n    {\n      \"exchangeId\": \"string\",\n      \"name\": \"string\",\n      \"collateralDetails\": {\n        \"currencies\": [\n          {\n            \"buffer\": \"string\",\n            \"currentCollateralBalance\": \"string\",\n            \"settlementCurrency\": \"string\",\n            \"uPnL\": \"string\",\n            \"uPnLExcessDeficit\": \"string\",\n            \"updatedAt\": \"string\"\n          },\n          {\n            \"buffer\": \"string\",\n            \"currentCollateralBalance\": \"string\",\n            \"settlementCurrency\": \"string\",\n            \"uPnL\": \"string\",\n            \"uPnLExcessDeficit\": \"string\",\n            \"updatedAt\": \"string\"\n          }\n        ]\n      },\n      \"settlementDetails\": {\n        \"frequency\": \"string\",\n        \"nextSettlementTimestamp\": \"string\"\n      }\n    },\n    {\n      \"exchangeId\": \"string\",\n      \"name\": \"string\",\n      \"collateralDetails\": {\n        \"currencies\": [\n          {\n            \"buffer\": \"string\",\n            \"currentCollateralBalance\": \"string\",\n            \"settlementCurrency\": \"string\",\n            \"uPnL\": \"string\",\n            \"uPnLExcessDeficit\": \"string\",\n            \"updatedAt\": \"string\"\n          },\n          {\n            \"buffer\": \"string\",\n            \"currentCollateralBalance\": \"string\",\n            \"settlementCurrency\": \"string\",\n            \"uPnL\": \"string\",\n            \"uPnLExcessDeficit\": \"string\",\n            \"updatedAt\": \"string\"\n          }\n        ]\n      },\n      \"settlementDetails\": {\n        \"frequency\": \"string\",\n        \"nextSettlementTimestamp\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04d48d7d-ea63-4ffe-ba0e-ad8d8e7e77e2",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8149e9a-a78c-4630-a7fa-991b5a7dc539",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd20508c-6ed4-4952-8bd4-34a7c50c6c39",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5e07a9fa-4191-47a7-a350-5dde5601ae1c",
+          "name": "Get ClearLoop Exchange by ID",
+          "request": {
+            "name": "Get ClearLoop Exchange by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "exchanges",
+                ":exchangeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "exchangeId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6c4041af-a5b2-4d73-a462-b79e9bd291df",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges",
+                    ":exchangeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exchangeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"exchangeId\": \"string\",\n  \"name\": \"string\",\n  \"collateralDetails\": {\n    \"currencies\": [\n      {\n        \"buffer\": \"string\",\n        \"currentCollateralBalance\": \"string\",\n        \"settlementCurrency\": \"string\",\n        \"uPnL\": \"string\",\n        \"uPnLExcessDeficit\": \"string\",\n        \"updatedAt\": \"string\"\n      },\n      {\n        \"buffer\": \"string\",\n        \"currentCollateralBalance\": \"string\",\n        \"settlementCurrency\": \"string\",\n        \"uPnL\": \"string\",\n        \"uPnLExcessDeficit\": \"string\",\n        \"updatedAt\": \"string\"\n      }\n    ]\n  },\n  \"settlementDetails\": {\n    \"frequency\": \"string\",\n    \"nextSettlementTimestamp\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e6e7315e-57cf-40b4-98fd-2c74991feb19",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges",
+                    ":exchangeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exchangeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93510920-08a5-4d60-a98f-02007aa5688e",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges",
+                    ":exchangeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exchangeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "79f08785-b6be-4c49-b0ac-b32ec90e1fff",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "exchanges",
+                    ":exchangeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "exchangeId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "87f6d768-4551-4aee-ad40-e7600db531b5",
+          "name": "Get ClearLoop Portfolios",
+          "request": {
+            "name": "Get ClearLoop Portfolios",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "portfolios"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "657fe75f-6bcf-4cb1-be27-b4fb77b041d4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"portfolios\": [\n    {\n      \"clientAccountId\": \"string\",\n      \"custodyType\": \"external\",\n      \"delegationsEnabled\": true,\n      \"disabledDelegationsReason\": \"string\",\n      \"disabledUndelegationsReason\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"settlementDetails\": {\n        \"comments\": \"string\",\n        \"status\": \"disabled\"\n      },\n      \"settlementStatus\": \"excluded\",\n      \"undelegationsEnabled\": false\n    },\n    {\n      \"clientAccountId\": \"string\",\n      \"custodyType\": \"external\",\n      \"delegationsEnabled\": false,\n      \"disabledDelegationsReason\": \"string\",\n      \"disabledUndelegationsReason\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"settlementDetails\": {\n        \"comments\": \"string\",\n        \"status\": \"completed\"\n      },\n      \"settlementStatus\": \"failed\",\n      \"undelegationsEnabled\": false\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b341b53-3dd9-4cc5-9d1c-6c22eb0837fb",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "18a5d9f1-744f-40ca-b689-b8a9e5941349",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e256a1f-4d45-4922-b3d9-ef2ac856a1bd",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "358da6a6-46d1-417d-8f15-7578ae9091b8",
+          "name": "Get ClearLoop Portfolio by Id",
+          "request": {
+            "name": "Get ClearLoop Portfolio by Id",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "portfolios",
+                ":portfolioId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "portfolioId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08b51f88-1a54-4890-bc8c-d5caddc7ed84",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"clientAccountId\": \"string\",\n  \"custodyType\": \"clearloop-omnibus\",\n  \"delegationsEnabled\": false,\n  \"disabledDelegationsReason\": \"string\",\n  \"disabledUndelegationsReason\": \"string\",\n  \"organizationId\": \"string\",\n  \"portfolioId\": \"string\",\n  \"settlementDetails\": {\n    \"comments\": \"string\",\n    \"status\": \"in-progress\"\n  },\n  \"settlementStatus\": \"not-yet-settled\",\n  \"undelegationsEnabled\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c417bf6e-7202-45d7-a37b-cd3dd19a7d70",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "650bf4b7-99e6-475b-b5d4-e6f64efe2878",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d277b1d-a86e-4f4d-a195-0136768168b6",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "portfolios",
+                    ":portfolioId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "portfolioId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7520ec7d-4a68-4401-bdf8-1561b29f52c9",
+          "name": "Get ClearLoop Settlements",
+          "request": {
+            "name": "Get ClearLoop Settlements",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "settlements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Unique Copper account identifier for which records can be retrieved"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientAccountId",
+                  "value": "<string>",
+                  "description": "Exchange account unique identifier for which records can be retrieved"
+                },
+                {
+                  "disabled": false,
+                  "key": "exchangeSettlementId",
+                  "value": "<string>",
+                  "description": "Unique exchange settlement identifier per instruction, defined by client account and settlement currency. Guaranteed to be unique within each exchange."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAfter",
+                  "value": "<string>",
+                  "description": "Unix timestamp in milliseconds to filter settlements created after this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdBefore",
+                  "value": "<string>",
+                  "description": "Unix timestamp in milliseconds to filter settlements created before this time"
+                },
+                {
+                  "disabled": false,
+                  "key": "cycleStartTimestamp",
+                  "value": "<string>",
+                  "description": "Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started"
+                },
+                {
+                  "disabled": false,
+                  "key": "cycles",
+                  "value": "<string>",
+                  "description": "The number of most recent cycles that you want to retrieve for every exchange. For example, specifying 1 will return the last settlement for every queried exchange"
+                },
+                {
+                  "disabled": false,
+                  "key": "clearLoopSettlementStatuses",
+                  "value": "<string>",
+                  "description": "Comma separated list with statuses to be included. [See details](/enums/ClearLoopSettlementStatus)"
+                },
+                {
+                  "disabled": false,
+                  "key": "clearLoopSettlementStatuses",
+                  "value": "<string>",
+                  "description": "Comma separated list with statuses to be included. [See details](/enums/ClearLoopSettlementStatus)"
+                },
+                {
+                  "disabled": false,
+                  "key": "clearLoopSettlementStatusesNotIn",
+                  "value": "<string>",
+                  "description": "Comma separated list with statuses not to be included. [See details](/enums/ClearLoopSettlementStatus)"
+                },
+                {
+                  "disabled": false,
+                  "key": "clearLoopSettlementStatusesNotIn",
+                  "value": "<string>",
+                  "description": "Comma separated list with statuses not to be included. [See details](/enums/ClearLoopSettlementStatus)"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000",
+                  "description": "Maximum number of records to return (pagination limit)"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortDirection",
+                  "value": "asc",
+                  "description": "The sorting order of settlement records, which are sorted by their `createdAt` field: `asc` (ascending) or `desc` (descending)"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Number of records to skip before starting to return results (pagination offset)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30c8d3ff-7e4a-4ae3-b7ef-03676af1adc8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exchangeSettlementId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycleStartTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"settlements\": [\n    {\n      \"settlementId\": \"string\",\n      \"settlementStatus\": \"<string>\",\n      \"settlementSubStatus\": \"undefined\",\n      \"cycleStartTimestamp\": \"string\",\n      \"exchange\": \"string\",\n      \"exchangeId\": \"string\",\n      \"completedAt\": \"string\",\n      \"createdAt\": \"string\",\n      \"custodian\": \"string\",\n      \"cycleEndTimestamp\": \"string\",\n      \"deadline\": \"string\",\n      \"failureReason\": \"string\",\n      \"settlementDetails\": [\n        {\n          \"portfolioId\": \"string\",\n          \"clientAccountId\": \"string\",\n          \"exchangeSettlementId\": \"string\",\n          \"settlementInstructions\": [\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"exclusionDetails\": {\n            \"exclusionReason\": \"string\",\n            \"exclusionSettlementId\": \"string\"\n          },\n          \"organizationId\": \"string\",\n          \"pnlAttributionEndTimestamp\": \"string\",\n          \"pnlAttributionStartTimestamp\": \"string\",\n          \"status\": \"<string>\"\n        },\n        {\n          \"portfolioId\": \"string\",\n          \"clientAccountId\": \"string\",\n          \"exchangeSettlementId\": \"string\",\n          \"settlementInstructions\": [\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"exclusionDetails\": {\n            \"exclusionReason\": \"string\",\n            \"exclusionSettlementId\": \"string\"\n          },\n          \"organizationId\": \"string\",\n          \"pnlAttributionEndTimestamp\": \"string\",\n          \"pnlAttributionStartTimestamp\": \"string\",\n          \"status\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"settlementId\": \"string\",\n      \"settlementStatus\": \"<string>\",\n      \"settlementSubStatus\": \"undefined\",\n      \"cycleStartTimestamp\": \"string\",\n      \"exchange\": \"string\",\n      \"exchangeId\": \"string\",\n      \"completedAt\": \"string\",\n      \"createdAt\": \"string\",\n      \"custodian\": \"string\",\n      \"cycleEndTimestamp\": \"string\",\n      \"deadline\": \"string\",\n      \"failureReason\": \"string\",\n      \"settlementDetails\": [\n        {\n          \"portfolioId\": \"string\",\n          \"clientAccountId\": \"string\",\n          \"exchangeSettlementId\": \"string\",\n          \"settlementInstructions\": [\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"exclusionDetails\": {\n            \"exclusionReason\": \"string\",\n            \"exclusionSettlementId\": \"string\"\n          },\n          \"organizationId\": \"string\",\n          \"pnlAttributionEndTimestamp\": \"string\",\n          \"pnlAttributionStartTimestamp\": \"string\",\n          \"status\": \"<string>\"\n        },\n        {\n          \"portfolioId\": \"string\",\n          \"clientAccountId\": \"string\",\n          \"exchangeSettlementId\": \"string\",\n          \"settlementInstructions\": [\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"currency\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"balance\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"orderStatus\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementAmountUSD\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"settlementInstructionId\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"status\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ],\n          \"exclusionDetails\": {\n            \"exclusionReason\": \"string\",\n            \"exclusionSettlementId\": \"string\"\n          },\n          \"organizationId\": \"string\",\n          \"pnlAttributionEndTimestamp\": \"string\",\n          \"pnlAttributionStartTimestamp\": \"string\",\n          \"status\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"limit\": \"string\",\n    \"page\": \"string\",\n    \"pages\": \"string\",\n    \"totalItems\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e4b2362-2b3b-44b5-9c6e-a52d0aa96d43",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exchangeSettlementId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycleStartTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a142c01-83d8-4a23-b00b-f9c41e61db8b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exchangeSettlementId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycleStartTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90b68d73-5b2e-417e-b941-915fa7da6ab6",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clientAccountId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "exchangeSettlementId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdAfter",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "createdBefore",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycleStartTimestamp",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "cycles",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatuses",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "clearLoopSettlementStatusesNotIn",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortDirection",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "632fc872-d8e3-4a21-b494-7e1dc364aa30",
+          "name": "Get ClearLoop Settlement by ID",
+          "request": {
+            "name": "Get ClearLoop Settlement by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "clearloop",
+                "settlements",
+                ":settlementId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "settlementId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f284b93-cf7e-4f93-bedd-c9986eed94f3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements",
+                    ":settlementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "settlementId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"settlementId\": \"string\",\n  \"settlementStatus\": \"<string>\",\n  \"settlementSubStatus\": \"undefined\",\n  \"cycleStartTimestamp\": \"string\",\n  \"exchange\": \"string\",\n  \"exchangeId\": \"string\",\n  \"completedAt\": \"string\",\n  \"createdAt\": \"string\",\n  \"custodian\": \"string\",\n  \"cycleEndTimestamp\": \"string\",\n  \"deadline\": \"string\",\n  \"failureReason\": \"string\",\n  \"settlementDetails\": [\n    {\n      \"portfolioId\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"exchangeSettlementId\": \"string\",\n      \"settlementInstructions\": [\n        {\n          \"currency\": \"string\",\n          \"settlementAmount\": \"string\",\n          \"balance\": \"string\",\n          \"orderId\": \"string\",\n          \"orderStatus\": \"waiting-funds\",\n          \"settlementAmountUSD\": \"string\",\n          \"settlementInstructionId\": \"string\",\n          \"status\": \"<string>\"\n        },\n        {\n          \"currency\": \"string\",\n          \"settlementAmount\": \"string\",\n          \"balance\": \"string\",\n          \"orderId\": \"string\",\n          \"orderStatus\": \"reserving\",\n          \"settlementAmountUSD\": \"string\",\n          \"settlementInstructionId\": \"string\",\n          \"status\": \"<string>\"\n        }\n      ],\n      \"exclusionDetails\": {\n        \"exclusionReason\": \"string\",\n        \"exclusionSettlementId\": \"string\"\n      },\n      \"organizationId\": \"string\",\n      \"pnlAttributionEndTimestamp\": \"string\",\n      \"pnlAttributionStartTimestamp\": \"string\",\n      \"status\": \"<string>\"\n    },\n    {\n      \"portfolioId\": \"string\",\n      \"clientAccountId\": \"string\",\n      \"exchangeSettlementId\": \"string\",\n      \"settlementInstructions\": [\n        {\n          \"currency\": \"string\",\n          \"settlementAmount\": \"string\",\n          \"balance\": \"string\",\n          \"orderId\": \"string\",\n          \"orderStatus\": \"manual-resolving\",\n          \"settlementAmountUSD\": \"string\",\n          \"settlementInstructionId\": \"string\",\n          \"status\": \"<string>\"\n        },\n        {\n          \"currency\": \"string\",\n          \"settlementAmount\": \"string\",\n          \"balance\": \"string\",\n          \"orderId\": \"string\",\n          \"orderStatus\": \"declined\",\n          \"settlementAmountUSD\": \"string\",\n          \"settlementInstructionId\": \"string\",\n          \"status\": \"<string>\"\n        }\n      ],\n      \"exclusionDetails\": {\n        \"exclusionReason\": \"string\",\n        \"exclusionSettlementId\": \"string\"\n      },\n      \"organizationId\": \"string\",\n      \"pnlAttributionEndTimestamp\": \"string\",\n      \"pnlAttributionStartTimestamp\": \"string\",\n      \"status\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e81a6b3-85a4-45af-995a-00dabf73436e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements",
+                    ":settlementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "settlementId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e91a6027-6f71-4304-b6a1-832b8c162c81",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements",
+                    ":settlementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "settlementId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34091ade-2982-400d-bff0-c2708decc70f",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "clearloop",
+                    "settlements",
+                    ":settlementId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "settlementId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e557f409-b8be-4500-ae93-2a91e2d1e291",
+    "name": "Copper Platform Clearloop API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}

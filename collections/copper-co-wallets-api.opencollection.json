@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Wallets API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "wallets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Wallets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/wallets",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by portfolio id"
+              },
+              {
+                "name": "currencies",
+                "value": "BTC,ETH",
+                "type": "query",
+                "description": "Filter wallets by currency"
+              },
+              {
+                "name": "mainCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Filter wallets by main currency"
+              },
+              {
+                "name": "portfolioTypes",
+                "value": "custody,exchange",
+                "type": "query",
+                "description": "Filter wallets by portfolio types. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "excludedPortfolioTypes",
+                "value": "custody,exchange",
+                "type": "query",
+                "description": "Exclude wallets by portfolio types. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "nonEmpty",
+                "value": "",
+                "type": "query",
+                "description": "Filter only wallets with non-zero balance"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for pagination"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              }
+            ]
+          },
+          "docs": "When you perform a request without specifying any additional filters like `portfolioId` or `currency`, the method returns all wallets which have non-zero balances only."
+        },
+        {
+          "info": {
+            "name": "Create Wallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/wallets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new wallet"
+        },
+        {
+          "info": {
+            "name": "Get Wallet by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/wallets/:walletId",
+            "params": [
+              {
+                "name": "walletId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Fetch wallet details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Address Book API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "address-book",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Crypto Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/crypto-addresses",
+            "params": [
+              {
+                "name": "cryptoAddressIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by crypto address ids"
+              },
+              {
+                "name": "currencies",
+                "value": "BTC,ETH",
+                "type": "query",
+                "description": "Filter by currencies"
+              },
+              {
+                "name": "mainCurrencies",
+                "value": "BTC,ETH",
+                "type": "query",
+                "description": "Filter by main currencies"
+              },
+              {
+                "name": "addressTags",
+                "value": "",
+                "type": "query",
+                "description": "Filter by address tags"
+              },
+              {
+                "name": "addresses",
+                "value": "address1,address2",
+                "type": "query",
+                "description": "Filter by addresses"
+              },
+              {
+                "name": "memo",
+                "value": "",
+                "type": "query",
+                "description": "Filter by memo"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for pagination"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "isWhitelist",
+                "value": "",
+                "type": "query",
+                "description": "Filter only whitelisted addresses"
+              },
+              {
+                "name": "addressTypes",
+                "value": "smart-contract",
+                "type": "query",
+                "description": "Filter by address types. [See details](/enums/AddressType)"
+              }
+            ]
+          },
+          "docs": "Retrieve information about crypto addresses in an organization's address book"
+        },
+        {
+          "info": {
+            "name": "Create Crypto Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/crypto-addresses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new crypto address in an organization's address book"
+        },
+        {
+          "info": {
+            "name": "Get Crypto Address by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/crypto-addresses/:cryptoAddressId",
+            "params": [
+              {
+                "name": "cryptoAddressId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about a crypto address in an organization's address book"
+        },
+        {
+          "info": {
+            "name": "Deactivate Crypto Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.copper.co/platform/crypto-addresses/:cryptoAddressId",
+            "params": [
+              {
+                "name": "cryptoAddressId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deactivate a crypto address in an organization's address book"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

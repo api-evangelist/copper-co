@@ -1,0 +1,1195 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Clearloop API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: clearloop
+paths:
+  /clearloop/actions:
+    get:
+      parameters:
+      - description: Unix timestamp (in milliseconds) to retrieve records from this point in time
+        in: query
+        name: fromTimestamp
+        required: false
+        schema:
+          type: string
+      - description: Unix timestamp (in milliseconds) to retrieve records up to this point in time
+        in: query
+        name: toTimestamp
+        required: false
+        schema:
+          type: string
+      - description: Unique identifier of the exchange account for which records are retrieved
+        in: query
+        name: clientAccountId
+        required: false
+        schema:
+          type: string
+      - description: List of Copper portfolio IDs to filter records
+        in: query
+        name: portfolioIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: 'Type of action: `add-funds` (delegate to the exchange) or `remove-funds` (undelegate from the exchange)'
+        in: query
+        name: actionType
+        required: false
+        schema:
+          type: string
+      - description: Maximum number of records to return (pagination limit)
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: string
+      - description: Number of records to skip before starting to return results (pagination offset)
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - description: 'Sort order for results: `asc` for ascending or `desc` for descending'
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          default: asc
+          type: string
+      - description: If true, only return records for actions that have been successfully executed (i.e., funds have been successfully added or removed).If false, include all records regardless of execution status
+        in: query
+        name: filterExecuted
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActionsResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Actions
+      tags:
+      - clearloop
+  /clearloop/actions/{actionId}:
+    get:
+      parameters:
+      - in: path
+        name: actionId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopAction'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Action by ID
+      tags:
+      - clearloop
+  /clearloop/balances:
+    get:
+      parameters:
+      - description: Unique Copper account identifier for which records can be retrieved
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: If `true`, only balances with non-zero values will be returned
+        in: query
+        name: nonEmpty
+        required: false
+        schema:
+          default: 'true'
+          type: boolean
+      - description: If `true`, includes `totalAvailableBalanceToUndelegate` across both the main account and subaccounts
+        in: query
+        name: fetchSubaccounts
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopBalances'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Balances
+      tags:
+      - clearloop
+  /clearloop/exchanges:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopExchangesResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Exchanges
+      tags:
+      - clearloop
+  /clearloop/exchanges/{exchangeId}:
+    get:
+      parameters:
+      - in: path
+        name: exchangeId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopExchangeInformation'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Exchange by ID
+      tags:
+      - clearloop
+  /clearloop/portfolios:
+    get:
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopPortfoliosResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Portfolios
+      tags:
+      - clearloop
+  /clearloop/portfolios/{portfolioId}:
+    get:
+      parameters:
+      - in: path
+        name: portfolioId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopPortfolioResponse'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Portfolio by Id
+      tags:
+      - clearloop
+  /clearloop/settlements:
+    get:
+      parameters:
+      - description: Unique Copper account identifier for which records can be retrieved
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Exchange account unique identifier for which records can be retrieved
+        in: query
+        name: clientAccountId
+        required: false
+        schema:
+          type: string
+      - description: Unique exchange settlement identifier per instruction, defined by client account and settlement currency. Guaranteed to be unique within each exchange.
+        in: query
+        name: exchangeSettlementId
+        required: false
+        schema:
+          type: string
+      - description: Unix timestamp in milliseconds to filter settlements created after this time
+        in: query
+        name: createdAfter
+        required: false
+        schema:
+          type: string
+      - description: Unix timestamp in milliseconds to filter settlements created before this time
+        in: query
+        name: createdBefore
+        required: false
+        schema:
+          type: string
+      - description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started
+        in: query
+        name: cycleStartTimestamp
+        required: false
+        schema:
+          type: string
+      - description: The number of most recent cycles that you want to retrieve for every exchange. For example, specifying 1 will return the last settlement for every queried exchange
+        in: query
+        name: cycles
+        required: false
+        schema:
+          type: string
+      - description: Comma separated list with statuses to be included. [See details](/enums/ClearLoopSettlementStatus)
+        in: query
+        name: clearLoopSettlementStatuses
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          type: array
+      - description: Comma separated list with statuses not to be included. [See details](/enums/ClearLoopSettlementStatus)
+        in: query
+        name: clearLoopSettlementStatusesNotIn
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          type: array
+      - description: Maximum number of records to return (pagination limit)
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '1000'
+          type: string
+      - description: 'The sorting order of settlement records, which are sorted by their `createdAt` field: `asc` (ascending) or `desc` (descending)'
+        in: query
+        name: sortDirection
+        required: false
+        schema:
+          default: asc
+          type: string
+      - description: Number of records to skip before starting to return results (pagination offset)
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopSettlementsResponseV2'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Settlements
+      tags:
+      - clearloop
+  /clearloop/settlements/{settlementId}:
+    get:
+      parameters:
+      - in: path
+        name: settlementId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClearLoopSettlementV2'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get ClearLoop Settlement by ID
+      tags:
+      - clearloop
+components:
+  schemas:
+    ClearLoopExchangeSettlementDetails:
+      properties:
+        frequency:
+          description: Frequency of the settlement in milliseconds
+          type: string
+        nextSettlementTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the next settlement cycle will start
+          type: string
+      type: object
+    OrderStatus:
+      enum:
+      - new
+      - waiting-funds
+      - reserving
+      - reserved
+      - queued
+      - validating-funds
+      - working
+      - waiting-approve
+      - co-sign-require
+      - approved
+      - processing
+      - executed
+      - canceled
+      - rejecting
+      - rejected
+      - declining
+      - declined
+      - suspending
+      - suspended
+      - blocked
+      - action-required
+      - accepting
+      - accepted
+      - require-initializer-approve
+      - waiting-counterparty-approve
+      - require-counterparty-approve
+      - ready-for-settlement
+      - settled
+      - part-signed-tx-added
+      - full-signed-tx-added
+      - rejected-part-signed-tx-added
+      - rejected-full-signed-tx-added
+      - accepted-part-signed-tx-added
+      - accepted-full-signed-tx-added
+      - awaiting-settlement
+      - master-password-required
+      - manual-resolving
+      - error
+      - pending-atomic-settlement-confirmation
+      - atomic-settlement-reservation-completed
+      - require-finalize
+      - waiting-accept-deposit
+      - waiting-reject-deposit
+      type: string
+    ClearLoopPortfolioResponse:
+      properties:
+        clientAccountId:
+          description: Identifier of the client account associated with the ClearLoop portfolio
+          type: string
+        custodyType:
+          $ref: '#/components/schemas/PortfolioCustodyType'
+          description: Custody type of the ClearLoop portfolio, which indicates how the portfolio is held by the custodian. Possible values include `segregated-trust-wallet`, `clearloop-omnibus`, and `external`.. [See details](/enums/PortfolioCustodyType)
+        delegationsEnabled:
+          description: Indicates whether delegations are enabled for the ClearLoop portfolio
+          type: boolean
+        disabledDelegationsReason:
+          description: 'Reason why delegations are disabled for the ClearLoop portfolio. Example: `CL-SETTLEMENTS-1`, which means that delegation is disabled due to an upcoming or pending settlement'
+          type: string
+        disabledUndelegationsReason:
+          description: 'Reason why undelegations are disabled for the ClearLoop portfolio. Example: `CL-SETTLEMENTS-1`, which means that undelegation is disabled due to an upcoming or pending settlement'
+          type: string
+        organizationId:
+          description: Identifier of the client organisation holding the ClearLoop portfolio
+          type: string
+        portfolioId:
+          description: Identifier of the ClearLoop portfolio
+          type: string
+        settlementDetails:
+          $ref: '#/components/schemas/PortfolioSettlementDetails'
+          description: Settlement details associated with the ClearLoop portfolio
+          type: object
+        settlementStatus:
+          $ref: '#/components/schemas/PortfolioSettlementStatus'
+          description: Settlement status of the last settlement cycle. [See details](/enums/PortfolioSettlementStatus)
+        undelegationsEnabled:
+          description: Indicates whether undelegations are enabled for the ClearLoop portfolio
+          type: boolean
+      type: object
+    ClearLoopExchangesResponse:
+      properties:
+        clearLoopExchanges:
+          description: An array of exchange objects
+          items:
+            $ref: '#/components/schemas/ClearLoopExchangeInformation'
+          type: array
+      required:
+      - clearLoopExchanges
+      type: object
+    PortfolioSettlementDetails:
+      properties:
+        comments:
+          description: Optional comments, for example, reason for exclusion
+          type: string
+        status:
+          $ref: '#/components/schemas/PortfolioSettlementStatus'
+          description: Settlement status of the ClearLoop portfolio. [See details](/enums/PortfolioSettlementStatus)
+      type: object
+    ClearLoopExchangeInformation:
+      properties:
+        collateralDetails:
+          $ref: '#/components/schemas/ClearLoopExchangeCollateralDetails'
+          description: Collateral details
+          type: object
+        exchangeId:
+          description: Exchange identifier
+          type: string
+        name:
+          description: Human-readable name of the exchange
+          type: string
+        settlementDetails:
+          $ref: '#/components/schemas/ClearLoopExchangeSettlementDetails'
+          description: Settlements configuration details
+          type: object
+      required:
+      - exchangeId
+      - name
+      type: object
+    ClearLoopPortfoliosResponse:
+      properties:
+        portfolios:
+          description: An array of ClearLoop portfolios (i.e. accounts) held at Copper
+          items:
+            $ref: '#/components/schemas/ClearLoopPortfolioResponse'
+          type: array
+      type: object
+    ClearLoopSettlementSubStatus:
+      enum: []
+      type: string
+    ClearLoopSettlementV2:
+      properties:
+        completedAt:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement was fully completed
+          type: string
+        createdAt:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement started
+          type: string
+        custodian:
+          description: Custodian associated to settlement
+          type: string
+        cycleEndTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has ended
+          type: string
+        cycleStartTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started
+          type: string
+        deadline:
+          description: Unix timestamp (in milliseconds) of the settlement deadline
+          type: string
+        exchange:
+          description: Exchange name
+          type: string
+        exchangeId:
+          description: Exchange identifier
+          type: string
+        failureReason:
+          type: string
+        settlementDetails:
+          description: Array of settlement detail records for each client account linked to a given settlement ID
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementDetails'
+          type: array
+        settlementId:
+          description: Unique Copper settlement identifier
+          type: string
+        settlementStatus:
+          $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          description: Status describing the settlement. [See details](/enums/ClearLoopSettlementStatus)
+        settlementSubStatus:
+          $ref: '#/components/schemas/ClearLoopSettlementSubStatus'
+          description: Sub-status providing additional context to the status of the settlement
+      required:
+      - settlementId
+      - settlementStatus
+      - settlementSubStatus
+      - cycleStartTimestamp
+      - exchange
+      - exchangeId
+      type: object
+    ClearLoopPagination:
+      properties:
+        limit:
+          description: Numerical limit of records for any given page
+          type: string
+        page:
+          description: Current page index (numerical)
+          type: string
+        pages:
+          description: Total number of pages matching the query
+          type: string
+        totalItems:
+          description: Total number of records returned
+          type: string
+      type: object
+    ClearLoopSettlementExclusionDetails:
+      properties:
+        exclusionReason:
+          description: Settlement exclusion reason
+          type: string
+        exclusionSettlementId:
+          description: Exclusion settlement identifier, if the client has been excluded from a settlement cycle.
+          type: string
+      required:
+      - exclusionReason
+      type: object
+    ClearLoopBalances:
+      properties:
+        balances:
+          description: Array of balance records per wallet
+          items:
+            $ref: '#/components/schemas/ManagedFund'
+          type: array
+      required:
+      - balances
+      type: object
+    ClearLoopSettlementStatus:
+      enum:
+      - new
+      - pending-exchange-confirmation
+      - in-progress
+      - completed
+      - failed
+      - cancelled
+      - partially-completed
+      - ignored
+      - on-chain-orders-in-progress
+      - excluded
+      type: string
+    ClearLoopAction:
+      properties:
+        action:
+          description: 'Type of action performed: `add-funds` (delegate) or `remove-funds` (undelegate)'
+          type: string
+        amount:
+          description: Amount of funds involved in the action
+          type: string
+        clearLoopPortfolioId:
+          description: ClearLoop portfolioId
+          type: string
+        clientAccountId:
+          description: Unique identifier of the client’s exchange account
+          type: string
+        completedAt:
+          description: Unix timestamp (in milliseconds) when the action was completed
+          type: string
+        createdAt:
+          description: Unix timestamp (in milliseconds) when the action was initiated
+          type: string
+        currency:
+          description: Currency in which the action was performed
+          type: string
+        delegatedOrganizationId:
+          description: Identifier of the organisation on the exchange to which the balance is delegated
+          type: string
+        exchangeId:
+          description: Identifier of the exchange where the delegated balance is held
+          type: string
+        network:
+          description: Network used for the currency
+          type: string
+        orderId:
+          description: Unique identifier of the order associated with the action
+          type: string
+        organizationId:
+          description: Identifier of the client organisation initiating the action
+          type: string
+        status:
+          description: Status of the action (e.g. `executed`)
+          type: string
+        updatedAt:
+          description: Unix timestamp (in milliseconds) when the action was last updated
+          type: string
+        usdAmount:
+          description: USD equivalent of the `amount` at the time of execution
+          type: string
+      required:
+      - delegatedOrganizationId
+      - organizationId
+      - clientAccountId
+      - action
+      - currency
+      - amount
+      - createdAt
+      type: object
+    ClearLoopCurrencyCollateralDetails:
+      properties:
+        buffer:
+          description: Ratio of current collateral excess/deficit over the current collateral balance. Displayed as %
+          type: string
+        currentCollateralBalance:
+          description: Current Exchange collateral balance in their ClearLoop account
+          type: string
+        settlementCurrency:
+          type: string
+        uPnL:
+          description: Unrealised PnL, computed as the difference between equity balance and delegated balance
+          type: string
+        uPnLExcessDeficit:
+          description: Difference between the current collateral balance and unrealised PnL
+          type: string
+        updatedAt:
+          type: string
+      type: object
+    ClearLoopSettlementsResponseV2:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/ClearLoopPagination'
+          type: object
+        settlements:
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementV2'
+          type: array
+      required:
+      - settlements
+      type: object
+    PortfolioCustodyType:
+      enum:
+      - segregated-trust-wallet
+      - clearloop-omnibus
+      - external
+      type: string
+    GetActionsResponse:
+      properties:
+        actions:
+          description: Wrapper containing an array of delegation and undelegation action records
+          items:
+            $ref: '#/components/schemas/ClearLoopAction'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/ClearLoopPagination'
+          description: Object containing pagination-related info
+          type: object
+      required:
+      - actions
+      type: object
+    ClearLoopSettlementDetails:
+      properties:
+        clientAccountId:
+          description: Unique exchange account identifier
+          type: string
+        exchangeSettlementId:
+          description: Unique identifier assigned by the exchange for the settlement
+          type: string
+        exclusionDetails:
+          $ref: '#/components/schemas/ClearLoopSettlementExclusionDetails'
+          description: Exclusion details
+          type: object
+        organizationId:
+          description: Unique identifier for the client organisation tied to a settlement record
+          type: string
+        pnlAttributionEndTimestamp:
+          description: Unix timestamp (in milliseconds) of the end of the period used to attribute profit and loss (PnL) for the settlement
+          type: string
+        pnlAttributionStartTimestamp:
+          description: Unix timestamp (in milliseconds) of the start of the period used to attribute profit and loss (PnL) for the settlement
+          type: string
+        portfolioId:
+          description: Unique Copper account identifier
+          type: string
+        settlementInstructions:
+          description: Array of settlement instruction records, grouped by settlement currency and client account, linked to a given settlement ID
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementInstruction'
+          type: array
+        status:
+          $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          description: Client settlement status. [See details](/enums/ClearLoopSettlementStatus)
+      required:
+      - portfolioId
+      - clientAccountId
+      - exchangeSettlementId
+      - settlementInstructions
+      type: object
+    PortfolioSettlementStatus:
+      enum:
+      - not-yet-settled
+      - eligibility-checks
+      - awaiting-exchange-calculation
+      - in-progress
+      - order-processing
+      - completed
+      - failed
+      - excluded
+      - paused-copper
+      - disabled
+      type: string
+    ManagedFund:
+      properties:
+        amount:
+          description: 'Delegated available balance: full delegated amount minus reserved balance'
+          type: string
+        available:
+          description: 'Available balance to undelegate: minimum between exchange funds and delegated balance'
+          type: string
+        balance:
+          description: Total balance value held in the account
+          type: string
+        clientAccountId:
+          description: Unique identifier for the client's exchange account
+          type: string
+        currency:
+          description: Currency associated with the balance
+          type: string
+        delegatedOrganizationId:
+          description: Identifier of the organisation on the exchange to which the balance is delegated
+          type: string
+        exchangeId:
+          description: Identifier of the exchange where the balance is held
+          type: string
+        mainCurrency:
+          description: Network or main currency associated with the wallet
+          type: string
+        organizationId:
+          description: Identifier of the client organisation owning the account
+          type: string
+        portfolioId:
+          description: Unique Copper portfolio identifier
+          type: string
+        reserve:
+          description: Reserved balance allocated for open orders
+          type: string
+        totalAvailableToUndelegate:
+          description: 'Total available balance to undelegate: minimum across all exchange funds (main and subaccounts) and Copper delegated balance'
+          type: string
+      required:
+      - currency
+      - balance
+      - amount
+      - clientAccountId
+      - portfolioId
+      type: object
+    ClearLoopExchangeCollateralDetails:
+      properties:
+        currencies:
+          items:
+            $ref: '#/components/schemas/ClearLoopCurrencyCollateralDetails'
+          type: array
+      type: object
+    ClearLoopSettlementInstruction:
+      properties:
+        balance:
+          description: Client's delegated balance in Copper, fetched at the time of settlement
+          type: string
+        currency:
+          description: Settlement currency
+          type: string
+        orderId:
+          description: Identifier of the order linked to the settlement for the specified client account and currency
+          type: string
+        orderStatus:
+          $ref: '#/components/schemas/OrderStatus'
+          description: Status of the order associated with the settlement for the given client account and currency. [See details](/enums/OrderStatus)
+        settlementAmount:
+          description: Aggregate amount to be settled across main and subaccounts within the exchange
+          type: string
+        settlementAmountUSD:
+          description: USD equivalent of the `settlementAmount`
+          type: string
+        settlementInstructionId:
+          description: Unique identifier for the settlement instruction (per client account and currency per cycle)
+          type: string
+        status:
+          $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          description: Status of the settlement at client account and currency level. [See details](/enums/ClearLoopSettlementStatus)
+      required:
+      - currency
+      - settlementAmount
+      type: object

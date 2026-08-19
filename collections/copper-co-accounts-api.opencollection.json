@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Deprecated Accounts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "<Warning>The `GET /accounts` API endpoint is deprecated and should not be used for new integrations. It will be removed in future releases.</Warning> To fetch portfolios, use the [`GET /portfolios`](/api-reference/portfolios/get-portfolios) endpoint instead.<br/> To retrieve wallets, use the [`GET /wallets`](/api-reference/wallets/get-wallets) endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

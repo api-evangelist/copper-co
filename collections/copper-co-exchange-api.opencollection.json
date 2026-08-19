@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Exchange API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Exchange",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute exchange action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Execute Hyperliquid exchange action. Mimics https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/exchange-endpoint"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

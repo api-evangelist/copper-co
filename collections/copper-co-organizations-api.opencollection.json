@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Organizations API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations"
+          },
+          "docs": "Retrieve information about organizations"
+        },
+        {
+          "info": {
+            "name": "Get Activities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/activities",
+            "headers": [
+              {
+                "name": "Accept",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (pagination limit)"
+              },
+              {
+                "name": "createdFrom",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "createdTo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search string based on activity name and description"
+              },
+              {
+                "name": "activityTypes",
+                "value": "",
+                "type": "query",
+                "description": "Filter activities by activity types. [See details](/enums/ActivityType)"
+              },
+              {
+                "name": "excludedActivityTypes",
+                "value": "",
+                "type": "query",
+                "description": "Exclude activities by activity types. [See details](/enums/ActivityType)"
+              },
+              {
+                "name": "userIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter activities by user IDs"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about all activities in the organization"
+        },
+        {
+          "info": {
+            "name": "Get Organization Members",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/members",
+            "params": [
+              {
+                "name": "includePermissionGroups",
+                "value": "",
+                "type": "query",
+                "description": "Embed data about members' permission groups"
+              },
+              {
+                "name": "includeUsers",
+                "value": "",
+                "type": "query",
+                "description": "Embed data about members' user information"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve information about organization members"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,908 @@
+{
+  "item": [
+    {
+      "id": "4dbb6fbb-d461-4abb-aaab-f2c2c9ac03e5",
+      "name": "stake",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "80b7c4b9-614a-4f2d-860d-2f549c36395c",
+          "name": "Get Active Stakes",
+          "request": {
+            "name": "Get Active Stakes",
+            "description": {},
+            "url": {
+              "path": [
+                "staking",
+                "active-stakes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Return stakes only for specific portfolio"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "Filter by the staked currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrency",
+                  "value": "<string>",
+                  "description": "Filter by the main currency (blockchain network) for staking"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "adae74d1-6005-414c-95f0-083e87dd1465",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "active-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"activeStakes\": [\n    {\n      \"activeStake\": {\n        \"activeStakedAmount\": \"string\",\n        \"canIncreaseStakeAmount\": true,\n        \"claimableRewardsAmount\": \"string\",\n        \"endTimeSeconds\": \"string\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"readyToRedelegate\": false,\n        \"readyToUndelegateStakingPermissions\": true,\n        \"readyToUnstake\": true,\n        \"readyToUnstakeAt\": \"string\",\n        \"requireChillToUnstake\": true,\n        \"rewardRate\": \"string\",\n        \"rewardsAutoRestake\": false,\n        \"rewardsRequireClaim\": false,\n        \"stakeAddress\": \"string\",\n        \"warning\": {\n          \"message\": \"string\",\n          \"code\": \"string\"\n        }\n      },\n      \"activeStakeId\": \"string\",\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    },\n    {\n      \"activeStake\": {\n        \"activeStakedAmount\": \"string\",\n        \"canIncreaseStakeAmount\": false,\n        \"claimableRewardsAmount\": \"string\",\n        \"endTimeSeconds\": \"string\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"readyToRedelegate\": true,\n        \"readyToUndelegateStakingPermissions\": false,\n        \"readyToUnstake\": false,\n        \"readyToUnstakeAt\": \"string\",\n        \"requireChillToUnstake\": true,\n        \"rewardRate\": \"string\",\n        \"rewardsAutoRestake\": false,\n        \"rewardsRequireClaim\": true,\n        \"stakeAddress\": \"string\",\n        \"warning\": {\n          \"message\": \"string\",\n          \"code\": \"string\"\n        }\n      },\n      \"activeStakeId\": \"string\",\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d77d4ed8-14b5-43a8-8c85-7461851d4cee",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "active-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9957120-f862-4d72-a40c-621f24e3131d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "active-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9558a630-9c7b-4146-8027-805a1ae3ce08",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "active-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c46cab4-c2d4-43dc-9310-6748829bc00c",
+          "name": "Get Outstanding Stakes",
+          "request": {
+            "name": "Get Outstanding Stakes",
+            "description": {},
+            "url": {
+              "path": [
+                "staking",
+                "outstanding-stakes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Return stakes only for specific portfolio"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "Filter by the staked currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrency",
+                  "value": "<string>",
+                  "description": "Filter by the main currency (blockchain network) for staking"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8388cc0-fe46-44d1-8c4a-e0231de4ebb0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "outstanding-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"outstandingStakes\": [\n    {\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"outstandingOperation\": {\n        \"canCreatePool\": false,\n        \"claimResourceId\": \"string\",\n        \"outstandingAmount\": \"string\",\n        \"outstandingOperationType\": \"allocate-stake\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"rewardResourceIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"stakeAddress\": \"string\"\n      },\n      \"outstandingStakeId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    },\n    {\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"outstandingOperation\": {\n        \"canCreatePool\": false,\n        \"claimResourceId\": \"string\",\n        \"outstandingAmount\": \"string\",\n        \"outstandingOperationType\": \"claim-unmint\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"rewardResourceIds\": [\n          \"string\",\n          \"string\"\n        ],\n        \"stakeAddress\": \"string\"\n      },\n      \"outstandingStakeId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7125443-b37e-4e5a-a14e-3aff1aa18597",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "outstanding-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b578e660-08f4-4224-a75a-e9c13fcfa254",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "outstanding-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2870e4f6-6172-49a6-bc40-f18e0bc9472d",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "outstanding-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a179b853-fbee-41b3-99bf-15cc31ecf2ff",
+          "name": "Get Pending Stakes",
+          "request": {
+            "name": "Get Pending Stakes",
+            "description": {},
+            "url": {
+              "path": [
+                "staking",
+                "pending-stakes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Return stakes only for specific portfolio"
+                },
+                {
+                  "disabled": false,
+                  "key": "currency",
+                  "value": "<string>",
+                  "description": "Filter by the staked currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrency",
+                  "value": "<string>",
+                  "description": "Filter by the main currency (blockchain network) for staking"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "64138828-839f-4014-a1c3-6ae8a58c6727",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "pending-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pendingStakes\": [\n    {\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"pendingStake\": {\n        \"pendingAmount\": \"string\",\n        \"pendingStakeStatus\": \"unbonding\",\n        \"canBeRebonded\": true,\n        \"canBeUnstaked\": true,\n        \"canIncreaseStakeAmount\": true,\n        \"originPool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pendingEndsAt\": \"string\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"requireChillToUnstake\": false,\n        \"stakeAddress\": \"string\",\n        \"warning\": {\n          \"message\": \"string\",\n          \"code\": \"string\"\n        }\n      },\n      \"pendingStakeId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    },\n    {\n      \"createdAt\": \"string\",\n      \"currency\": \"string\",\n      \"depositTargetId\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"pendingStake\": {\n        \"pendingAmount\": \"string\",\n        \"pendingStakeStatus\": \"unbonding\",\n        \"canBeRebonded\": true,\n        \"canBeUnstaked\": false,\n        \"canIncreaseStakeAmount\": true,\n        \"originPool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pendingEndsAt\": \"string\",\n        \"pool\": {\n          \"extra\": {\n            \"netuid\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"neuronFollowees\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"swapExtra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"poolId\": \"string\",\n          \"poolName\": \"string\",\n          \"totalBonded\": \"string\",\n          \"validatorProviderId\": \"string\"\n        },\n        \"pools\": [\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          },\n          {\n            \"extra\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"poolId\": \"string\",\n            \"poolName\": \"string\",\n            \"totalBonded\": \"string\",\n            \"validatorProviderId\": \"string\"\n          }\n        ],\n        \"requireChillToUnstake\": false,\n        \"stakeAddress\": \"string\",\n        \"warning\": {\n          \"message\": \"string\",\n          \"code\": \"string\"\n        }\n      },\n      \"pendingStakeId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"updatedAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ab84834-7199-4c4c-9c4c-63eea7428568",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "pending-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27a59076-95f1-4fd6-8dbc-d0369cfd1a97",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "pending-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "723eadd1-a279-4e63-be7c-ebffa3992a54",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "staking",
+                    "pending-stakes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7c2c1430-0c74-4427-b463-02c4d5b4e8cf",
+    "name": "Copper Platform Stake API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}

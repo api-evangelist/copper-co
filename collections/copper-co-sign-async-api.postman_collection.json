@@ -1,0 +1,205 @@
+{
+  "item": [
+    {
+      "id": "3ae044ed-b6f8-4201-a329-66bd0e78ce5d",
+      "name": "Sign Async",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "17c98ecf-cf28-41d0-b9f4-ea97e95d58de",
+          "name": "Sign transaction asynchronously",
+          "request": {
+            "name": "Sign transaction asynchronously",
+            "description": {},
+            "url": {
+              "path": [
+                "sign-async"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"keyPassword\": \"<string>\",\n  \"keyFilename\": \"<string>\",\n  \"transactionRequestId\": \"<string>\",\n  \"masterPassword\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"apiSecret\": \"<string>\",\n  \"signRequest\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d7c103e9-b0cb-4e50-a123-c454916bd6f2",
+              "name": "Transaction signed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sign-async"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"<string>\",\n  \"keyPassword\": \"<string>\",\n  \"keyFilename\": \"<string>\",\n  \"transactionRequestId\": \"<string>\",\n  \"masterPassword\": \"<string>\",\n  \"apiKey\": \"<string>\",\n  \"apiSecret\": \"<string>\",\n  \"signRequest\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transactionRequestId\": \"string\",\n  \"sessionKey\": \"string\",\n  \"sessionTimestamp\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8cc4bd34-1fa0-40b4-8f0b-19272e3b01bf",
+          "name": "Get status of the sign request",
+          "request": {
+            "name": "Get status of the sign request",
+            "description": {},
+            "url": {
+              "path": [
+                "sign-async",
+                ":transactionRequestId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "transactionRequestId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eaa36282-f94e-486d-a5c0-8d5b9355e811",
+              "name": "Status of the sign request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sign-async",
+                    ":transactionRequestId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "transactionRequestId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"in-progress\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "http://0.0.0.0:3010",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b390c361-367b-4a6a-8092-a515556f7a1f",
+    "name": "Copper Unlimited Online Sign Async API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for signing transactions asynchronously with Copper Unlimited Online",
+      "type": "text/plain"
+    }
+  }
+}

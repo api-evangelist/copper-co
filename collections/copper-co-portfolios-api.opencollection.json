@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Portfolios API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "portfolios",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Portfolios",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/portfolios",
+            "params": [
+              {
+                "name": "portfolioTypes",
+                "value": "custody,external",
+                "type": "query",
+                "description": "Filter by portfolio types. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "excludedPortfolioTypes",
+                "value": "trading,trading-vault",
+                "type": "query",
+                "description": "Filter by portfolio types not in. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by portfolio id"
+              },
+              {
+                "name": "organizationId",
+                "value": "CPTL",
+                "type": "query",
+                "description": "Filter by organization id"
+              },
+              {
+                "name": "isActive",
+                "value": "",
+                "type": "query",
+                "description": "Filter by is active"
+              },
+              {
+                "name": "isDefiVault",
+                "value": "",
+                "type": "query",
+                "description": "Filter only DeFi vaults"
+              },
+              {
+                "name": "signingFlowType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by signing enabled signing flow type"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve your portfolios (in UI terms - accounts)"
+        },
+        {
+          "info": {
+            "name": "Create Portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/portfolios",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new portfolio"
+        },
+        {
+          "info": {
+            "name": "Retrieve Portfolio by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/portfolios/:portfolioId",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve Portfolio by ID"
+        },
+        {
+          "info": {
+            "name": "Archive Portfolio",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.copper.co/platform/portfolios/:portfolioId",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Archive Portfolio"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

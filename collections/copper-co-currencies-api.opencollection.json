@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Currencies API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "currencies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/currencies",
+            "params": [
+              {
+                "name": "rateFor",
+                "value": "",
+                "type": "query",
+                "description": "Provide currency to get rate for it. For now, USD is the only allowed value"
+              },
+              {
+                "name": "mainCurrency",
+                "value": "",
+                "type": "query",
+                "description": "Filter by main currency"
+              },
+              {
+                "name": "currencies",
+                "value": "",
+                "type": "query",
+                "description": "Filer by currencies"
+              },
+              {
+                "name": "tags",
+                "value": "deposit-custody",
+                "type": "query",
+                "description": "Filter by currency tags. [See details](/enums/CurrencyTag)"
+              }
+            ]
+          },
+          "docs": "Get Currencies"
+        },
+        {
+          "info": {
+            "name": "Get Currency",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/currencies/:currency-:mainCurrency",
+            "params": [
+              {
+                "name": "currency",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mainCurrency",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Currency"
+        },
+        {
+          "info": {
+            "name": "Currency Trading Fees for Amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/currencies/:currency-:mainCurrency/trading-fees",
+            "params": [
+              {
+                "name": "sendAmount",
+                "value": "0.1",
+                "type": "query",
+                "description": "The amount of which will be withdrawn"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "mainCurrency",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Calculates trading fees for a given amount and a currency pair"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

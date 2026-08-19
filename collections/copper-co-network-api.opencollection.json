@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Network API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "network",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Counterparties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/counterparties",
+            "params": [
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search string"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit for pagination"
+              },
+              {
+                "name": "isConnected",
+                "value": "",
+                "type": "query",
+                "description": "Filter by connection status"
+              },
+              {
+                "name": "counterpartyIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter by counterparty IDs"
+              },
+              {
+                "name": "counterpartyTypes",
+                "value": "",
+                "type": "query",
+                "description": "Counterparty types list. [See details](/enums/CounterpartyType)"
+              },
+              {
+                "name": "includeRelatedCounterpartyIds",
+                "value": "",
+                "type": "query",
+                "description": "Include related counterparty IDs"
+              },
+              {
+                "name": "includeConnections",
+                "value": "",
+                "type": "query",
+                "description": "Include connections"
+              },
+              {
+                "name": "includeCounterpartyDetails",
+                "value": "",
+                "type": "query",
+                "description": "Include counterparty details"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Find participant of the Copper Network"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Co Lending API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "lending",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Loans",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query",
+                "description": "The account to filter by"
+              },
+              {
+                "name": "loanIds",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "loanSide",
+                "value": "lend",
+                "type": "query",
+                "description": "The loan side to filter by. [See details](/enums/LoanSide)"
+              },
+              {
+                "name": "loanTypes",
+                "value": "",
+                "type": "query",
+                "description": "[See details](/enums/LoanType)"
+              },
+              {
+                "name": "statuses",
+                "value": "disbursing,active",
+                "type": "query",
+                "description": "The loan status to filter by. [See details](/enums/LoanStatus)"
+              },
+              {
+                "name": "isOpen",
+                "value": "",
+                "type": "query",
+                "description": "Flag to filter out open loans"
+              },
+              {
+                "name": "includeCollaterals",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating if collaterals should be included in embedded"
+              },
+              {
+                "name": "includeCounterparties",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating if counterparties should be included in embedded"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The number of loans to include in the response"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "The number of loans to skip in the response"
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort by. Currently supported: updatedAt"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by - must be used in conjunction with sortBy. [See details](/enums/SortingDirection)"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve loans"
+        },
+        {
+          "info": {
+            "name": "Create Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate loan creation. This action can only be carried out by the lender."
+        },
+        {
+          "info": {
+            "name": "Calculate Loan LTV Dry Run",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain the loan LTV or needed collateral amount for given loan parameters."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Term Extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptExtensionLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptExtensionLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the loan term extension request. Only requests that were initiated by the counterparty can be accepted."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Interest Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptInterestLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptInterestLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the loan interest payment request."
+        },
+        {
+          "info": {
+            "name": "Accept Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept a loan. This action can only be carried out by the borrower."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Rebalance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptRebalanceLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptRebalanceLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the loan rebalance request. Only a lender can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Repayment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptRepaymentLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptRepaymentLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the full or partial loan repayment request. Only requests that were initiated by the counterparty can be accepted."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Rerate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptRerateLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptRerateLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the loan interest rerate request. Only the borrower can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Accept Loan Top Up",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:acceptTopUpLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "acceptTopUpLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accept the loan top up request. Only a borrower can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Approve Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:approveLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "approveLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Approve a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Term Extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelExtensionLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelExtensionLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the loan term extensino request. This action can be carried out by the borrower or the lender."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Interest Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelInterestLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelInterestLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the loan interest payment request that is awaiting acceptance. This action can be carried out by the lender or the borrower."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a loan that is awaiting acceptance. This action can be carried out by the lender or the borrower."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Rebalance",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelRebalanceLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelRebalanceLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the loan rebalance request that is awaiting acceptance. This action can be carried out by the lender or the borrower."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Repayment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelRepaymentLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelRepaymentLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the full or partial loan repayment. This action can be carried out by the borrower or the lender."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Rerate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelRerateLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelRerateLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the loan interest rerate request that is awaiting acceptance. This action can be carried out by the lender or the borrower."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Top Up",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelTopUpLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelTopUpLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the loan top up request that is awaiting acceptance. This action can be carried out by the lender or the borrower."
+        },
+        {
+          "info": {
+            "name": "Confirm External Disbursement",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:confirmDisbursementLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "confirmDisbursementLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm the external disbursement of an off-platform managed loan. Only the lender can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Confirm External Interest Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:confirmInterestLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "confirmInterestLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm the external payment of interest. Only the lender can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Confirm External Repayment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:confirmRepaymentLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "confirmRepaymentLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm the external repayment of an off-platform managed loan. Only the lender can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Confirm External Top Up",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:confirmTopUpLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "confirmTopUpLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm the external top up of an off-platform managed loan. Only the lender can carry out this action."
+        },
+        {
+          "info": {
+            "name": "Default Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:defaultLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "defaultLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Default a loan that is in a defaultable state. This action can only be carried out by the lender."
+        },
+        {
+          "info": {
+            "name": "Estimate Loan Leverage Ratio",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:estimateLeverageLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "estimateLeverageLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain an estimated loan leverage ratio after taking into account requested loan amount and/or collateral amount adjustments."
+        },
+        {
+          "info": {
+            "name": "Estimate Loan LTV",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:estimateLtvLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "estimateLtvLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Obtain an estimated loan LTV after taking into account requested loan amount and/or collateral amount adjustments."
+        },
+        {
+          "info": {
+            "name": "Extend Loan Term",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:extendTermLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "extendTermLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request loan term extension. Loan term extension can only be requested within five days of the loan reaching maturity. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty."
+        },
+        {
+          "info": {
+            "name": "Get Loan by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:loanId",
+            "params": [
+              {
+                "name": "includeCollaterals",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating if collaterals should be included in embedded"
+              },
+              {
+                "name": "includeCounterparties",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating if counterparties should be included in embedded"
+              },
+              {
+                "name": "includeLoanAllocations",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating if allocations should be included in embedded"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "loanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve a loan by its ID"
+        },
+        {
+          "info": {
+            "name": "Pay Loan Interest",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:payInterestLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "payInterestLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an interest payment request."
+        },
+        {
+          "info": {
+            "name": "Rebalance Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:rebalanceLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rebalanceLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a loan rebalance request. This action can only be carried out by the borrower and must be accepted by the lender."
+        },
+        {
+          "info": {
+            "name": "Reject Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:rejectLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rejectLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reject a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state."
+        },
+        {
+          "info": {
+            "name": "Repay Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:repayLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "repayLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request the partial or full repayment of a loan. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty."
+        },
+        {
+          "info": {
+            "name": "Rerate Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:rerateLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rerateLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a new loan interest rerate. The new interest rate must be stated in BPS. This action can only be carried out by the lender."
+        },
+        {
+          "info": {
+            "name": "Secure Collateral Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:secureCollateralLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "secureCollateralLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Secure collateral for a loan. This action can only be carried out by the borrower and should be invoked for both initial and subsequent collateral top ups."
+        },
+        {
+          "info": {
+            "name": "Top Up Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:topUpLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "topUpLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a loan top up. This action can only be carried out by the lender and must be accepted by the borrower."
+        },
+        {
+          "info": {
+            "name": "Cancel Loan Default",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:cancelDefaultLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "cancelDefaultLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a default request for loan. This action can only be carried out by the lender."
+        },
+        {
+          "info": {
+            "name": "Early Terminate Loan",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/organizations/:organizationId/loans/:earlyTerminationLoanId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "earlyTerminationLoanId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Early terminate ClearLoop loans within the same portfolio. This action can only be initiated by the Agency Desk."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

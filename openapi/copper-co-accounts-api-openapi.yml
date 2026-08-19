@@ -1,0 +1,29 @@
+openapi: 3.2.0
+info:
+  title: Copper Platform Deprecated Accounts API
+  description: Copper Platform Deprecated Spec
+  version: 1.0.0
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+tags:
+- name: Accounts
+paths:
+  /accounts:
+    get:
+      summary: Get accounts
+      description: <Warning>The `GET /accounts` API endpoint is deprecated and should not be used for new integrations. It will be removed in future releases.</Warning> To fetch portfolios, use the [`GET /portfolios`](/api-reference/portfolios/get-portfolios) endpoint instead.<br/> To retrieve wallets, use the [`GET /wallets`](/api-reference/wallets/get-wallets) endpoint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+      - Accounts

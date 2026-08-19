@@ -1,0 +1,524 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Organizations API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: organizations
+paths:
+  /organizations:
+    get:
+      description: Retrieve information about organizations
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organizations'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Organizations
+      tags:
+      - organizations
+  /organizations/{organizationId}/activities:
+    get:
+      description: Retrieve information about all activities in the organization
+      parameters:
+      - in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - description: Maximum number of records to return (pagination limit)
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '1000'
+          type: string
+      - in: query
+        name: createdFrom
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: createdTo
+        required: false
+        schema:
+          type: string
+      - description: Search string based on activity name and description
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Filter activities by activity types. [See details](/enums/ActivityType)
+        in: query
+        name: activityTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/ActivityType'
+          type: array
+      - description: Exclude activities by activity types. [See details](/enums/ActivityType)
+        in: query
+        name: excludedActivityTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/ActivityType'
+          type: array
+      - description: Filter activities by user IDs
+        in: query
+        name: userIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: application/json by default OR text/csv
+        in: header
+        name: Accept
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activities'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Activities
+      tags:
+      - organizations
+  /organizations/{organizationId}/members:
+    get:
+      description: Retrieve information about organization members
+      parameters:
+      - description: Embed data about members' permission groups
+        in: query
+        name: includePermissionGroups
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Embed data about members' user information
+        in: query
+        name: includeUsers
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationMembers'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Organization Members
+      tags:
+      - organizations
+components:
+  schemas:
+    User:
+      properties:
+        createdAt:
+          description: Created at timestamp in milliseconds
+          type: string
+        firstName:
+          description: The user's first name
+          type: string
+        lastName:
+          description: The user's last name
+          type: string
+        userId:
+          description: The user ID
+          type: string
+      required:
+      - userId
+      type: object
+    Activities:
+      properties:
+        activities:
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+      type: object
+    Organizations:
+      properties:
+        organizations:
+          description: List of organizations
+          items:
+            $ref: '#/components/schemas/Organization'
+          type: array
+      required:
+      - organizations
+      type: object
+    Activity:
+      properties:
+        activityId:
+          type: string
+        activityType:
+          $ref: '#/components/schemas/ActivityType'
+          description: '[See details](/enums/ActivityType)'
+        createdAt:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+        portfolioId:
+          type: string
+        userId:
+          type: string
+      required:
+      - activityId
+      - name
+      - description
+      - createdAt
+      - activityType
+      type: object
+    OrganizationType:
+      enum:
+      - standard
+      type: string
+    ActivityType:
+      enum:
+      - login
+      - invitation-cancelled
+      - failed-login
+      - user-permissions-update
+      - bank-account-update
+      - bank-account-deactivate
+      - new-bank-account
+      - new-crypto-address
+      - crypto-address-deletion
+      - clearloop-delegation-undelegation
+      - exchange-account-update
+      - invoice-payment
+      - invoice-update
+      - organisation-archiving
+      - organisation-blocking
+      - secondary-approval-settings
+      - new-organisation
+      - otc-settings
+      - last-to-sign-settings
+      - member-activation
+      - new-member
+      - member-deactivation
+      - member-permissions-update
+      - member-update
+      - organisation-unarchiving
+      - withdrawal-password-update
+      - whitelist-lock
+      - timelock-delay
+      - account-activation
+      - new-account
+      - account-archiving
+      - add-crypto-address-settings-update
+      - account-settings-update
+      - account-update
+      - stake-agreement-review
+      - walled-garden-manager-change
+      - new-wallet
+      - wallet-deposit-address-changes
+      - order-cancellation
+      - order-execution
+      - order-termination
+      - sso-configuration-creation
+      - sso-configuration-update
+      - sso-configuration-deactivation
+      - wg-portfolio-secondary-approval-settings
+      - approval-workflow-update
+      - passkey-creation
+      - new-api-key
+      - api-key-revocation
+      - api-key-transfer
+      - credentials-reset
+      - passkey-deletion
+      - password-change
+      - 2fa-change
+      - manual-deposit-compliance-approval
+      - manual-deposit-compliance-rejection
+      - new-loan
+      - loan-approved
+      - loan-rejected
+      - loan-accepted
+      - loan-cancelled
+      - loan-top-up-request
+      - loan-top-up-accepted
+      - loan-top-up-cancelled
+      - loan-repayment
+      - loan-repayment-accepted
+      - loan-repayment-cancelled
+      - loan-default
+      - loan-partial-default
+      - add-collateral-to-loan
+      - loan-rebalance-request
+      - loan-rebalance-accepted
+      - loan-rebalance-cancelled
+      - external-loan-disbursal-confirmed
+      - external-loan-top-up-confirmed
+      - external-loan-repayment-confirmed
+      - loan-rerate-request
+      - loan-rerate-accepted
+      - loan-rerate-cancelled
+      - loan-extension-request
+      - loan-extension-accepted
+      - loan-extension-cancelled
+      type: string
+    Organization:
+      properties:
+        alias:
+          description: The organization alias
+          type: string
+        createdAt:
+          description: The organization creation timestamp
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrganizationExtra'
+          description: The organization additional information
+          type: object
+        organizationId:
+          description: The organization ID
+          type: string
+        organizationName:
+          description: The organization name
+          type: string
+        organizationType:
+          $ref: '#/components/schemas/OrganizationType'
+          description: The organization type. [See details](/enums/OrganizationType)
+        reportingCurrency:
+          description: The organization reporting currency
+          type: string
+      required:
+      - organizationId
+      - organizationName
+      - createdAt
+      - reportingCurrency
+      - organizationType
+      type: object
+    OrganizationExtra:
+      properties:
+        defaultFiatPortfolioId:
+          description: Portfolio id where fiat deposits are credited (must be a trading portfolio)
+          type: string
+      type: object
+    MemberType:
+      enum:
+      - user
+      - service
+      type: string
+    OrganizationMember:
+      properties:
+        _embedded:
+          $ref: '#/components/schemas/OrganizationMemberEmbedded'
+          description: Additional data about the member
+          type: object
+        createdAt:
+          description: Created at timestamp in milliseconds
+          type: string
+        deactivatedAt:
+          description: Deactivated at timestamp in milliseconds
+          type: string
+        isActive:
+          description: Indicates, whether the member is active
+          type: boolean
+        memberType:
+          $ref: '#/components/schemas/MemberType'
+          description: The member type. [See details](/enums/MemberType)
+        organizationId:
+          description: The organization ID
+          type: string
+        updatedAt:
+          description: Last updated at timestamp in milliseconds
+          type: string
+        userId:
+          description: The user ID
+          type: string
+      required:
+      - organizationId
+      - userId
+      - isActive
+      type: object
+    OrganizationMembers:
+      properties:
+        members:
+          description: List of organization members
+          items:
+            $ref: '#/components/schemas/OrganizationMember'
+          type: array
+      required:
+      - members
+      type: object
+    OrganizationMemberEmbedded:
+      properties:
+        permissionGroups:
+          description: List of permission groups the member belongs to
+          items:
+            type: string
+          type: array
+        user:
+          $ref: '#/components/schemas/User'
+          description: Member's user information
+          type: object
+      type: object

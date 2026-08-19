@@ -1,0 +1,30 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Files API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: files
+paths:
+  /files/{fileId}:
+    get:
+      parameters:
+      - in: path
+        name: fileId
+        required: true
+        schema:
+          type: string
+      summary: Download Files
+      tags:
+      - files

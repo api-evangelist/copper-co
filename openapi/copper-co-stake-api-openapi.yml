@@ -1,0 +1,598 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Stake API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: stake
+paths:
+  /staking/active-stakes:
+    get:
+      parameters:
+      - description: Return stakes only for specific portfolio
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Filter by the staked currency
+        in: query
+        name: currency
+        required: false
+        schema:
+          type: string
+      - description: Filter by the main currency (blockchain network) for staking
+        in: query
+        name: mainCurrency
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '100'
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformActiveStakes'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Active Stakes
+      tags:
+      - stake
+  /staking/outstanding-stakes:
+    get:
+      parameters:
+      - description: Return stakes only for specific portfolio
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Filter by the staked currency
+        in: query
+        name: currency
+        required: false
+        schema:
+          type: string
+      - description: Filter by the main currency (blockchain network) for staking
+        in: query
+        name: mainCurrency
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '100'
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformOutstandingStakes'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Outstanding Stakes
+      tags:
+      - stake
+  /staking/pending-stakes:
+    get:
+      parameters:
+      - description: Return stakes only for specific portfolio
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Filter by the staked currency
+        in: query
+        name: currency
+        required: false
+        schema:
+          type: string
+      - description: Filter by the main currency (blockchain network) for staking
+        in: query
+        name: mainCurrency
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '100'
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformPendingStakes'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Pending Stakes
+      tags:
+      - stake
+components:
+  schemas:
+    PlatformActiveStakes:
+      properties:
+        activeStakes:
+          description: List of active stakes
+          items:
+            $ref: '#/components/schemas/PlatformActiveStake'
+          type: array
+      type: object
+    OutstandingOperationType:
+      enum:
+      - claim-reward
+      - complete-withdrawal
+      - allocate-stake
+      - complete-deposit
+      - claim-unmint
+      type: string
+    PendingStakeStatus:
+      enum:
+      - unbonding
+      - bonding
+      - changing-validator
+      type: string
+    SwapExtra:
+      properties: {}
+      type: object
+    PlatformOutstandingStake:
+      properties:
+        createdAt:
+          description: Timestamp of stake creation
+          type: string
+        currency:
+          description: Staked currency
+          type: string
+        depositTargetId:
+          description: Unique identifier of the Deposit Target
+          type: string
+        mainCurrency:
+          description: Main currency (blockchain network) of a stake
+          type: string
+        organizationId:
+          description: Unique ID of the organisation
+          type: string
+        outstandingOperation:
+          $ref: '#/components/schemas/OutstandingStakeOperation'
+          description: Outstanding stake data
+          type: object
+        outstandingStakeId:
+          description: Unique identifier of the outstanding stake
+          type: string
+        portfolioId:
+          description: Unique identifier of the portfolio, for which the stake was created
+          type: string
+        updatedAt:
+          description: Timestamp of the latest stake update
+          type: string
+      type: object
+    PlatformActiveStake:
+      properties:
+        activeStake:
+          $ref: '#/components/schemas/ActiveStake'
+          description: Active stake data
+          type: object
+        activeStakeId:
+          description: Unique identifier of the active stake
+          type: string
+        createdAt:
+          description: Timestamp of the stake creation
+          type: string
+        currency:
+          description: Staked currency
+          type: string
+        depositTargetId:
+          description: Unique identifier of the Deposit Target
+          type: string
+        mainCurrency:
+          description: Main currency (blockchain network) of a stake
+          type: string
+        organizationId:
+          description: Unique ID of the organisation
+          type: string
+        portfolioId:
+          description: Unique identifier of the portfolio, for which the stake was created
+          type: string
+        updatedAt:
+          description: Timestamp of the latest stake update
+          type: string
+      type: object
+    ActiveStake:
+      properties:
+        activeStakedAmount:
+          description: Amount which is taken into account in the current epoch/period of stake when calculating rewards
+          type: string
+        canIncreaseStakeAmount:
+          description: The stake can be increased
+          type: boolean
+        claimableRewardsAmount:
+          description: Amount of rewards, that can still be claimed from this active stake using TAKE_REWARD transaction
+          type: string
+        endTimeSeconds:
+          description: 'Stake delegation end time in seconds: BTC/CORE only.'
+          type: string
+        pool:
+          $ref: '#/components/schemas/Pool'
+          description: Pool that this stake connected to
+          type: object
+        pools:
+          description: A list of pools that this stake is connected to. Returned if the stake is connected to two or more pools
+          items:
+            $ref: '#/components/schemas/Pool'
+          type: array
+        readyToRedelegate:
+          description: In some cases your active stake can't be redelegated (e.g. you just redelegated stake from one pool to other in cosmos based stakes)
+          type: boolean
+        readyToUndelegateStakingPermissions:
+          description: For Substrate based. When you want to remove Staking permissions from delegatee
+          type: boolean
+        readyToUnstake:
+          description: Can this stake be unstaked or not
+          type: boolean
+        readyToUnstakeAt:
+          description: If stake is not ready to unstake, when it will be ready
+          type: string
+        requireChillToUnstake:
+          description: For Substrate based. When you want to unstake BONDING stake you should chill first
+          type: boolean
+        rewardRate:
+          description: 'Staking Reward Rate: CORE only.'
+          type: string
+        rewardsAutoRestake:
+          description: If rewards will automatically be restaked when paid, then true
+          type: boolean
+        rewardsRequireClaim:
+          description: If rewards require TAKE_REWARD transaction to do claim
+          type: boolean
+        stakeAddress:
+          description: The address of a dedicated staking account.  Only applies for SOL
+          type: string
+        warning:
+          $ref: '#/components/schemas/Warning'
+          description: Warning message that describe that there is a problem with this stake (e.g. you don't get rewards because of some problem)
+          type: object
+      type: object
+    Pool:
+      properties:
+        extra:
+          $ref: '#/components/schemas/BlockchainExtra'
+          description: Additional information for this staking pool
+          type: object
+        poolId:
+          description: Pool identifier
+          type: string
+        poolName:
+          description: Pool name
+          type: string
+        totalBonded:
+          description: Amount of current all stakes for pool
+          type: string
+        validatorProviderId:
+          description: Validator provider ID matched for this pool (if any)
+          type: string
+      type: object
+    PlatformPendingStakes:
+      properties:
+        pendingStakes:
+          description: List of pending stakes
+          items:
+            $ref: '#/components/schemas/PlatformPendingStake'
+          type: array
+      type: object
+    PlatformPendingStake:
+      properties:
+        createdAt:
+          description: Timestamp of stake creation
+          type: string
+        currency:
+          description: Staked currency
+          type: string
+        depositTargetId:
+          description: Unique identifier of the Deposit Target
+          type: string
+        mainCurrency:
+          description: Main currency (blockchain network) of a stake
+          type: string
+        organizationId:
+          description: Unique ID of the organisation
+          type: string
+        pendingStake:
+          $ref: '#/components/schemas/PendingStake'
+          type: object
+        pendingStakeId:
+          description: Unique identifier of the pending stake
+          type: string
+        portfolioId:
+          description: Unique identifier of the portfolio, for which the stake was created
+          type: string
+        updatedAt:
+          description: Timestamp of the latest stake update
+          type: string
+      type: object
+    Warning:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    OutstandingStakeOperation:
+      properties:
+        canCreatePool:
+          description: Only applies for AVAX. In AVAX we can create a pool with funds imported to P Chain. Should be set to 'true' with OutstandingOperationType.ALLOCATE_STAKE
+          type: boolean
+        claimResourceId:
+          description: Only applies for [XRD] Radix. Radix issues an NFT when stakes are undelegated. This NFT will be used to claimXRD using complete-withdrawal operation
+          type: string
+        outstandingAmount:
+          description: Outstanding stake amount
+          type: string
+        outstandingOperationType:
+          $ref: '#/components/schemas/OutstandingOperationType'
+          description: The type of the outstanding operation. [See details](/enums/OutstandingOperationType)
+        pool:
+          $ref: '#/components/schemas/Pool'
+          description: A pool that this stake is connected to
+          type: object
+        pools:
+          description: For Substrate based. List of pools that are related to this operation.
+          items:
+            $ref: '#/components/schemas/Pool'
+          type: array
+        rewardResourceIds:
+          description: Applies for currencies which require a list of IDs when claiming a reward. For example, Core rewards with staked BTC requires a txId from the original delegate transaction
+          items:
+            type: string
+          type: array
+        stakeAddress:
+          description: The address of a dedicated staking account. Only applies for SOL currently
+          type: string
+      type: object
+    BlockchainExtra:
+      properties:
+        netuid:
+          description: Network ID
+          type: string
+        neuronFollowees:
+          description: ICP Neuron followees
+          items:
+            type: string
+          type: array
+        swapExtra:
+          $ref: '#/components/schemas/SwapExtra'
+          description: Additional order information related to Swap flow
+          type: object
+      type: object
+    PlatformOutstandingStakes:
+      properties:
+        outstandingStakes:
+          description: List of outstanding stakes
+          items:
+            $ref: '#/components/schemas/PlatformOutstandingStake'
+          type: array
+      type: object
+    PendingStake:
+      properties:
+        canBeRebonded:
+          description: For Substrate based. During UNBONDING status you can rebond this with REBOND_STAKE transaction
+          type: boolean
+        canBeUnstaked:
+          description: For Substrate based. During BONDING status stake can be unbonded
+          type: boolean
+        canIncreaseStakeAmount:
+          description: If the stake can be increased
+          type: boolean
+        originPool:
+          $ref: '#/components/schemas/Pool'
+          description: In case if CHANGING_VALIDATOR here we specify pools from which stake was moved
+          type: object
+        pendingAmount:
+          description: Pending stake amount
+          type: string
+        pendingEndsAt:
+          description: When pending operation will be finished
+          type: string
+        pendingStakeStatus:
+          $ref: '#/components/schemas/PendingStakeStatus'
+          description: The status of a pending stake. [See details](/enums/PendingStakeStatus)
+        pool:
+          $ref: '#/components/schemas/Pool'
+          description: Pool that this stake connected to
+          type: object
+        pools:
+          description: A list of pools that this stake is connected to. Returned if the stake is connected to two or more pools
+          items:
+            $ref: '#/components/schemas/Pool'
+          type: array
+        requireChillToUnstake:
+          description: For Substrate based. When you want to unstake BONDING stake you should chill first
+          type: boolean
+        stakeAddress:
+          description: The address of a dedicated staking account. Only applies for SOL currently.
+          type: string
+        warning:
+          $ref: '#/components/schemas/Warning'
+          description: For Substrate based. When you want to unstake BONDING stake you should chill first
+          type: object
+      required:
+      - pendingAmount
+      - pendingStakeStatus
+      type: object

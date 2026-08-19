@@ -1,0 +1,363 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Wallets API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: wallets
+paths:
+  /wallets:
+    get:
+      description: When you perform a request without specifying any additional filters like `portfolioId` or `currency`, the method returns all wallets which have non-zero balances only.
+      parameters:
+      - description: Filter by portfolio id
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Filter wallets by currency
+        example:
+        - BTC,ETH
+        in: query
+        name: currencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter wallets by main currency
+        in: query
+        name: mainCurrency
+        required: false
+        schema:
+          type: string
+      - description: Filter wallets by portfolio types. [See details](/enums/PortfolioType)
+        example:
+        - custody,exchange
+        in: query
+        name: portfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - description: Exclude wallets by portfolio types. [See details](/enums/PortfolioType)
+        example:
+        - custody,exchange
+        in: query
+        name: excludedPortfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - description: Filter only wallets with non-zero balance
+        in: query
+        name: nonEmpty
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallets'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Wallets
+      tags:
+      - wallets
+    post:
+      description: Create a new wallet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWallet'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Wallet
+      tags:
+      - wallets
+  /wallets/{walletId}:
+    get:
+      description: Fetch wallet details
+      parameters:
+      - in: path
+        name: walletId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Wallet by ID
+      tags:
+      - wallets
+components:
+  schemas:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    Wallets:
+      properties:
+        wallets:
+          description: List of wallets
+          items:
+            $ref: '#/components/schemas/Wallet'
+          type: array
+      required:
+      - wallets
+      type: object
+    WalletExtra:
+      properties:
+        externalAccountId:
+          description: Third-party identifier (ID of an external account)
+          type: string
+      type: object
+    Wallet:
+      properties:
+        available:
+          description: Available balance of a wallet
+          type: string
+        balance:
+          description: Total balance of a wallet, including reserved, but excluding the stakeBalance
+          type: string
+        createdAt:
+          description: Created at timestamp
+          type: string
+        currency:
+          description: Currency of a wallet
+          type: string
+        extra:
+          $ref: '#/components/schemas/WalletExtra'
+          description: Additional wallet information
+          type: object
+        locked:
+          description: Locked balance of a wallet for ClearLoop, including the funds delegated to all sub-accounts
+          type: string
+        mainCurrency:
+          description: Main currency (blockchain network) of a wallet
+          type: string
+        organizationId:
+          description: Organization id
+          type: string
+        portfolioId:
+          description: Portfolio id
+          type: string
+        portfolioType:
+          $ref: '#/components/schemas/PortfolioType'
+          description: Type of the wallet's portfolio. [See details](/enums/PortfolioType)
+        reserve:
+          description: Reserved balance of a wallet (e.g. for open orders)
+          type: string
+        stakeBalance:
+          description: The balance of funds that are locked in staking
+          type: string
+        totalBalance:
+          description: The overall balance of a wallet
+          type: string
+        updatedAt:
+          description: Last updated at timestamp
+          type: string
+        walletId:
+          description: Wallet id
+          type: string
+      required:
+      - walletId
+      - portfolioId
+      - currency
+      type: object
+    CreateWallet:
+      properties:
+        currency:
+          description: Currency of a wallet
+          type: string
+        mainCurrency:
+          description: Main currency of a wallet
+          type: string
+        portfolioId:
+          description: Portfolio id
+          type: string
+        walletId:
+          description: Wallet id
+          type: string
+      required:
+      - walletId
+      - portfolioId
+      - currency
+      type: object

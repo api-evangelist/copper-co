@@ -1,0 +1,1761 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Orders API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: orders
+paths:
+  /dry-run-orders:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DryRunOrderRequest'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DryRunOrder'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Dry Run Order
+      tags:
+      - orders
+  /orders:
+    get:
+      parameters:
+      - description: Comma-separated list of portfolio IDs to filter by
+        in: query
+        name: portfolioIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Comma-separated list of currencies to filter by `base_currency` or `quote_currency`
+        in: query
+        name: currencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Comma-separated list of currencies to filter by `base_currency`
+        in: query
+        name: baseCurrencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Comma-separated list of currencies to filter by `quote_currency`
+        in: query
+        name: quoteCurrencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Comma-separated list of currencies to filter by `main_currency` (blockchain network)
+        in: query
+        name: mainCurrencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Comma-separated list of order types to filter by. [See details](/enums/OrderType)
+        in: query
+        name: orderTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/OrderType'
+          type: array
+      - description: Comma-separated list of statuses to filter by. [See details](/enums/OrderStatus)
+        in: query
+        name: statuses
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/OrderStatus'
+          type: array
+      - in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: limit
+        required: false
+        schema:
+          default: '1000'
+          type: string
+      - description: Filter by external order ID
+        example:
+        - 6de6d2c3-ce34-4ae8-b26e-d050167fc5c3
+        in: query
+        name: externalOrderId
+        required: false
+        schema:
+          type: string
+      - description: Filter by transfer chain ID
+        in: query
+        name: transferChainId
+        required: false
+        schema:
+          type: string
+      - description: Filter by blockchain transaction ID
+        in: query
+        name: transactionId
+        required: false
+        schema:
+          type: string
+      - description: Search query by blockchain transaction ID, fromAddress or toAddress
+        in: query
+        name: searchQuery
+        required: false
+        schema:
+          type: string
+      - description: Filter by updated date since timestamp
+        in: query
+        name: updatedSince
+        required: false
+        schema:
+          type: string
+      - description: Filter by created date since timestamp
+        in: query
+        name: createdSince
+        required: false
+        schema:
+          type: string
+      - description: Filter by created date since timestamp
+        in: query
+        name: createdAtFrom
+        required: false
+        schema:
+          type: string
+      - description: Filter by created date to timestamp
+        in: query
+        name: createdAtTo
+        required: false
+        schema:
+          type: string
+      - description: Filter by terminated date since timestamp
+        in: query
+        name: terminatedAtFrom
+        required: false
+        schema:
+          type: string
+      - description: Filter by terminated date to timestamp
+        in: query
+        name: terminatedAtTo
+        required: false
+        schema:
+          type: string
+      - description: Comma-separated list of portfolio types to filter by. [See details](/enums/PortfolioType)
+        in: query
+        name: portfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - description: Comma-separated list of portfolio types to exclude. [See details](/enums/PortfolioType)
+        in: query
+        name: excludedPortfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - in: query
+        name: counterpartyId
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Orders'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Orders
+      tags:
+      - orders
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Order
+      tags:
+      - orders
+  /orders/:
+    post:
+      description: Bulk orders creation. If the execution of an order fails, it will not affect the execution of other orders. Failed orders will be returned in the response. The bulk size should be less than 50 orders.
+      parameters:
+      - description: application/vnd.create-orders+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.create-orders+json:
+            schema:
+              $ref: '#/components/schemas/CreateOrders'
+      responses:
+        '200':
+          content:
+            application/vnd.create-orders+json:
+              schema:
+                $ref: '#/components/schemas/Orders'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Multiple Orders
+      tags:
+      - orders
+  /orders/{acceptOtcOrderId}:
+    patch:
+      description: Accept counterparty settlement order
+      parameters:
+      - description: application/vnd.approve-counterparty-otc+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: acceptOtcOrderId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.approve-counterparty-otc+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Accept Order
+      tags:
+      - orders
+  /orders/{cancelOrderId}:
+    patch:
+      parameters:
+      - description: application/vnd.cancel-order+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelOrderId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-order+json:
+            schema:
+              $ref: '#/components/schemas/CancelOrder'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-order+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Order
+      tags:
+      - orders
+  /orders/{coSignOrderId}:
+    patch:
+      parameters:
+      - description: application/vnd.co-sign-order+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: coSignOrderId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.co-sign-order+json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrderCoSigners'
+      responses:
+        '200':
+          content:
+            application/vnd.co-sign-order+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Approve (co-sign) Order
+      tags:
+      - orders
+  /orders/{orderId}:
+    get:
+      parameters:
+      - in: path
+        name: orderId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Order by ID
+      tags:
+      - orders
+    patch:
+      parameters:
+      - description: application/vnd.enter-master-password+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: orderId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.enter-master-password+json:
+            schema:
+              $ref: '#/components/schemas/EnterMasterPassword'
+      responses:
+        '200':
+          content:
+            application/vnd.enter-master-password+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Provide master password for Order
+      tags:
+      - orders
+  /orders/{startSigningOrderId}:
+    patch:
+      description: Start crypto signing for an order
+      parameters:
+      - description: application/vnd.start-signing+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: startSigningOrderId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.start-signing+json:
+              schema:
+                $ref: '#/components/schemas/Order'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Start Signing
+      tags:
+      - orders
+components:
+  schemas:
+    UserAbstraction:
+      enum: []
+      type: string
+    UploadPartSignedTx:
+      properties: {}
+      type: object
+    CryptoAddress:
+      properties:
+        _embedded:
+          $ref: '#/components/schemas/CryptoAddressEmbedded'
+          description: Additional information for this crypto address
+          type: object
+        acceptTokens:
+          description: Indicates an address can be used for tokens on the same blockchain network
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: Address type. [See details](/enums/AddressType)
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: Address category. [See details](/enums/AddressCategory)
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          deprecated: true
+          description: Currency of an address
+          type: string
+        extra:
+          $ref: '#/components/schemas/CryptoAddressExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          deprecated: true
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        mainCurrency:
+          description: Main currency of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of an address
+          type: string
+        organizationId:
+          description: Organization id
+          type: string
+        portfolioIds:
+          deprecated: true
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      - createdBy
+      - createdAt
+      - isWhitelist
+      - addressType
+      type: object
+    OrderReceiver:
+      properties:
+        amount:
+          description: The amount of order in baseCurrency
+          examples:
+          - '0.1'
+          type: string
+        toAddress:
+          description: The address where the funds should be transferred
+          type: string
+        toCryptoAddressId:
+          description: In case of a withdrawal, the destination crypto address ID from the Address Book
+          type: string
+      type: object
+    AddressCategory:
+      enum:
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
+      type: string
+    DepositOrigin:
+      enum: []
+      type: string
+    FeeType:
+      enum: []
+      type: string
+    Warning:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
+      type: object
+    OrderStatus:
+      enum:
+      - new
+      - waiting-funds
+      - reserving
+      - reserved
+      - queued
+      - validating-funds
+      - working
+      - waiting-approve
+      - co-sign-require
+      - approved
+      - processing
+      - executed
+      - canceled
+      - rejecting
+      - rejected
+      - declining
+      - declined
+      - suspending
+      - suspended
+      - blocked
+      - action-required
+      - accepting
+      - accepted
+      - require-initializer-approve
+      - waiting-counterparty-approve
+      - require-counterparty-approve
+      - ready-for-settlement
+      - settled
+      - part-signed-tx-added
+      - full-signed-tx-added
+      - rejected-part-signed-tx-added
+      - rejected-full-signed-tx-added
+      - accepted-part-signed-tx-added
+      - accepted-full-signed-tx-added
+      - awaiting-settlement
+      - master-password-required
+      - manual-resolving
+      - error
+      - pending-atomic-settlement-confirmation
+      - atomic-settlement-reservation-completed
+      - require-finalize
+      - waiting-accept-deposit
+      - waiting-reject-deposit
+      type: string
+    DeliveryType:
+      enum:
+      - free-of-payment
+      - payment-vs-payment
+      type: string
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
+    OrderExtra:
+      properties:
+        availableCoSigners:
+          description: The ids of user who can approve an order. If not set, anybody with Approver permission can approve
+          items:
+            type: string
+          type: array
+        availableSnapshot:
+          description: Snapshot of a wallet available balance at the moment of order termination
+          type: string
+        balanceSnapshot:
+          description: Snapshot of a wallet balance at the moment of order termination
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        clearLoop:
+          description: Indicates whether the order is a part of ClearLoop
+          type: boolean
+        clearLoopExtra:
+          $ref: '#/components/schemas/ClearLoopExtra'
+          description: Additional order information related to ClearLoop specific orders
+          type: object
+        clientAccountId:
+          description: Unique client exchange's account identifier used for ClearLoop
+          type: string
+        coSigners:
+          description: The ids of user who has approved an order
+          items:
+            type: string
+          type: array
+        coSignersNumber:
+          description: The number of required approves for an order
+          type: string
+        confirmations:
+          description: Number of confirmations for a blockchain transaction
+          type: string
+        counterpartyPortfolioId:
+          type: string
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          description: Settlement order type only applicable for settle orders. [See details](/enums/DeliveryType)
+        depositOrderId:
+          description: The ID of a deposit order where a withdraw was made to
+          type: string
+        depositOrigin:
+          $ref: '#/components/schemas/DepositOrigin'
+          description: Determines if the deposit came from a send, reward claim, or stake undelegation transaction
+        depositTargetId:
+          description: The ID of a deposit target where an order was made to
+          type: string
+        description:
+          description: The description of the order
+          type: string
+        estimatedFees:
+          $ref: '#/components/schemas/FeeEstimation'
+          deprecated: true
+          description: The estimated fees for an order
+          type: object
+        externalBroadcast:
+          description: Withdraw is requested to be processed by external system. In that case we don't broadcast it to blockchain
+          type: boolean
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: 'Flat fees that Copper charges for withdrawing cryptocurrency to an external address. Flat fees are set per currency and do not change depending on transaction size and type. Flat fees are divided into three fee levels: low, medium and high, which define the speed of transaction processing—the higher the flat fee, the faster the speed. Flat fees are based on average network fees at the start of settlement. [See details](/enums/FeeLevel)'
+        fees:
+          description: The fees for an order
+          items:
+            $ref: '#/components/schemas/FeeEstimation'
+          type: array
+        fromAddresses:
+          description: List of addresses from which the deposit was made. This is an array because, on some blockchains like Bitcoin (BTC), the sending address can include multiple input UTXO addresses
+          items:
+            type: string
+          type: array
+        fromCounterpartyId:
+          description: The ID of a counterparty where an order was made from
+          type: string
+        fromCryptoAddress:
+          $ref: '#/components/schemas/CryptoAddress'
+          deprecated: true
+          description: The object of a crypto address where an order was made from. Will be removed in the future. Use `fromCryptoAddressId` instead
+          type: object
+        fromCryptoAddressId:
+          description: The ID of a crypto address where an order was made from
+          type: string
+        fromPortfolioId:
+          description: The ID of a portfolio where an order was made from
+          type: string
+        includeFeeInWithdraw:
+          description: Indicates whether the fee should be included in the withdrawal amount or added on top of it
+          type: boolean
+        invoiceId:
+          description: The ID of an invoice where an order was made to
+          type: string
+        marketPrice:
+          type: string
+        memo:
+          description: Withdraw memo (destination tag for XRP)
+          type: string
+        nextTransferTo:
+          description: The remain list of next transfer targets
+          items:
+            $ref: '#/components/schemas/WithdrawTarget'
+          type: array
+        originalDepositAmount:
+          description: Amount of the original deposit transaction
+          type: string
+        partSigned:
+          $ref: '#/components/schemas/UploadPartSignedTx'
+          description: Partly-signed data
+          type: object
+        payload:
+          description: Serialized [data](https://ethereum.org/en/developers/docs/transactions/#the-data-field) payload for a smart contract
+          type: string
+        payloads:
+          description: Serialized list of unsigned transactions. For Ethereum only type 0 (legacy) transactions are supported
+          items:
+            type: string
+          type: array
+        reportingCurrencyRate:
+          description: The snapshot of a base currency rate at the moment of order creation
+          type: string
+        reportingQuoteCurrencyRate:
+          description: The snapshot of a quote currency rate at the moment of order creation
+          type: string
+        signed:
+          $ref: '#/components/schemas/UploadFullSignedTx'
+          description: Fully-signed data
+          type: object
+        spenderAddress:
+          description: For ETH Approve transaction store spender address
+          type: string
+        terminatedReportingCurrencyRate:
+          description: The snapshot of a base currency rate at the moment of order termination
+          type: string
+        toAddress:
+          description: The address where the funds should be transferred
+          type: string
+        toCounterpartyId:
+          description: The ID of a counterparty where an order was made to
+          type: string
+        toCryptoAddressId:
+          description: The ID of a crypto address where an order was made to
+          type: string
+        toInvoiceId:
+          description: The ID of an invoice where an order was made to
+          type: string
+        toLendingInvoiceId:
+          description: The ID of an lending invoice where an order was made to
+          type: string
+        toPortfolioId:
+          description: The ID of a portfolio where an order was made to
+          type: string
+        totalQuoteAmount:
+          description: The amount of a quote currency in an order
+          type: string
+        transactionId:
+          description: The blockchain transaction ID on an order
+          type: string
+        transactionRequest:
+          description: Data which needs to be passed to Copper Unlimited to sign the transaction
+          type: object
+        transferAmount:
+          description: Amount transferred from proxy to destination
+          type: string
+        transferChainId:
+          description: The ID to identify orders, created as a part of the same order chain
+          type: string
+        transferDepositTargetId:
+          description: The deposit target ID of the proxy address for the transfer
+          type: string
+        transferFees:
+          description: Network fees required for transferring from proxy to destination
+          type: string
+        transferFeesCurrency:
+          description: Currency of fees paid for transferring from proxy to destination
+          type: string
+        transferTransactionId:
+          description: The hash of the transaction transferring funds from proxy to destination
+          type: string
+        withdrawFee:
+          description: The amount of fees for the order
+          type: string
+        withdrawOrderId:
+          description: The ID of a withdraw order where a deposit was made from
+          type: string
+      type: object
+    TargetType:
+      enum:
+      - external
+      - portfolio
+      type: string
+    FeeEstimation:
+      properties:
+        baseFeePerGas:
+          description: The base fee for the block in Gwei
+          type: string
+        estimatedTime:
+          description: The estimated time in milliseconds for the transaction to be confirmed
+          type: string
+        fee:
+          description: The amount of the fee
+          type: string
+        feeCurrency:
+          description: The currency in which the fee is denominated
+          type: string
+        feePerByte:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The fee per byte of the transaction
+          type: object
+        feeType:
+          $ref: '#/components/schemas/FeeType'
+          description: The type of the fee
+        gasLimit:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The gas limit for the transaction
+          type: object
+        gasPriceGwei:
+          description: The gas price in Gwei
+          type: string
+        maxFeePerGas:
+          description: The max gas fee wiling to pay in Gwei
+          type: string
+        maxPriorityFeePerGas:
+          description: The max priority fee wiling to pay in Gwei
+          type: string
+        reportingCurrencyRate:
+          description: The fee amount in the reporting currency
+          type: string
+        transactionBytes:
+          description: The number of bytes in the transaction
+          type: string
+      required:
+      - fee
+      - feeCurrency
+      type: object
+    Orders:
+      properties:
+        orders:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+      required:
+      - orders
+      type: object
+    UploadFullSignedTx:
+      properties: {}
+      type: object
+    UpdateOrderCoSigners:
+      properties:
+        masterPassword:
+          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
+          type: string
+      type: object
+    CryptoAddressExtra:
+      properties: {}
+      type: object
+    CurrencyConfigurationExtra:
+      properties: {}
+      type: object
+    CreateOrders:
+      properties:
+        orders:
+          description: List of orders to create
+          items:
+            $ref: '#/components/schemas/CreateOrder'
+          type: array
+      required:
+      - orders
+      type: object
+    AddressTag:
+      enum: []
+      type: string
+    MinimalUnit:
+      properties: {}
+      type: object
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
+      type: object
+    Order:
+      properties:
+        amount:
+          description: Amount of order in baseCurrency
+          type: string
+        baseCurrency:
+          description: Base currency of the order
+          type: string
+        createdAt:
+          description: Order creation timestamp
+          type: string
+        createdBy:
+          description: Creator user id
+          type: string
+        externalOrderId:
+          description: The order ID in the external system
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrderExtra'
+          description: Additional order information
+          type: object
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: Limit type of the order. [See details](/enums/LimitType)
+        mainCurrency:
+          description: Blockchain network of a `baseCurrency`
+          type: string
+        orderId:
+          description: Order ID
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: Order type. [See details](/enums/OrderType)
+        organizationId:
+          description: Organization id
+          type: string
+        portfolioId:
+          description: Portfolio ID
+          type: string
+        portfolioType:
+          $ref: '#/components/schemas/PortfolioType'
+          description: Portfolio type. [See details](/enums/PortfolioType)
+        quoteCurrency:
+          description: The quote currency of the order (in case of a settle order)
+          type: string
+        quoteMainCurrency:
+          description: Blockchain network of a `quoteCurrency`
+          type: string
+        status:
+          $ref: '#/components/schemas/OrderStatus'
+          description: 'Order status. Note: When an order has completed processing, it enters one of the final states and returns a ''terminal'' status. `terminalStatuses` are: `EXECUTED`, `CANCELED`, `LIQUIDATED`, `ERROR`, `BLOCKED`, `DECLINED`, `SUSPENDED`, `REJECTED`. [See details](/enums/OrderStatus)'
+        terminatedAt:
+          description: Order termination timestamp
+          type: string
+        updatedAt:
+          description: Order update timestamp
+          type: string
+      required:
+      - orderId
+      - externalOrderId
+      - status
+      - orderType
+      - portfolioId
+      - portfolioType
+      - amount
+      - baseCurrency
+      - createdAt
+      type: object
+    DryRunOrderRequest:
+      properties:
+        amount:
+          type: string
+        baseCurrency:
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          description: '[See details](/enums/DeliveryType)'
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: '[See details](/enums/FeeLevel)'
+        includeFeeInWithdraw:
+          type: boolean
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: '[See details](/enums/LimitType)'
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        payload:
+          type: string
+        payloads:
+          items:
+            type: string
+          type: array
+        portfolioId:
+          type: string
+        priceLimit:
+          type: string
+        quoteAmount:
+          type: string
+        quoteCurrency:
+          type: string
+        quoteMainCurrency:
+          type: string
+        requestedNetworkFees:
+          $ref: '#/components/schemas/RequestedNetworkFees'
+          type: object
+        toCounterpartyId:
+          type: string
+        toCryptoAddressId:
+          type: string
+        toInvoiceId:
+          type: string
+        toLendingInvoiceId:
+          type: string
+        toPortfolioId:
+          type: string
+      required:
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    WithdrawTarget:
+      properties:
+        cryptoAddressId:
+          type: string
+        portfolioId:
+          type: string
+        targetType:
+          $ref: '#/components/schemas/TargetType'
+          description: '[See details](/enums/TargetType)'
+      required:
+      - targetType
+      type: object
+    RequestedNetworkFees:
+      properties:
+        feePerByte:
+          type: string
+        gasLimit:
+          type: string
+        gasPriceGwei:
+          type: string
+        maxFeePerGas:
+          type: string
+        maxPriorityFeePerGas:
+          type: string
+      type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    LimitType:
+      enum:
+      - otc
+      - rfq
+      type: string
+    CancelOrder:
+      properties:
+        reason:
+          type: string
+      type: object
+    DryRunOrder:
+      properties:
+        amount:
+          type: string
+        baseCurrency:
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrderExtra'
+          type: object
+        mainCurrency:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        portfolioId:
+          type: string
+        warning:
+          $ref: '#/components/schemas/Warning'
+          type: object
+      required:
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string
+    CreateOrder:
+      properties:
+        agentAddress:
+          description: Agent address for orders created by agents on behalf of users
+          type: string
+        agentName:
+          description: Agent name for orders created by agents on behalf of users
+          type: string
+        amount:
+          description: The amount of order in baseCurrency
+          examples:
+          - '0.1'
+          type: string
+        baseCurrency:
+          description: The currency of the order amount
+          examples:
+          - BTC
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        builderFeeAddress:
+          description: Builder fee address for Hyperliquid builder approval and activation
+          type: string
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          default: payment-vs-payment
+          description: Settlement order type only applicable for settle orders. [See details](/enums/DeliveryType)
+          examples:
+          - payment-vs-payment
+        description:
+          description: The description of the order
+          examples:
+          - Withdrawal to my wallet
+          type: string
+        externalBroadcast:
+          default: 'false'
+          description: 'Sets broadcast mode. If true: manual broadcast. If false: automatic broadcast. Copper automatically broadcasts transactions to the network after fully signing'
+          examples:
+          - 'false'
+          type: boolean
+        externalOrderId:
+          description: Unique order identifier from client (should be unique for the portfolio)
+          type: string
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: 'Flat fees that Copper charges for withdrawing cryptocurrency to an external address. Flat fees are set per currency and do not change depending on transaction size and type. Flat fees are divided into three fee levels: low, medium and high, which define the speed of transaction processing—the higher the flat fee, the faster the speed. Flat fees are based on average network fees at the start of settlement. [See details](/enums/FeeLevel)'
+        includeFeeInWithdraw:
+          default: 'false'
+          description: Indicates, whether the fee should be included in the withdrawal amount or added on top of it
+          examples:
+          - 'false'
+          type: boolean
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: The limit type of the order. Used to create settle orders. [See details](/enums/LimitType)
+        mainCurrency:
+          description: The main currency of the base currency
+          type: string
+        masterPassword:
+          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
+          type: string
+        memo:
+          description: Withdraw memo (destination tag for XRP)
+          type: string
+        netuid:
+          description: Subnet Network ID in TAO blockchain
+          type: string
+        nextTransferTo:
+          description: The list of next transfer targets for chained transfer orders
+          items:
+            $ref: '#/components/schemas/WithdrawTarget'
+          type: array
+        optInReferralProgram:
+          description: Opt in to the referral program during Hyperliquid activation
+          type: boolean
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: The order type. [See details](/enums/OrderType)
+        payload:
+          description: Serialised [data](https://ethereum.org/en/developers/docs/transactions/#the-data-field) payload for a smart contract
+          type: string
+        payloads:
+          description: Serialised list of unsigned transactions. For Ethereum only type 0 (legacy) transactions are supported
+          items:
+            type: string
+          type: array
+        portfolioId:
+          description: The ID of the portfolio where the order should be placed
+          type: string
+        priceLimit:
+          description: The price of the order in quote currency, only applicable for settle orders
+          type: string
+        quoteAmount:
+          description: The amount of order in quoteCurrency
+          examples:
+          - '10'
+          type: string
+        quoteCurrency:
+          description: The currency of the quote amount
+          examples:
+          - USD
+          type: string
+        quoteMainCurrency:
+          description: The main currency of the quote currency
+          type: string
+        referralCode:
+          description: Referral code
+          type: string
+        toAddress:
+          description: The address where the funds should be transferred
+          type: string
+        toCounterpartyId:
+          description: The ID of the counterparty to transfer money to
+          type: string
+        toCryptoAddressId:
+          description: In case of a withdrawal, the destination crypto address ID from an Address Book
+          type: string
+        toPortfolioId:
+          description: In case of a withdrawal on a different portfolio, the portfolio ID of the destination account
+          type: string
+        toReceivers:
+          description: Is used for multi withdrawal orders instead of toAddress
+          items:
+            $ref: '#/components/schemas/OrderReceiver'
+          type: array
+        userAbstract:
+          $ref: '#/components/schemas/UserAbstraction'
+          description: Account type for Hyperliquid account-set and activation
+      required:
+      - externalOrderId
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    ClearLoopExtra:
+      properties:
+        clearLoopExternalNetted:
+          description: Whether the order is linked to the ClearLoop multi-custody model that works by netting settlement amounts
+          type: boolean
+        clearLoopSettlementId:
+          description: Id uniquely identifying the ClearLoop settlement the order is part of
+          type: string
+      type: object
+    BlockchainTransactionType:
+      enum:
+      - send
+      - multi-withdraw
+      - account-set
+      - approve-hot-key
+      - approve-builder-fee
+      - allowance
+      - smart-call
+      - multi-smart-call
+      - activate
+      - activate-trading
+      - stake-delegation
+      - stake-nomination
+      - stake-undelegation
+      - complete-withdrawal
+      - stake-complete-deposit
+      - take-reward
+      - pool-creation
+      - edit-pool
+      - governance-vote
+      - unjail
+      - importance-transfer
+      - transfer-stake
+      - rebond-stake
+      - chill
+      - cross-chain-send
+      - accept-deposit
+      - reject-deposit
+      - create-referral
+      - set-referral
+      type: string
+    EnterMasterPassword:
+      properties:
+        masterPassword:
+          description: Withdrawal password (also known as Master Password)
+          type: string
+      required:
+      - masterPassword
+      type: object

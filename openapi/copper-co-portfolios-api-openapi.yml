@@ -1,0 +1,513 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Portfolios API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: portfolios
+paths:
+  /portfolios:
+    get:
+      description: Retrieve your portfolios (in UI terms - accounts)
+      parameters:
+      - description: Filter by portfolio types. [See details](/enums/PortfolioType)
+        example:
+        - custody,external
+        in: query
+        name: portfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - description: Filter by portfolio types not in. [See details](/enums/PortfolioType)
+        example:
+        - trading,trading-vault
+        in: query
+        name: excludedPortfolioTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      - description: Filter by portfolio id
+        in: query
+        name: portfolioId
+        required: false
+        schema:
+          type: string
+      - description: Filter by organization id
+        example:
+        - CPTL
+        in: query
+        name: organizationId
+        required: false
+        schema:
+          type: string
+      - description: Filter by is active
+        in: query
+        name: isActive
+        required: false
+        schema:
+          default: 'true'
+          type: boolean
+      - description: Filter only DeFi vaults
+        in: query
+        name: isDefiVault
+        required: false
+        schema:
+          type: boolean
+      - description: Filter by signing enabled signing flow type
+        in: query
+        name: signingFlowType
+        required: false
+        schema:
+          $ref: '#/components/schemas/SigningFlowType'
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolios'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Portfolios
+      tags:
+      - portfolios
+    post:
+      description: Create a new portfolio
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePortfolio'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Portfolio
+      tags:
+      - portfolios
+  /portfolios/{portfolioId}:
+    delete:
+      parameters:
+      - in: path
+        name: portfolioId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Archive Portfolio
+      tags:
+      - portfolios
+    get:
+      parameters:
+      - in: path
+        name: portfolioId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Portfolio'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Retrieve Portfolio by ID
+      tags:
+      - portfolios
+components:
+  schemas:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    AutodiscoveredAccountStatus:
+      enum: []
+      type: string
+    BalanceType:
+      enum:
+      - real
+      - margin
+      type: string
+    PortfolioExtra:
+      properties:
+        autodiscoveredAccountStatus:
+          $ref: '#/components/schemas/AutodiscoveredAccountStatus'
+          description: Sub-status used to determine the state of walled-garden or clearloop portfolio
+        baseCurrency:
+          description: Base currency for external account that use margin pair
+          type: string
+        clearLoopDelegationsBlocked:
+          description: Portfolio Delegations are disabled/blocked
+          type: boolean
+        clearLoopPortfolioId:
+          description: Identifier of a ClearLoop portfolio, if any
+          type: string
+        clearLoopUnDelegationsBlocked:
+          description: Portfolio Undelegations are disabled/blocked
+          type: boolean
+        clientAccountId:
+          description: Unique client exchange's account identifier used for ClearLoop
+          type: string
+        customerId:
+          description: External customer identifier from an exchange
+          type: string
+        exchange:
+          description: External exchange associated with this portfolio
+          examples:
+          - okex
+          type: string
+        exchangeAccountType:
+          $ref: '#/components/schemas/ExchangeAccountType'
+          description: External portfolio exchange account type
+        externalAccountId:
+          description: Identifier of an external third-party account related to the portfolio
+          type: string
+        parentPortfolioId:
+          description: Identifier of a parent portfolio, if any
+          type: string
+        quoteCurrency:
+          description: Quote currency for external account that use margin pair
+          type: string
+        showWalletBalance:
+          $ref: '#/components/schemas/BalanceType'
+          description: Type of balance shown for the external account. [See details](/enums/BalanceType)
+        usdWithdrawalLimit:
+          description: Withdrawal limit of the portfolio in USD
+          type: string
+      type: object
+    SigningFlowType:
+      enum: []
+      type: string
+    Portfolios:
+      properties:
+        portfolios:
+          description: List of portfolios
+          items:
+            $ref: '#/components/schemas/Portfolio'
+          type: array
+      required:
+      - portfolios
+      type: object
+    CreatePortfolio:
+      properties:
+        isDefiVault:
+          description: Flag to indicate if the portfolio is a DeFi vault
+          type: boolean
+        organizationId:
+          description: Organization id
+          type: string
+        parentPortfolioId:
+          description: Parent portfolio id
+          type: string
+        portfolioDescription:
+          description: Portfolio description
+          examples:
+          - My portfolio description
+          type: string
+        portfolioId:
+          description: Portfolio id
+          type: string
+        portfolioName:
+          description: Portfolio name
+          examples:
+          - My portfolio
+          type: string
+        portfolioType:
+          $ref: '#/components/schemas/PortfolioType'
+          description: Portfolio type. [See details](/enums/PortfolioType)
+          examples:
+          - custody
+      required:
+      - portfolioId
+      - portfolioName
+      - portfolioType
+      type: object
+    Portfolio:
+      properties:
+        createdAt:
+          description: Portfolio creation date
+          examples:
+          - '1617235200000'
+          type: string
+        createdBy:
+          description: Portfolio creator ID
+          type: string
+        extra:
+          $ref: '#/components/schemas/PortfolioExtra'
+          description: Portfolio extra data
+          type: object
+        isActive:
+          description: Portfolio active state
+          type: boolean
+        organizationId:
+          description: Organization ID
+          examples:
+          - 1fa95ae7-5f74-4258-a4c6-687b39d7941d
+          type: string
+        portfolioDescription:
+          description: Portfolio description
+          examples:
+          - My portfolio description
+          type: string
+        portfolioId:
+          description: Portfolio id
+          type: string
+        portfolioName:
+          description: Portfolio name
+          examples:
+          - My portfolio
+          type: string
+        portfolioType:
+          $ref: '#/components/schemas/PortfolioType'
+          description: Portfolio type. [See details](/enums/PortfolioType)
+          examples:
+          - custody
+        status:
+          $ref: '#/components/schemas/PortfolioStatus'
+          description: Portfolio status
+          examples:
+          - active
+        updatedAt:
+          description: Portfolio update date
+          examples:
+          - '1617235200000'
+          type: string
+        updatedBy:
+          description: Portfolio updater ID
+          type: string
+      required:
+      - portfolioId
+      - portfolioName
+      - portfolioType
+      - createdBy
+      - createdAt
+      - isActive
+      type: object
+    Unit:
+      properties: {}
+      type: object
+    PortfolioStatus:
+      enum: []
+      type: string
+    ExchangeAccountType:
+      enum: []
+      type: string

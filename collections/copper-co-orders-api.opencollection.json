@@ -1,0 +1,361 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Orders API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dry Run Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/dry-run-orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dry Run Order"
+        },
+        {
+          "info": {
+            "name": "Get Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/orders",
+            "params": [
+              {
+                "name": "portfolioIds",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of portfolio IDs to filter by"
+              },
+              {
+                "name": "currencies",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of currencies to filter by `base_currency` or `quote_currency`"
+              },
+              {
+                "name": "baseCurrencies",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of currencies to filter by `base_currency`"
+              },
+              {
+                "name": "quoteCurrencies",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of currencies to filter by `quote_currency`"
+              },
+              {
+                "name": "mainCurrencies",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of currencies to filter by `main_currency` (blockchain network)"
+              },
+              {
+                "name": "orderTypes",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of order types to filter by. [See details](/enums/OrderType)"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of statuses to filter by. [See details](/enums/OrderStatus)"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalOrderId",
+                "value": "6de6d2c3-ce34-4ae8-b26e-d050167fc5c3",
+                "type": "query",
+                "description": "Filter by external order ID"
+              },
+              {
+                "name": "transferChainId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by transfer chain ID"
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by blockchain transaction ID"
+              },
+              {
+                "name": "searchQuery",
+                "value": "",
+                "type": "query",
+                "description": "Search query by blockchain transaction ID, fromAddress or toAddress"
+              },
+              {
+                "name": "updatedSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter by updated date since timestamp"
+              },
+              {
+                "name": "createdSince",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created date since timestamp"
+              },
+              {
+                "name": "createdAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created date since timestamp"
+              },
+              {
+                "name": "createdAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter by created date to timestamp"
+              },
+              {
+                "name": "terminatedAtFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter by terminated date since timestamp"
+              },
+              {
+                "name": "terminatedAtTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter by terminated date to timestamp"
+              },
+              {
+                "name": "portfolioTypes",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of portfolio types to filter by. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "excludedPortfolioTypes",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of portfolio types to exclude. [See details](/enums/PortfolioType)"
+              },
+              {
+                "name": "counterpartyId",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get Orders"
+        },
+        {
+          "info": {
+            "name": "Create Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/orders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create Order"
+        },
+        {
+          "info": {
+            "name": "Create Multiple Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/orders/",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk orders creation. If the execution of an order fails, it will not affect the execution of other orders. Failed orders will be returned in the response. The bulk size should be less than 50 orders."
+        },
+        {
+          "info": {
+            "name": "Accept Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/orders/:acceptOtcOrderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "acceptOtcOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Accept counterparty settlement order"
+        },
+        {
+          "info": {
+            "name": "Cancel Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/orders/:cancelOrderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "cancelOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel Order"
+        },
+        {
+          "info": {
+            "name": "Approve (co-sign) Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/orders/:coSignOrderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "coSignOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Approve (co-sign) Order"
+        },
+        {
+          "info": {
+            "name": "Get Order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Order by ID"
+        },
+        {
+          "info": {
+            "name": "Provide master password for Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/orders/:orderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Provide master password for Order"
+        },
+        {
+          "info": {
+            "name": "Start Signing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/orders/:startSigningOrderId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startSigningOrderId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Start crypto signing for an order"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

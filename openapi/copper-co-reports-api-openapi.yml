@@ -1,0 +1,587 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Reports API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: reports
+paths:
+  /reports/lending:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLendingReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Lending Report
+      tags:
+      - reports
+  /reports/orders/net:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrdersNetReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Orders NET Report
+      tags:
+      - reports
+  /reports/stake/orders:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStakeOrdersReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Stake Orders Report
+      tags:
+      - reports
+  /reports/stake/rewards:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateStakeRewardsReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Stake Rewards Report
+      tags:
+      - reports
+  /reports/wallets/net-asset-values:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Position Statement Report
+      tags:
+      - reports
+  /reports/wallets/wallets-snapshots:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWalletReport'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Balance Report
+      tags:
+      - reports
+components:
+  schemas:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    CreateLendingReport:
+      properties:
+        fromDate:
+          description: Optional date when provided the report will only contain lending information from this date onward (inclusive)
+          type: string
+        loanSide:
+          $ref: '#/components/schemas/LoanSide'
+          description: The loan side to filter by. [See details](/enums/LoanSide)
+          examples:
+          - lend,borrow
+        organizationId:
+          description: Unique ID of the organisation
+          type: string
+        reportType:
+          $ref: '#/components/schemas/LendingReportType'
+          description: The type of the report to generate. [See details](/enums/LendingReportType)
+          examples:
+          - outstanding-loans-report,loan-activity-report,loan-fees-report
+        toDate:
+          description: Optional date when provided the report will only contain lending information up to this date (inclusive)
+          type: string
+      required:
+      - organizationId
+      - reportType
+      type: object
+    StakeReportTypes:
+      enum:
+      - rewards
+      - staking-orders
+      type: string
+    LoanSide:
+      enum:
+      - lend
+      - borrow
+      type: string
+    NetReportType:
+      enum:
+      - transfers
+      - orders
+      - transactions
+      - trading
+      type: string
+    CreateStakeOrdersReport:
+      properties:
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+        reportType:
+          $ref: '#/components/schemas/StakeReportTypes'
+          description: Report type. [See details](/enums/StakeReportTypes)
+        terminatedAtFrom:
+          description: Timestamp in milliseconds of when orders were terminated from
+          type: string
+        terminatedAtTo:
+          description: Timestamp in milliseconds of when orders were terminated to
+          type: string
+      required:
+      - terminatedAtTo
+      type: object
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string
+    LendingReportType:
+      enum:
+      - outstanding-loans-report
+      - loan-activity-report
+      - loan-fees-report
+      type: string
+    Report:
+      properties: {}
+      type: object
+    CreateWalletReport:
+      properties:
+        dateFrom:
+          description: Timestamp in milliseconds for the initial report entry
+          type: string
+        dateTo:
+          description: Timestamp in milliseconds for the final report entry
+          type: string
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      required:
+      - dateFrom
+      - dateTo
+      type: object
+    CreateStakeRewardsReport:
+      properties:
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+        reportType:
+          $ref: '#/components/schemas/StakeReportTypes'
+          description: Report type. [See details](/enums/StakeReportTypes)
+        terminatedAtFrom:
+          description: Timestamp in milliseconds of when orders were terminated from
+          type: string
+        terminatedAtTo:
+          description: Timestamp in milliseconds of when orders were terminated to
+          type: string
+      required:
+      - terminatedAtTo
+      - reportType
+      type: object
+    CreateOrdersNetReport:
+      properties:
+        orderTypes:
+          description: List of order types for the report. [See details](/enums/OrderType)
+          examples:
+          - buy,sell
+          items:
+            $ref: '#/components/schemas/OrderType'
+          type: array
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+        reportType:
+          $ref: '#/components/schemas/NetReportType'
+          description: Group of orders to be included in the report. [See details](/enums/NetReportType)
+        terminatedAtFrom:
+          description: Timestamp in milliseconds of when orders were terminated from
+          type: string
+        terminatedAtTo:
+          description: Timestamp in milliseconds of when orders were terminated to
+          type: string
+      required:
+      - terminatedAtFrom
+      - terminatedAtTo
+      - reportType
+      type: object

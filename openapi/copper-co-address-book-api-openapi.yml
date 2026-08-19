@@ -1,0 +1,572 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Address Book API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: address-book
+paths:
+  /crypto-addresses:
+    get:
+      description: Retrieve information about crypto addresses in an organization's address book
+      parameters:
+      - description: Filter by crypto address ids
+        in: query
+        name: cryptoAddressIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter by currencies
+        example:
+        - BTC,ETH
+        in: query
+        name: currencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter by main currencies
+        example:
+        - BTC,ETH
+        in: query
+        name: mainCurrencies
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter by address tags
+        in: query
+        name: addressTags
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+      - description: Filter by addresses
+        example:
+        - address1,address2
+        in: query
+        name: addresses
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Filter by memo
+        in: query
+        name: memo
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '500'
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - description: Filter only whitelisted addresses
+        in: query
+        name: isWhitelist
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Filter by address types. [See details](/enums/AddressType)
+        example:
+        - smart-contract
+        in: query
+        name: addressTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/AddressType'
+          type: array
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoAddresses'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Crypto Addresses
+      tags:
+      - address-book
+    post:
+      description: Create a new crypto address in an organization's address book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCryptoAddress'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoAddress'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Crypto Address
+      tags:
+      - address-book
+  /crypto-addresses/{cryptoAddressId}:
+    delete:
+      description: Deactivate a crypto address in an organization's address book
+      parameters:
+      - in: path
+        name: cryptoAddressId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unit'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Deactivate Crypto Address
+      tags:
+      - address-book
+    get:
+      description: Retrieve information about a crypto address in an organization's address book
+      parameters:
+      - in: path
+        name: cryptoAddressId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CryptoAddress'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Crypto Address by ID
+      tags:
+      - address-book
+components:
+  schemas:
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
+    AddressTag:
+      enum: []
+      type: string
+    CryptoAddress:
+      properties:
+        _embedded:
+          $ref: '#/components/schemas/CryptoAddressEmbedded'
+          description: Additional information for this crypto address
+          type: object
+        acceptTokens:
+          description: Indicates an address can be used for tokens on the same blockchain network
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: Address type. [See details](/enums/AddressType)
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: Address category. [See details](/enums/AddressCategory)
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          deprecated: true
+          description: Currency of an address
+          type: string
+        extra:
+          $ref: '#/components/schemas/CryptoAddressExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          deprecated: true
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        mainCurrency:
+          description: Main currency of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of an address
+          type: string
+        organizationId:
+          description: Organization id
+          type: string
+        portfolioIds:
+          deprecated: true
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      - createdBy
+      - createdAt
+      - isWhitelist
+      - addressType
+      type: object
+    AddressCategory:
+      enum:
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
+      type: string
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
+      type: object
+    CreateCryptoAddress:
+      properties:
+        acceptTokens:
+          description: Indicates, if address can be used for network tokens
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: '[See details](/enums/AddressType)'
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        isWhitelist:
+          default: 'false'
+          description: Indicates, if address is whitelisted
+          examples:
+          - 'false'
+          type: boolean
+        mainCurrency:
+          description: Main currency (network) of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of the address
+          type: string
+        portfolioIds:
+          description: Comma-separated portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      type: object
+    CryptoAddressExtra:
+      properties: {}
+      type: object
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
+      type: object
+    Unit:
+      properties: {}
+      type: object
+    CryptoAddresses:
+      properties:
+        cryptoAddresses:
+          description: List of crypto addresses
+          items:
+            $ref: '#/components/schemas/CryptoAddress'
+          type: array
+      required:
+      - cryptoAddresses
+      type: object
+    CurrencyConfigurationExtra:
+      properties: {}
+      type: object

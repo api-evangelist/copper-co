@@ -1,0 +1,214 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Network API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: network
+paths:
+  /organizations/{organizationId}/counterparties:
+    get:
+      description: Find participant of the Copper Network
+      parameters:
+      - description: Search string
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - description: Offset for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: string
+      - description: Limit for pagination
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '1000'
+          type: string
+      - description: Filter by connection status
+        in: query
+        name: isConnected
+        required: false
+        schema:
+          type: boolean
+      - description: Filter by counterparty IDs
+        in: query
+        name: counterpartyIds
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      - description: Counterparty types list. [See details](/enums/CounterpartyType)
+        in: query
+        name: counterpartyTypes
+        required: false
+        schema:
+          items:
+            $ref: '#/components/schemas/CounterpartyType'
+          type: array
+      - description: Include related counterparty IDs
+        in: query
+        name: includeRelatedCounterpartyIds
+        required: false
+        schema:
+          default: 'true'
+          type: boolean
+      - description: Include connections
+        in: query
+        name: includeConnections
+        required: false
+        schema:
+          default: 'true'
+          type: boolean
+      - description: Include counterparty details
+        in: query
+        name: includeCounterpartyDetails
+        required: false
+        schema:
+          default: 'true'
+          type: boolean
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Counterparties'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Counterparties
+      tags:
+      - network
+components:
+  schemas:
+    CounterpartyTag:
+      enum:
+      - featured
+      type: string
+    CounterpartyExtra:
+      properties:
+        exchangeId:
+          description: Counterparty exchange id
+          type: string
+      type: object
+    Counterparty:
+      properties:
+        backgroundImageId:
+          description: Background image id
+          type: string
+        counterpartyDescription:
+          description: Counterparty description
+          type: string
+        counterpartyId:
+          description: Counterparty ID
+          type: string
+        counterpartyName:
+          description: Counterparty name
+          type: string
+        counterpartyType:
+          $ref: '#/components/schemas/CounterpartyType'
+          description: Counterparty type. [See details](/enums/CounterpartyType)
+        extra:
+          $ref: '#/components/schemas/CounterpartyExtra'
+          description: Counterparty additional information
+          type: object
+        imageId:
+          description: Image id
+          type: string
+        networkTag:
+          description: Counterparty network handle
+          type: string
+        priority:
+          description: Counterparty priority indicator. The higher the value, the higher the priority
+          type: string
+        tags:
+          description: Counterparty tags. [See details](/enums/CounterpartyTag)
+          items:
+            $ref: '#/components/schemas/CounterpartyTag'
+          type: array
+      required:
+      - counterpartyId
+      - counterpartyName
+      - networkTag
+      - counterpartyType
+      type: object
+    CounterpartyType:
+      enum:
+      - standard
+      - clearloop-exchange
+      - agency-desk
+      type: string
+    Counterparties:
+      properties:
+        counterparties:
+          description: Counterparties list
+          items:
+            $ref: '#/components/schemas/Counterparty'
+          type: array
+      required:
+      - counterparties
+      type: object

@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Deposit Targets API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deposit-targets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Deposit Targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.copper.co/platform/deposit-targets",
+            "params": [
+              {
+                "name": "portfolioId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "depositTargetId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "externalId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "currency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "mainCurrency",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "targetTypes",
+                "value": "",
+                "type": "query",
+                "description": "[See details](/enums/DepositTargetType)"
+              },
+              {
+                "name": "statuses",
+                "value": "",
+                "type": "query",
+                "description": "[See details](/enums/DepositTargetStatus)"
+              },
+              {
+                "name": "sortDirection",
+                "value": "",
+                "type": "query",
+                "description": "[See details](/enums/SortingDirection)"
+              },
+              {
+                "name": "orderGroup",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "addresses",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "memo",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve information about all deposit targets in an organization"
+        },
+        {
+          "info": {
+            "name": "Create Deposit Target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/deposit-targets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new deposit target"
+        },
+        {
+          "info": {
+            "name": "Activate Deposit Target Currency",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.copper.co/platform/deposit-targets/:depositTargetId",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "depositTargetId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update deposit target"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

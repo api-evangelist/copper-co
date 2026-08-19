@@ -1,0 +1,2437 @@
+openapi: 3.2.0
+info:
+  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+
+    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
+
+    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  title: Copper Platform Trades API
+  version: latest
+servers:
+- description: platform.copper.co
+  url: https://api.copper.co/platform
+- description: demo.copper.co
+  url: https://api.stage.copper.co/platform
+- description: testnet.copper.co
+  url: https://api.testnet.copper.co/platform
+tags:
+- name: trades
+paths:
+  /trades:
+    get:
+      description: Retrieve a list of trades for the given organization.
+      parameters:
+      - description: Organization ID to scope the search
+        in: query
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - description: Filter by trade ID
+        in: query
+        name: tradeId
+        required: false
+        schema:
+          type: string
+      - description: Filter by external trade reference ID
+        in: query
+        name: tradeReferenceId
+        required: false
+        schema:
+          type: string
+      - description: Filter trades with effective date on or after this. Format is unix timestamp (ms)
+        in: query
+        name: effectiveDateFrom
+        required: false
+        schema:
+          type: string
+      - description: Filter trades with effective date on or before this. Format is unix timestamp (ms)
+        in: query
+        name: effectiveDateTo
+        required: false
+        schema:
+          type: string
+      - description: Filter trades with maturity date on or after this. Format is unix timestamp (ms)
+        in: query
+        name: maturityDateFrom
+        required: false
+        schema:
+          type: string
+      - description: Filter trades with maturity date on or before this. Format is unix timestamp (ms)
+        in: query
+        name: maturityDateTo
+        required: false
+        schema:
+          type: string
+      - description: Filter by trade side (buy, sell, not-applicable)
+        in: query
+        name: tradeSide
+        required: false
+        schema:
+          $ref: '#/components/schemas/TradeSide'
+          type: string
+      - description: Filter by trade status
+        example:
+        - active
+        in: query
+        name: tradeStatus
+        required: false
+        schema:
+          $ref: '#/components/schemas/TradeStatus'
+          type: string
+      - description: Filter by trade type (forward, option, swap, other, not-applicable)
+        example:
+        - forward
+        in: query
+        name: tradeType
+        required: false
+        schema:
+          $ref: '#/components/schemas/TradeType'
+          type: string
+      - description: Filter by counterparty ID (creator or acceptor)
+        in: query
+        name: counterpartyId
+        required: false
+        schema:
+          type: string
+      - description: When true, includes collateral details in the response
+        in: query
+        name: includeCollateral
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes counterparty details in the response
+        in: query
+        name: includeCounterparties
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes trade actions in the response
+        in: query
+        name: includeTradeActions
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes collateral transactions in the response
+        in: query
+        name: includeCollateralTransactions
+        required: false
+        schema:
+          type: boolean
+      - description: Maximum number of results to return.
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: '100'
+          type: string
+      - description: Number of results to skip for pagination
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: '0'
+          type: string
+      - description: When true, returns only open trades; when false, returns only closed trades
+        in: query
+        name: isOpen
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trades'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Trades
+      tags:
+      - trades
+    post:
+      description: Initiate a new trade. The counterparty will need to accept the trade.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTrade'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Trade
+      tags:
+      - trades
+  /trades/{acceptClosureTradeId}:
+    patch:
+      description: Accept a pending trade closure initiated by the counterparty.
+      parameters:
+      - description: application/vnd.accept-close-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: acceptClosureTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.accept-close-trade+json:
+            schema:
+              $ref: '#/components/schemas/ActionTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.accept-close-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Accept Trade Close
+      tags:
+      - trades
+  /trades/{acceptDefaultTradeId}:
+    patch:
+      description: Accept a pending trade default initiated by the counterparty.
+      parameters:
+      - description: application/vnd.accept-trade-default+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: acceptDefaultTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.accept-trade-default+json:
+            schema:
+              $ref: '#/components/schemas/ActionTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.accept-trade-default+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Accept Trade Default
+      tags:
+      - trades
+  /trades/{acceptTradeId}:
+    patch:
+      description: Accept a trade. This action can only be carried out by the counterparty.
+      parameters:
+      - description: application/vnd.accept-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: acceptTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.accept-trade+json:
+            schema:
+              $ref: '#/components/schemas/AcceptTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.accept-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Accept Trade
+      tags:
+      - trades
+  /trades/{cancelClosureTradeId}:
+    patch:
+      description: Cancel a pending trade closure before it has been accepted.
+      parameters:
+      - description: application/vnd.cancel-close-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelClosureTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-close-trade+json:
+            schema:
+              $ref: '#/components/schemas/ActionTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-close-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Trade Close
+      tags:
+      - trades
+  /trades/{cancelCollateralTopUpTradeId}:
+    patch:
+      description: Cancel a pending collateral top-up request before it has been reviewed.
+      parameters:
+      - description: application/vnd.cancel-collateral-top-up-request+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelCollateralTopUpTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-collateral-top-up-request+json:
+            schema:
+              $ref: '#/components/schemas/CancelTopUpRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-collateral-top-up-request+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Collateral Top-Up Request
+      tags:
+      - trades
+  /trades/{cancelCollateralTradeId}:
+    patch:
+      description: Cancel a pending collateral release request before it has been reviewed.
+      parameters:
+      - description: application/vnd.cancel-collateral-release-request+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelCollateralTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-collateral-release-request+json:
+            schema:
+              $ref: '#/components/schemas/CancelCollateralReleaseRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-collateral-release-request+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Collateral Release Request
+      tags:
+      - trades
+  /trades/{cancelDefaultTradeId}:
+    patch:
+      description: Cancel a pending trade default before it has been accepted.
+      parameters:
+      - description: application/vnd.cancel-trade-default+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelDefaultTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-trade-default+json:
+            schema:
+              $ref: '#/components/schemas/ActionTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-trade-default+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Trade Default
+      tags:
+      - trades
+  /trades/{cancelTradeId}:
+    patch:
+      description: Cancel a trade. Can be initiated by either party before the trade is active.
+      parameters:
+      - description: application/vnd.cancel-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: cancelTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.cancel-trade+json:
+            schema:
+              $ref: '#/components/schemas/CancelTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Trade
+      tags:
+      - trades
+  /trades/{closeTradeId}:
+    patch:
+      description: Initiate the closure of an active trade and release collateral.
+      parameters:
+      - description: application/vnd.close-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: closeTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.close-trade+json:
+            schema:
+              $ref: '#/components/schemas/CloseTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.close-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Close Trade
+      tags:
+      - trades
+  /trades/{collateralTopUpTradeId}:
+    patch:
+      description: Add additional collateral to an active trade.
+      parameters:
+      - description: application/vnd.top-up-collateral+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: collateralTopUpTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.top-up-collateral+json:
+            schema:
+              $ref: '#/components/schemas/TopUpTradeCollateral'
+      responses:
+        '200':
+          content:
+            application/vnd.top-up-collateral+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Top Up Trade Collateral
+      tags:
+      - trades
+  /trades/{declineTradeId}:
+    patch:
+      description: Decline a trade. This action can only be carried out by the counterparty.
+      parameters:
+      - description: application/vnd.decline-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: declineTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.decline-trade+json:
+            schema:
+              $ref: '#/components/schemas/DeclineTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.decline-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Decline Trade
+      tags:
+      - trades
+  /trades/{defaultTradeId}:
+    patch:
+      description: Mark a trade as defaulted and transfer collateral to the specified portfolio.
+      parameters:
+      - description: application/vnd.default-trade+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: defaultTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.default-trade+json:
+            schema:
+              $ref: '#/components/schemas/DefaultTrade'
+      responses:
+        '200':
+          content:
+            application/vnd.default-trade+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Default Trade
+      tags:
+      - trades
+  /trades/{requestCollateralReleaseTradeId}:
+    patch:
+      description: Request the release of collateral held against the trade.
+      parameters:
+      - description: application/vnd.request-collateral-release+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: requestCollateralReleaseTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.request-collateral-release+json:
+            schema:
+              $ref: '#/components/schemas/ReleaseCollateralRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.request-collateral-release+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Request Collateral Release
+      tags:
+      - trades
+  /trades/{requestCollateralTradeId}:
+    patch:
+      description: Request the counterparty to top up their collateral position on the trade.
+      parameters:
+      - description: application/vnd.request-collateral-top-up+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: requestCollateralTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.request-collateral-top-up+json:
+            schema:
+              $ref: '#/components/schemas/TopUpRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.request-collateral-top-up+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Request Collateral Top-Up
+      tags:
+      - trades
+  /trades/{reviewCollateralReleaseTradeId}:
+    patch:
+      description: Approve or reject a pending collateral release request.
+      parameters:
+      - description: application/vnd.review-collateral-release-request+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: reviewCollateralReleaseTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.review-collateral-release-request+json:
+            schema:
+              $ref: '#/components/schemas/ReviewCollateralReleaseRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.review-collateral-release-request+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Review Collateral Release Request
+      tags:
+      - trades
+  /trades/{reviewCollateraltradeId}:
+    patch:
+      description: Approve or reject a pending collateral top-up request.
+      parameters:
+      - description: application/vnd.review-collateral-top-up-request+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: reviewCollateraltradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.review-collateral-top-up-request+json:
+            schema:
+              $ref: '#/components/schemas/ReviewTopUpRequest'
+      responses:
+        '200':
+          content:
+            application/vnd.review-collateral-top-up-request+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Review Collateral Top-Up Request
+      tags:
+      - trades
+  /trades/{secureTradeId}:
+    patch:
+      description: Lock collateral positions against the trade obligations.
+      parameters:
+      - description: application/vnd.secure-collateral+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: secureTradeId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.secure-collateral+json:
+            schema:
+              $ref: '#/components/schemas/SecureTradeCollateral'
+      responses:
+        '200':
+          content:
+            application/vnd.secure-collateral+json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Secure Trade Collateral
+      tags:
+      - trades
+  /trades/{tradeId}:
+    get:
+      description: Retrieve a single trade by its unique identifier.
+      parameters:
+      - description: Organization ID to scope the request
+        in: query
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - description: Unique identifier of the trade to retrieve
+        in: query
+        name: tradeId
+        required: true
+        schema:
+          type: string
+      - description: When true, includes collateral details in the response
+        in: query
+        name: includeCollateral
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes counterparty details in the response
+        in: query
+        name: includeCounterparties
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes trade actions in the response
+        in: query
+        name: includeTradeActions
+        required: false
+        schema:
+          type: boolean
+      - description: When true, includes collateral transactions in the response
+        in: query
+        name: includeCollateralTransactions
+        required: false
+        schema:
+          type: boolean
+      - in: path
+        name: tradeId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trade'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Trade by ID
+      tags:
+      - trades
+components:
+  schemas:
+    ActionTrade:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeActionId:
+          description: Unique identifier of the trade action being acted upon
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeActionId
+      - tradeId
+      - organizationId
+      type: object
+    TradeActionExtra:
+      properties:
+        acceptedAt:
+          description: Time when the action was accepted. Format is unix timestamp (ms)
+          type: string
+        acceptedBy:
+          description: User ID of the person who accepted the action
+          type: string
+        cancelledAt:
+          description: Time when the action was cancelled. Format is unix timestamp (ms)
+          type: string
+        cancelledBy:
+          description: User ID of the person who cancelled the action
+          type: string
+        closeTradeAction:
+          $ref: '#/components/schemas/CloseTradeAction'
+          description: Details of the close trade action, if applicable
+          type: object
+        collateralProviderId:
+          description: Counterparty ID of the collateral provider involved in the action
+          type: string
+        defaultTradeAction:
+          $ref: '#/components/schemas/DefaultTradeAction'
+          description: Details of the default trade action, if applicable
+          type: object
+        rejectedAt:
+          description: Time when the action was rejected. Format is unix timestamp (ms)
+          type: string
+        rejectedBy:
+          description: User ID of the person who rejected the action
+          type: string
+        requestReleaseCollateralAction:
+          $ref: '#/components/schemas/RequestReleaseCollateralAction'
+          description: Details of the request release collateral action, if applicable
+          type: object
+        requestTopUpTradeAction:
+          $ref: '#/components/schemas/RequestTopUpTradeAction'
+          description: Details of the request top-up trade action, if applicable
+          type: object
+        secureCollateralAction:
+          $ref: '#/components/schemas/SecureCollateralAction'
+          description: Details of the secure collateral action, if applicable
+          type: object
+      type: object
+    ReviewType:
+      enum:
+      - approve
+      - reject
+      type: string
+    DeclineTrade:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to decline
+          type: string
+      required:
+      - organizationId
+      - tradeId
+      type: object
+    CloseTradeAction:
+      properties:
+        collateralDetails:
+          description: List of collateral positions being released as part of the close
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        toPortfolioId:
+          description: Portfolio ID to release collateral to upon closing
+          type: string
+      required:
+      - toPortfolioId
+      type: object
+    CloseTrade:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        toPortfolioId:
+          description: Portfolio ID to release collateral to upon closing; defaults to originating portfolio if omitted
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to close
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      type: object
+    ReviewTopUpRequest:
+      properties:
+        organizationId:
+          description: Organization ID of the reviewing party
+          type: string
+        reviewType:
+          $ref: '#/components/schemas/ReviewType'
+          description: 'Review decision: approve or reject. [See details](/enums/ReviewType)'
+        topUpDetails:
+          description: Collateral top-up details to apply when approving; required if reviewType is approve
+          items:
+            $ref: '#/components/schemas/TopUpTradeDetail'
+          type: array
+        tradeActionId:
+          description: Unique identifier of the top-up trade action being reviewed
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - tradeActionId
+      - reviewType
+      type: object
+    CancelTrade:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to cancel
+          type: string
+      required:
+      - organizationId
+      - tradeId
+      type: object
+    DefaultTradeAction:
+      properties:
+        defaultReason:
+          description: Optional reason for the default
+          type: string
+        toPortfolioId:
+          description: Portfolio ID to transfer defaulted collateral to
+          type: string
+      required:
+      - toPortfolioId
+      type: object
+    SecureCollateralAction:
+      properties:
+        amount:
+          description: Amount of collateral being secured
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        fromPortfolioId:
+          description: Portfolio ID the collateral is transferred from
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+        toPortfolioId:
+          description: Portfolio ID the collateral is transferred to
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      - fromPortfolioId
+      - toPortfolioId
+      type: object
+    CollateralTransactionType:
+      enum: []
+      type: string
+    CreateTrade:
+      properties:
+        collateralPortfolioId:
+          description: Portfolio ID to use as collateral source for the creator
+          type: string
+        counterpartyId:
+          description: Counterparty ID of the intended trade acceptor
+          type: string
+        effectiveDate:
+          description: Time when the trade becomes effective. Format is unix timestamp (ms)
+          type: string
+        maturityDate:
+          description: Time when the trade matures; omit for open-ended trades. Format is unix timestamp (ms)
+          type: string
+        organizationId:
+          description: Organization ID of the trade creator
+          type: string
+        requiredCollaterals:
+          description: List of collateral obligations required for this trade
+          items:
+            $ref: '#/components/schemas/InitialCollateral'
+          type: array
+        tradeReferenceId:
+          description: External reference ID for the trade, provided by the creator
+          type: string
+        tradeSide:
+          $ref: '#/components/schemas/TradeSide'
+          description: Side of the trade from the creator's perspective (buy, sell, not-applicable)
+        tradeType:
+          $ref: '#/components/schemas/TradeType'
+          description: Type of trade (forward, option, swap, other, not-applicable)
+      required:
+      - organizationId
+      - counterpartyId
+      - tradeReferenceId
+      - tradeType
+      - tradeSide
+      - effectiveDate
+      - requiredCollaterals
+      type: object
+    CollateralTransactionStatus:
+      enum:
+      - new
+      - order-created
+      - awaiting-funds
+      - awaiting-signature
+      - completed
+      - failed
+      type: string
+    CollateralActionDetails:
+      properties: {}
+      type: object
+    TopUpTradeCollateral:
+      properties:
+        collateralDetails:
+          description: List of collateral positions to add to the trade
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to top up collateral for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    DefaultTrade:
+      properties:
+        defaultReason:
+          description: Optional reason for the default
+          type: string
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        toPortfolioId:
+          description: Portfolio ID to transfer defaulted collateral to
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to default
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - toPortfolioId
+      type: object
+    Trades:
+      properties:
+        trades:
+          description: List of trades matching the query
+          items:
+            $ref: '#/components/schemas/Trade'
+          type: array
+      type: object
+    Collateral:
+      properties:
+        amount:
+          description: The amount of the transferred collateral
+          type: string
+        collateralId:
+          description: Unique identifier of the collateral
+          type: string
+        collateralType:
+          $ref: '#/components/schemas/CollateralType'
+          description: The type of collateral. [See details](/enums/CollateralType)
+        createdAt:
+          description: Timestamp in epoch milliseconds of the collateral creation
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        externalId:
+          description: The unique identifier of associated trade or loan
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account where the collateral is being held
+          type: string
+        unrealisedAmount:
+          description: The amount of pending collateral funds; can be positive and negative
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last collateral update
+          type: string
+      required:
+      - collateralId
+      - externalId
+      - collateralType
+      - amount
+      - currency
+      - mainCurrency
+      - createdAt
+      type: object
+    TradeActionType:
+      enum:
+      - secure-collateral
+      - close-trade
+      - default-trade
+      - top-up-collateral
+      - top-up-collateral-request
+      - release-collateral-request
+      type: string
+    ReleaseCollateralRequest:
+      properties:
+        collateralDetails:
+          description: List of collateral positions to release
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to request collateral release for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    Trade:
+      properties:
+        acceptedAt:
+          description: Time when the trade was accepted. Format is Unix timestamp (ms)
+          type: string
+        acceptedBy:
+          description: User ID of the person who accepted the trade
+          type: string
+        createdAt:
+          description: Time when the trade was created. Format is unix timestamp (ms)
+          type: string
+        createdBy:
+          description: User ID of the person who created the trade
+          type: string
+        effectiveDate:
+          description: Time when the trade becomes effective. Format is unix timestamp (ms)
+          type: string
+        embedded:
+          $ref: '#/components/schemas/TradeEmbedded'
+          description: Additional data linked to the trade
+          type: object
+        maturityDate:
+          description: Time when the trade matures; null if open-ended. Format is unix timestamp (ms)
+          type: string
+        requiredCollaterals:
+          description: List of collateral obligations required for this trade
+          items:
+            $ref: '#/components/schemas/RequiredCollateral'
+          type: array
+        securedCollaterals:
+          description: List of collateral positions already secured against this trade
+          items:
+            $ref: '#/components/schemas/Collateral'
+          type: array
+        tradeAcceptorCounterpartyId:
+          description: Counterparty ID of the trade acceptor
+          type: string
+        tradeAcceptorOrganizationId:
+          description: Organization ID of the trade acceptor
+          type: string
+        tradeAcceptorPortfolioId:
+          description: Portfolio ID of the trade acceptor used for collateral
+          type: string
+        tradeCreatorCounterpartyId:
+          description: Counterparty ID of the trade creator
+          type: string
+        tradeCreatorOrganizationId:
+          description: Organization ID of the trade creator
+          type: string
+        tradeCreatorPortfolioId:
+          description: Portfolio ID of the trade creator used for collateral
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+        tradeReferenceId:
+          description: External reference ID for the trade, provided by the creator
+          type: string
+        tradeSide:
+          $ref: '#/components/schemas/TradeSide'
+          description: Side of the trade from the creator's perspective (buy, sell, not-applicable)
+        tradeStatus:
+          $ref: '#/components/schemas/TradeStatus'
+          description: Current status of the trade
+        tradeType:
+          $ref: '#/components/schemas/TradeType'
+          description: Type of trade (e.g. forward, option, swap, other, not-applicable)
+        updatedAt:
+          description: Time when the trade was last updated. Format is unix timestamp (ms)
+          type: string
+        updatedBy:
+          description: User ID of the person who last updated the trade
+          type: string
+      required:
+      - tradeId
+      - tradeCreatorCounterpartyId
+      - tradeAcceptorCounterpartyId
+      - tradeReferenceId
+      - tradeType
+      - tradeSide
+      - tradeStatus
+      - effectiveDate
+      - createdAt
+      type: object
+    TradeActionStatus:
+      enum:
+      - new
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      - failed
+      - completed
+      - rejected
+      - processing
+      - requires-manual-intervention
+      type: string
+    TradeActionEmbedded:
+      properties:
+        collateralTransactions:
+          description: List of collateral transactions associated with this trade action
+          items:
+            $ref: '#/components/schemas/CollateralTransaction'
+          type: array
+      type: object
+    RequestTopUpTradeAction:
+      properties:
+        collateralActionDetails:
+          description: List of collateral positions requested in this top-up action
+          items:
+            $ref: '#/components/schemas/CollateralActionDetails'
+          type: array
+      required:
+      - collateralActionDetails
+      type: object
+    SecureTradeCollateral:
+      properties:
+        collateralDetails:
+          description: List of collateral positions to secure for this trade
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to secure collateral for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    TradeAction:
+      properties:
+        acceptorCounterpartyId:
+          description: Counterparty ID of the party who must respond to the action
+          type: string
+        actionType:
+          $ref: '#/components/schemas/TradeActionType'
+          description: The type of the action. [See details](/enums/TradeActionType)
+        createdAt:
+          description: Time when the action was created. Format is unix timestamp (ms)
+          type: string
+        createdBy:
+          description: User ID of the person who created the action
+          type: string
+        embedded:
+          $ref: '#/components/schemas/TradeActionEmbedded'
+          description: Additional data linked to the trade
+          type: object
+        extra:
+          $ref: '#/components/schemas/TradeActionExtra'
+          description: Additional metadata associated with this action
+          type: object
+        requestorCounterpartyId:
+          description: Counterparty ID of the party who initiated the action
+          type: string
+        status:
+          $ref: '#/components/schemas/TradeActionStatus'
+          description: The status of the action. [See details](/enums/TradeActionStatus)
+        terminatedAt:
+          description: Time when the action reached a terminal state. Format is unix timestamp (ms)
+          type: string
+        tradeActionId:
+          description: Unique identifier of the trade action
+          type: string
+        tradeId:
+          description: The ID of the trade
+          type: string
+        updatedAt:
+          description: Time when the action was last updated. Format is unix timestamp (ms)
+          type: string
+      required:
+      - tradeActionId
+      - tradeId
+      - status
+      - actionType
+      - createdBy
+      - createdAt
+      - requestorCounterpartyId
+      type: object
+    CancelCollateralReleaseRequest:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeActionId:
+          description: Unique identifier of the collateral release trade action to cancel
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - tradeActionId
+      type: object
+    TradeType:
+      enum: []
+      type: string
+    TradeSide:
+      enum: []
+      type: string
+    CancelTopUpRequest:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeActionId:
+          description: Unique identifier of the top-up trade action to cancel
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - tradeActionId
+      type: object
+    CollateralArrangementType:
+      enum:
+      - title-transfer
+      - pledge
+      type: string
+    TradeEmbedded:
+      properties:
+        tradeActions:
+          description: List of actions performed on this trade
+          items:
+            $ref: '#/components/schemas/TradeAction'
+          type: array
+      type: object
+    CollateralType:
+      enum:
+      - trade-collateral
+      - loan-collateral
+      - external-collateral
+      type: string
+    AcceptTrade:
+      properties:
+        collateralPortfolioId:
+          description: Portfolio ID to use as collateral source for the acceptor
+          type: string
+        organizationId:
+          description: Organization ID of the trade acceptor
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to accept
+          type: string
+      required:
+      - organizationId
+      - tradeId
+      type: object
+    CollateralTransaction:
+      properties:
+        adjustmentTaskId:
+          description: The ID of the adjustment task that created this collateral transaction
+          type: string
+        amount:
+          description: The amount of the trade collateral transaction
+          type: string
+        collateralId:
+          description: The unique identifier of associated trade or loan
+          type: string
+        collateralTransactionId:
+          description: Unique identifier of the collateral collateral transaction
+          type: string
+        collateralTransactionType:
+          $ref: '#/components/schemas/CollateralTransactionType'
+          description: The type of the collateral transaction
+        counterpartyOrderId:
+          description: The underlying deposit id
+          type: string
+        createdAt:
+          description: Timestamp in epoch milliseconds of the collateral transaction creation
+          type: string
+        createdBy:
+          description: The ID of the user whose action resulted in the creation of the collateral transaction
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        fromPortfolioId:
+          description: The account that funds are transferred out of. Obfuscated depending on collateral transaction type and requestor
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        orderId:
+          description: The underlying withdrawal id
+          type: string
+        status:
+          $ref: '#/components/schemas/CollateralTransactionStatus'
+          description: The status of the collateral transaction. [See details](/enums/CollateralTransactionStatus)
+        terminatedAt:
+          description: Timestamp in epoch milliseconds of the collateral transaction termination
+          type: string
+        toPortfolioId:
+          description: The account that funds are transferred to. Obfuscated depending on collateral transaction type and requestor
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last collateral transaction update
+          type: string
+      required:
+      - collateralTransactionId
+      - collateralId
+      - collateralTransactionType
+      - amount
+      - currency
+      - mainCurrency
+      - status
+      - createdAt
+      type: object
+    TopUpRequest:
+      properties:
+        collateralDetails:
+          description: List of collateral positions requested in the top-up
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to request a collateral top-up for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    TopUpTradeDetail:
+      properties:
+        collateralId:
+          description: Unique identifier of the collateral being used for the top-up
+          type: string
+        fromPortfolioId:
+          description: Portfolio ID from which the top-up trade is being initiated
+          type: string
+      required:
+      - fromPortfolioId
+      - collateralId
+      type: object
+    ReviewCollateralReleaseRequest:
+      properties:
+        organizationId:
+          description: Organization ID of the reviewing party
+          type: string
+        reviewType:
+          $ref: '#/components/schemas/ReviewType'
+          description: 'Review decision: approve or reject. [See details](/enums/ReviewType)'
+        tradeActionId:
+          description: Unique identifier of the collateral release trade action being reviewed
+          type: string
+        tradeId:
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - tradeActionId
+      - reviewType
+      type: object
+    InitialCollateral:
+      properties:
+        amount:
+          description: Required collateral amount
+          type: string
+        collateralArrangementType:
+          $ref: '#/components/schemas/CollateralArrangementType'
+          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
+        collateralProviderCounterpartyId:
+          description: Counterparty ID of the party providing the collateral
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      - collateralProviderCounterpartyId
+      - collateralArrangementType
+      type: object
+    CollateralDetails:
+      properties:
+        amount:
+          description: Amount of collateral
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        fromPortfolioId:
+          description: Portfolio ID to transfer collateral from
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+        toPortfolioId:
+          description: Portfolio ID to transfer collateral to
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      type: object
+    RequiredCollateral:
+      properties:
+        amount:
+          description: Required collateral amount
+          type: string
+        collateralArrangementType:
+          $ref: '#/components/schemas/CollateralArrangementType'
+          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
+        collateralId:
+          description: Unique identifier of the collateral record
+          type: string
+        collateralProviderCounterpartyId:
+          description: Counterparty ID of the party providing the collateral
+          type: string
+        collateralReceiverCounterpartyId:
+          description: Counterparty ID of the party receiving the collateral
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+        tradeId:
+          description: Unique identifier of the trade this collateral is associated with
+          type: string
+      required:
+      - collateralId
+      - tradeId
+      - amount
+      - currency
+      - mainCurrency
+      - collateralProviderCounterpartyId
+      - collateralReceiverCounterpartyId
+      - collateralArrangementType
+      type: object
+    RequestReleaseCollateralAction:
+      properties:
+        collateralActionDetails:
+          description: List of collateral positions requested for release in this action
+          items:
+            $ref: '#/components/schemas/CollateralActionDetails'
+          type: array
+      required:
+      - collateralActionDetails
+      type: object
+    TradeStatus:
+      enum: []
+      type: string

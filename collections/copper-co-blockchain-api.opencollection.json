@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Copper Platform Blockchain API",
+    "version": "latest"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "blockchain",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.copper.co/platform/blockchain/validate-address",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate Address"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,878 @@
+{
+  "item": [
+    {
+      "id": "f576bb14-0338-4de8-b118-745141f9b1d2",
+      "name": "wallets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea969300-5423-405a-82fd-3780a653ccae",
+          "name": "Get Wallets",
+          "request": {
+            "name": "Get Wallets",
+            "description": {
+              "content": "When you perform a request without specifying any additional filters like `portfolioId` or `currency`, the method returns all wallets which have non-zero balances only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wallets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "portfolioId",
+                  "value": "<string>",
+                  "description": "Filter by portfolio id"
+                },
+                {
+                  "disabled": false,
+                  "key": "currencies",
+                  "value": "<string>",
+                  "description": "Filter wallets by currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "currencies",
+                  "value": "<string>",
+                  "description": "Filter wallets by currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "mainCurrency",
+                  "value": "<string>",
+                  "description": "Filter wallets by main currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter wallets by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "portfolioTypes",
+                  "value": "<string>",
+                  "description": "Filter wallets by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedPortfolioTypes",
+                  "value": "<string>",
+                  "description": "Exclude wallets by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "excludedPortfolioTypes",
+                  "value": "<string>",
+                  "description": "Exclude wallets by portfolio types. [See details](/enums/PortfolioType)"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonEmpty",
+                  "value": "false",
+                  "description": "Filter only wallets with non-zero balance"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<string>",
+                  "description": "Limit for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Offset for pagination"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d57e061a-38ca-4e36-83c0-14dff922786e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"wallets\": [\n    {\n      \"walletId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"currency\": \"string\",\n      \"available\": \"string\",\n      \"balance\": \"string\",\n      \"createdAt\": \"string\",\n      \"extra\": {\n        \"externalAccountId\": \"string\"\n      },\n      \"locked\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioType\": \"<string>\",\n      \"reserve\": \"string\",\n      \"stakeBalance\": \"string\",\n      \"totalBalance\": \"string\",\n      \"updatedAt\": \"string\"\n    },\n    {\n      \"walletId\": \"string\",\n      \"portfolioId\": \"string\",\n      \"currency\": \"string\",\n      \"available\": \"string\",\n      \"balance\": \"string\",\n      \"createdAt\": \"string\",\n      \"extra\": {\n        \"externalAccountId\": \"string\"\n      },\n      \"locked\": \"string\",\n      \"mainCurrency\": \"string\",\n      \"organizationId\": \"string\",\n      \"portfolioType\": \"<string>\",\n      \"reserve\": \"string\",\n      \"stakeBalance\": \"string\",\n      \"totalBalance\": \"string\",\n      \"updatedAt\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc3df99c-5c4f-4e13-beee-9ebe02a59ed3",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "479e90be-e5cc-4a60-bdca-6bee5dcca186",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50676c73-d182-4cc9-9f08-54b201ec1fa9",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "portfolioId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "currencies",
+                      "value": "BTC,ETH"
+                    },
+                    {
+                      "key": "mainCurrency",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "portfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excludedPortfolioTypes",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "nonEmpty",
+                      "value": "false"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7e6c330a-7531-45fe-b665-c908b3eb2f53",
+          "name": "Create Wallet",
+          "request": {
+            "name": "Create Wallet",
+            "description": {
+              "content": "Create a new wallet",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wallets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"walletId\": \"<string>\",\n  \"portfolioId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"mainCurrency\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a5913a8-6c45-4957-bc4f-0a89fc4d0998",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"walletId\": \"<string>\",\n  \"portfolioId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"mainCurrency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"walletId\": \"string\",\n  \"portfolioId\": \"string\",\n  \"currency\": \"string\",\n  \"available\": \"string\",\n  \"balance\": \"string\",\n  \"createdAt\": \"string\",\n  \"extra\": {\n    \"externalAccountId\": \"string\"\n  },\n  \"locked\": \"string\",\n  \"mainCurrency\": \"string\",\n  \"organizationId\": \"string\",\n  \"portfolioType\": \"<string>\",\n  \"reserve\": \"string\",\n  \"stakeBalance\": \"string\",\n  \"totalBalance\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba09ed5c-cd94-40d2-b92f-ac5d865bc441",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"walletId\": \"<string>\",\n  \"portfolioId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"mainCurrency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eda7c671-be16-4ec1-b117-8268553aa38b",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"walletId\": \"<string>\",\n  \"portfolioId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"mainCurrency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c33cf86-ef6b-4147-b58f-6a0bee294a6a",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"walletId\": \"<string>\",\n  \"portfolioId\": \"<string>\",\n  \"currency\": \"<string>\",\n  \"mainCurrency\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "379ffac7-758e-4d70-a924-6b8f5ea70978",
+          "name": "Get Wallet by ID",
+          "request": {
+            "name": "Get Wallet by ID",
+            "description": {
+              "content": "Fetch wallet details",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "wallets",
+                ":walletId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "walletId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0d0b939c-d838-4885-9498-e5fdf7f216e8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets",
+                    ":walletId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"walletId\": \"string\",\n  \"portfolioId\": \"string\",\n  \"currency\": \"string\",\n  \"available\": \"string\",\n  \"balance\": \"string\",\n  \"createdAt\": \"string\",\n  \"extra\": {\n    \"externalAccountId\": \"string\"\n  },\n  \"locked\": \"string\",\n  \"mainCurrency\": \"string\",\n  \"organizationId\": \"string\",\n  \"portfolioType\": \"<string>\",\n  \"reserve\": \"string\",\n  \"stakeBalance\": \"string\",\n  \"totalBalance\": \"string\",\n  \"updatedAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba3a999e-c387-4fc1-943c-8abb20dab3fc",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets",
+                    ":walletId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "41d7f570-947a-4328-8dc0-6589c4b9b0ee",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets",
+                    ":walletId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d18ab394-9e73-4b2e-ae7f-3f77ae1eb4d8",
+              "name": "Conflict",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "wallets",
+                    ":walletId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "walletId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.copper.co/platform",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "28ba9264-f0c0-4c6c-9084-6139a87c2d3e",
+    "name": "Copper Platform Wallets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.\nBy default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.\nWhen interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision",
+      "type": "text/plain"
+    }
+  }
+}
