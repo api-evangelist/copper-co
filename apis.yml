@@ -21,6 +21,19 @@ tags:
 - Company
 - Digital Asset Custody
 - Cryptocurrency
+- Financial-Services
+- Institutional Finance
+- Prime Brokerage
+- Collateral Management
+- Lending
+- Settlement
+- Staking
+- Blockchain
+- Treasury Management
+tags_raw:
+- Company
+- Digital Asset Custody
+- Cryptocurrency
 - Financial Services
 - Institutional Finance
 - Prime Brokerage
@@ -37,6 +50,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -51,6 +66,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Address Book
+  tags_raw:
   - address-book
   properties:
   - type: OpenAPI
@@ -65,6 +82,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Blockchain
+  tags_raw:
   - blockchain
   properties:
   - type: OpenAPI
@@ -93,6 +112,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Currency
+  tags_raw:
   - currencies
   properties:
   - type: OpenAPI
@@ -135,6 +156,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - File
+  tags_raw:
   - files
   properties:
   - type: OpenAPI
@@ -149,6 +172,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Lending
+  tags_raw:
   - lending
   properties:
   - type: OpenAPI
@@ -163,6 +188,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Network
+  tags_raw:
   - network
   properties:
   - type: OpenAPI
@@ -177,6 +204,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Order
+  tags_raw:
   - orders
   properties:
   - type: OpenAPI
@@ -191,6 +220,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Organization
+  tags_raw:
   - organizations
   properties:
   - type: OpenAPI
@@ -205,6 +236,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Portfolio
+  tags_raw:
   - portfolios
   properties:
   - type: OpenAPI
@@ -219,6 +252,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Reports
+  tags_raw:
   - reports
   properties:
   - type: OpenAPI
@@ -261,6 +296,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Trades
+  tags_raw:
   - trades
   properties:
   - type: OpenAPI
@@ -275,6 +312,8 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
+  - Wallets
+  tags_raw:
   - wallets
   properties:
   - type: OpenAPI
