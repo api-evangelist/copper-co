@@ -10,6 +10,18 @@ description: 'Copper is an institutional digital asset infrastructure provider h
   with an API key plus a per-request HMAC-SHA256 signature, publishes OpenAPI 3.1 specifications
   and a Postman collection, and offers a webhook system for real-time order, deposit,
   withdrawal, ClearLoop and address-book events.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.sanity.io/images/ih0ldmk7/production/7362d67a23ba5de367175e92536225788ede190c-2400x1181.jpg
 url: https://raw.githubusercontent.com/api-evangelist/copper-co/refs/heads/main/apis.yml
 x-type: company
