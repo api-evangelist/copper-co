@@ -340,6 +340,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/copper-co-capability-edges.yml
+  name: Copper.co Business Capability Map
 - type: Overlay
   url: overlays/copper-co-platform-overlay.yaml
 - type: Website
