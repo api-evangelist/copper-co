@@ -78,7 +78,7 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
-  - address-book
+  - Address Book
   tags_raw:
   - address-book
   properties:
@@ -308,7 +308,7 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
-  - trades
+  - Trades
   tags_raw:
   - trades
   properties:
