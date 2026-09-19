@@ -215,7 +215,7 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
-  - Network
+  - Networks
   tags_raw:
   - network
   properties:
@@ -323,7 +323,7 @@ apis:
   humanURL: https://developer.copper.co/api-reference/getting-started
   baseURL: https://api.copper.co/platform
   tags:
-  - Trades
+  - Trade
   tags_raw:
   - trades
   properties:
