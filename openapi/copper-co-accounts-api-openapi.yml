@@ -12,7 +12,9 @@ paths:
   /accounts:
     get:
       summary: Get accounts
-      description: <Warning>The `GET /accounts` API endpoint is deprecated and should not be used for new integrations. It will be removed in future releases.</Warning> To fetch portfolios, use the [`GET /portfolios`](/api-reference/portfolios/get-portfolios) endpoint instead.<br/> To retrieve wallets, use the [`GET /wallets`](/api-reference/wallets/get-wallets) endpoint.
+      description: 'The `GET /accounts` API endpoint is deprecated and should not be used for new integrations. It will be removed in future releases. To fetch portfolios, use the `GET /portfolios` endpoint instead.
+
+        To retrieve wallets, use the `GET /wallets` endpoint.'
       requestBody:
         content:
           application/json:
@@ -27,3 +29,5 @@ paths:
                 type: object
       tags:
       - Accounts
+      operationId: getAccounts
+      x-operation-id-source: derived

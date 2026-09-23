@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Wallets API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: wallets
+- name: Wallets
 paths:
   /wallets:
     get:
@@ -136,7 +132,9 @@ paths:
           description: Conflict
       summary: Get Wallets
       tags:
-      - wallets
+      - Wallets
+      operationId: getWallets
+      x-operation-id-source: derived
     post:
       description: Create a new wallet
       requestBody:
@@ -198,7 +196,9 @@ paths:
           description: Conflict
       summary: Create Wallet
       tags:
-      - wallets
+      - Wallets
+      operationId: postWallets
+      x-operation-id-source: derived
   /wallets/{walletId}:
     get:
       description: Fetch wallet details
@@ -262,33 +262,11 @@ paths:
           description: Conflict
       summary: Get Wallet by ID
       tags:
-      - wallets
+      - Wallets
+      operationId: getWalletsByWalletId
+      x-operation-id-source: derived
 components:
   schemas:
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    Wallets:
-      properties:
-        wallets:
-          description: List of wallets
-          items:
-            $ref: '#/components/schemas/Wallet'
-          type: array
-      required:
-      - wallets
-      type: object
-    WalletExtra:
-      properties:
-        externalAccountId:
-          description: Third-party identifier (ID of an external account)
-          type: string
-      type: object
     Wallet:
       properties:
         available:
@@ -342,6 +320,20 @@ components:
       - portfolioId
       - currency
       type: object
+    WalletExtra:
+      properties:
+        externalAccountId:
+          description: Third-party identifier (ID of an external account)
+          type: string
+      type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
     CreateWallet:
       properties:
         currency:
@@ -360,4 +352,14 @@ components:
       - walletId
       - portfolioId
       - currency
+      type: object
+    Wallets:
+      properties:
+        wallets:
+          description: List of wallets
+          items:
+            $ref: '#/components/schemas/Wallet'
+          type: array
+      required:
+      - wallets
       type: object

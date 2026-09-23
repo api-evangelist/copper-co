@@ -1,8 +1,8 @@
 openapi: 3.2.0
 info:
-  title: Copper Co Lending API
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
+  title: Copper Platform Lending API
   version: latest
-  description: 'Operations tagged lending across 2 of this provider''s published API definitions: copper-co-lending-openapi.json, copper-co-platform-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - description: platform.copper.co
   url: https://api.copper.co/platform
@@ -11,16 +11,9 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: lending
+- name: Lending
 paths:
   /organizations/{organizationId}/loans:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     get:
       description: Retrieve loans
       parameters:
@@ -30,7 +23,8 @@ paths:
         required: false
         schema:
           type: string
-      - in: query
+      - description: The list of loan ids to filter by
+        in: query
         name: loanIds
         required: false
         schema:
@@ -45,6 +39,13 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/LoanSide'
+          type: string
+      - description: The loan type to filter by. [See details](/enums/LoanType)
+        in: query
+        name: loanType
+        required: false
+        schema:
+          $ref: '#/components/schemas/LoanType'
           type: string
       - description: '[See details](/enums/LoanType)'
         in: query
@@ -81,6 +82,27 @@ paths:
       - description: Flag indicating if counterparties should be included in embedded
         in: query
         name: includeCounterparties
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if child loans should be included in embedded - Only applicable for agency lending parent loans
+        in: query
+        name: includeChildLoans
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if allocations should be included in embedded
+        in: query
+        name: includeLoanAllocations
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if loan interest should be included in embedded - Only applicable for bilateral loans
+        in: query
+        name: includeLoanInterest
         required: false
         schema:
           default: 'false'
@@ -171,75 +193,9 @@ paths:
           description: Conflict
       summary: Get Loans
       tags:
-      - lending
-    post:
-      description: Initiate loan creation. This action can only be carried out by the lender.
-      parameters:
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateLoan'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Create Loan
-      tags:
-      - lending
+      - Lending
+      operationId: getOrganizationsByOrganizationIdLoans
+      x-operation-id-source: derived
     patch:
       description: Obtain the loan LTV or needed collateral amount for given loan parameters.
       parameters:
@@ -313,15 +269,80 @@ paths:
           description: Conflict
       summary: Calculate Loan LTV Dry Run
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoans
+      x-operation-id-source: derived
+    post:
+      description: Initiate loan creation. This action can only be carried out by the lender.
+      parameters:
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateLoan'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Create Loan
+      tags:
+      - Lending
+      operationId: postOrganizationsByOrganizationIdLoans
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptExtensionLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the loan term extension request. Only requests that were initiated by the counterparty can be accepted.
       parameters:
@@ -400,15 +421,10 @@ paths:
           description: Conflict
       summary: Accept Loan Term Extension
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptExtensionLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptInterestLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the loan interest payment request.
       parameters:
@@ -487,15 +503,10 @@ paths:
           description: Conflict
       summary: Accept Loan Interest Payment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptInterestLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept a loan. This action can only be carried out by the borrower.
       parameters:
@@ -574,15 +585,10 @@ paths:
           description: Conflict
       summary: Accept Loan
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptRebalanceLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the loan rebalance request. Only a lender can carry out this action.
       parameters:
@@ -661,15 +667,10 @@ paths:
           description: Conflict
       summary: Accept Loan Rebalance
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptRebalanceLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptRepaymentLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the full or partial loan repayment request. Only requests that were initiated by the counterparty can be accepted.
       parameters:
@@ -748,15 +749,10 @@ paths:
           description: Conflict
       summary: Accept Loan Repayment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptRepaymentLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptRerateLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the loan interest rerate request. Only the borrower can carry out this action.
       parameters:
@@ -835,15 +831,10 @@ paths:
           description: Conflict
       summary: Accept Loan Rerate
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptRerateLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{acceptTopUpLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Accept the loan top up request. Only a borrower can carry out this action.
       parameters:
@@ -922,15 +913,10 @@ paths:
           description: Conflict
       summary: Accept Loan Top Up
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByAcceptTopUpLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{approveLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Approve a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.
       parameters:
@@ -1004,17 +990,89 @@ paths:
           description: Conflict
       summary: Approve Loan
       tags:
-      - lending
-  /organizations/{organizationId}/loans/{cancelExtensionLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByApproveLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{cancelDefaultLoanId}:
     patch:
-      description: Cancel the loan term extensino request. This action can be carried out by the borrower or the lender.
+      description: Cancel a default request for loan. This action can only be carried out by the lender.
+      parameters:
+      - description: application/vnd.cancel-loan-default+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: cancelDefaultLoanId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.cancel-loan-default+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Cancel Loan Default
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelDefaultLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{cancelExtensionLoanId}:
+    patch:
+      description: Cancel the loan term extension request. This action can be carried out by the borrower or the lender.
       parameters:
       - description: application/vnd.cancel-loan-term-extension+json
         in: header
@@ -1091,15 +1149,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Term Extension
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelExtensionLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelInterestLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel the loan interest payment request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
       parameters:
@@ -1178,15 +1231,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Interest Payment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelInterestLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel a loan that is awaiting acceptance. This action can be carried out by the lender or the borrower.
       parameters:
@@ -1260,15 +1308,10 @@ paths:
           description: Conflict
       summary: Cancel Loan
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelRebalanceLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel the loan rebalance request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
       parameters:
@@ -1347,15 +1390,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Rebalance
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelRebalanceLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelRepaymentLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel the full or partial loan repayment. This action can be carried out by the borrower or the lender.
       parameters:
@@ -1434,15 +1472,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Repayment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelRepaymentLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelRerateLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel the loan interest rerate request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
       parameters:
@@ -1521,15 +1554,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Rerate
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelRerateLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{cancelTopUpLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Cancel the loan top up request that is awaiting acceptance. This action can be carried out by the lender or the borrower.
       parameters:
@@ -1608,15 +1636,10 @@ paths:
           description: Conflict
       summary: Cancel Loan Top Up
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByCancelTopUpLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{confirmDisbursementLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Confirm the external disbursement of an off-platform managed loan. Only the lender can carry out this action.
       parameters:
@@ -1695,15 +1718,10 @@ paths:
           description: Conflict
       summary: Confirm External Disbursement
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByConfirmDisbursementLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{confirmInterestLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Confirm the external payment of interest. Only the lender can carry out this action.
       parameters:
@@ -1782,15 +1800,10 @@ paths:
           description: Conflict
       summary: Confirm External Interest Payment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByConfirmInterestLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{confirmRepaymentLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Confirm the external repayment of an off-platform managed loan. Only the lender can carry out this action.
       parameters:
@@ -1869,15 +1882,10 @@ paths:
           description: Conflict
       summary: Confirm External Repayment
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByConfirmRepaymentLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{confirmTopUpLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Confirm the external top up of an off-platform managed loan. Only the lender can carry out this action.
       parameters:
@@ -1956,15 +1964,10 @@ paths:
           description: Conflict
       summary: Confirm External Top Up
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByConfirmTopUpLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{defaultLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Default a loan that is in a defaultable state. This action can only be carried out by the lender.
       parameters:
@@ -2038,1059 +2041,10 @@ paths:
           description: Conflict
       summary: Default Loan
       tags:
-      - lending
-  /organizations/{organizationId}/loans/{estimateLeverageLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Obtain an estimated loan leverage ratio after taking into account requested loan amount and/or collateral amount adjustments.
-      parameters:
-      - description: application/vnd.estimate-loan-leverage-ratio+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: estimateLeverageLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.estimate-loan-leverage-ratio+json:
-            schema:
-              $ref: '#/components/schemas/EstimateLoanLeverageRatio'
-      responses:
-        '200':
-          content:
-            application/vnd.estimate-loan-leverage-ratio+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Estimate Loan Leverage Ratio
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{estimateLtvLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Obtain an estimated loan LTV after taking into account requested loan amount and/or collateral amount adjustments.
-      parameters:
-      - description: application/vnd.estimate-loan-ltv+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: estimateLtvLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.estimate-loan-ltv+json:
-            schema:
-              $ref: '#/components/schemas/EstimateLoanLtv'
-      responses:
-        '200':
-          content:
-            application/vnd.estimate-loan-ltv+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Estimate Loan LTV
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{extendTermLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Request loan term extension. Loan term extension can only be requested within five days of the loan reaching maturity. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
-      parameters:
-      - description: application/vnd.extend-loan-term+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: extendTermLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.extend-loan-term+json:
-            schema:
-              $ref: '#/components/schemas/ExtendLoan'
-      responses:
-        '200':
-          content:
-            application/vnd.extend-loan-term+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Extend Loan Term
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{loanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    get:
-      description: Retrieve a loan by its ID
-      parameters:
-      - description: Flag indicating if collaterals should be included in embedded
-        in: query
-        name: includeCollaterals
-        required: false
-        schema:
-          default: 'false'
-          type: boolean
-      - description: Flag indicating if counterparties should be included in embedded
-        in: query
-        name: includeCounterparties
-        required: false
-        schema:
-          default: 'false'
-          type: boolean
-      - description: Flag indicating if allocations should be included in embedded
-        in: query
-        name: includeLoanAllocations
-        required: false
-        schema:
-          default: 'false'
-          type: boolean
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: loanId
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Get Loan by ID
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{payInterestLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Create an interest payment request.
-      parameters:
-      - description: application/vnd.pay-loan-interest+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: payInterestLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.pay-loan-interest+json:
-            schema:
-              $ref: '#/components/schemas/PayInterest'
-      responses:
-        '200':
-          content:
-            application/vnd.pay-loan-interest+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Pay Loan Interest
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{rebalanceLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Create a loan rebalance request. This action can only be carried out by the borrower and must be accepted by the lender.
-      parameters:
-      - description: application/vnd.rebalance-loan+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: rebalanceLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.rebalance-loan+json:
-            schema:
-              $ref: '#/components/schemas/RebalanceLoan'
-      responses:
-        '200':
-          content:
-            application/vnd.rebalance-loan+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Rebalance Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{rejectLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Reject a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.
-      parameters:
-      - description: application/vnd.reject-loan+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: rejectLoanId
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/vnd.reject-loan+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Reject Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{repayLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Request the partial or full repayment of a loan. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
-      parameters:
-      - description: application/vnd.repay-loan+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: repayLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.repay-loan+json:
-            schema:
-              $ref: '#/components/schemas/RepayLoan'
-      responses:
-        '200':
-          content:
-            application/vnd.repay-loan+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Repay Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{rerateLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Request a new loan interest rerate. The new interest rate must be stated in BPS. This action can only be carried out by the lender.
-      parameters:
-      - description: application/vnd.rerate-loan+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: rerateLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.rerate-loan+json:
-            schema:
-              $ref: '#/components/schemas/RerateLoan'
-      responses:
-        '200':
-          content:
-            application/vnd.rerate-loan+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Rerate Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{secureCollateralLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Secure collateral for a loan. This action can only be carried out by the borrower and should be invoked for both initial and subsequent collateral top ups.
-      parameters:
-      - description: application/vnd.secure-collateral+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: secureCollateralLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.secure-collateral+json:
-            schema:
-              $ref: '#/components/schemas/AddCollateral'
-      responses:
-        '200':
-          content:
-            application/vnd.secure-collateral+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Secure Collateral Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{topUpLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Request a loan top up. This action can only be carried out by the lender and must be accepted by the borrower.
-      parameters:
-      - description: application/vnd.top-up-loan+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: topUpLoanId
-        required: true
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/vnd.top-up-loan+json:
-            schema:
-              $ref: '#/components/schemas/TopUpLoan'
-      responses:
-        '200':
-          content:
-            application/vnd.top-up-loan+json:
-              schema:
-                $ref: '#/components/schemas/Loan'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Top Up Loan
-      tags:
-      - lending
-  /organizations/{organizationId}/loans/{cancelDefaultLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
-    patch:
-      description: Cancel a default request for loan. This action can only be carried out by the lender.
-      parameters:
-      - description: application/vnd.cancel-loan-default+json
-        in: header
-        name: Content-Type
-        required: false
-        schema:
-          type: string
-      - in: path
-        name: organizationId
-        required: true
-        schema:
-          type: string
-      - in: path
-        name: cancelDefaultLoanId
-        required: true
-        schema:
-          type: string
-      responses:
-        '200':
-          content:
-            application/vnd.cancel-loan-default+json:
-              schema:
-                $ref: '#/components/schemas/Loan_2'
-          description: OK
-        '400':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - bad-request
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Bad Request
-        '403':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - forbidden
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Forbidden
-        '409':
-          content:
-            application/json:
-              schema:
-                properties:
-                  error:
-                    description: The machine-readable error code
-                    examples:
-                    - conflict
-                    type: string
-                  message:
-                    description: A human-readable message providing more details about the error
-                    type: string
-                type: object
-          description: Conflict
-      summary: Cancel Loan Default
-      tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByDefaultLoanId
+      x-operation-id-source: derived
   /organizations/{organizationId}/loans/{earlyTerminationLoanId}:
-    servers:
-    - description: platform.copper.co
-      url: https://api.copper.co/platform
-    - description: demo.copper.co
-      url: https://api.stage.copper.co/platform
-    - description: testnet.copper.co
-      url: https://api.testnet.copper.co/platform
     patch:
       description: Early terminate ClearLoop loans within the same portfolio. This action can only be initiated by the Agency Desk.
       parameters:
@@ -3169,314 +2123,1042 @@ paths:
           description: Conflict
       summary: Early Terminate Loan
       tags:
-      - lending
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByEarlyTerminationLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{estimateLeverageLoanId}:
+    patch:
+      description: Obtain an estimated loan leverage ratio after taking into account requested loan amount and/or collateral amount adjustments.
+      parameters:
+      - description: application/vnd.estimate-loan-leverage-ratio+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: estimateLeverageLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.estimate-loan-leverage-ratio+json:
+            schema:
+              $ref: '#/components/schemas/EstimateLoanLeverageRatio'
+      responses:
+        '200':
+          content:
+            application/vnd.estimate-loan-leverage-ratio+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Estimate Loan Leverage Ratio
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByEstimateLeverageLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{estimateLtvLoanId}:
+    patch:
+      description: Obtain an estimated loan LTV after taking into account requested loan amount and/or collateral amount adjustments.
+      parameters:
+      - description: application/vnd.estimate-loan-ltv+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: estimateLtvLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.estimate-loan-ltv+json:
+            schema:
+              $ref: '#/components/schemas/EstimateLoanLtv'
+      responses:
+        '200':
+          content:
+            application/vnd.estimate-loan-ltv+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Estimate Loan LTV
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByEstimateLtvLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{extendTermLoanId}:
+    patch:
+      description: Request loan term extension. Loan term extension can only be requested within five days of the loan reaching maturity. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
+      parameters:
+      - description: application/vnd.extend-loan-term+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: extendTermLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.extend-loan-term+json:
+            schema:
+              $ref: '#/components/schemas/ExtendLoan'
+      responses:
+        '200':
+          content:
+            application/vnd.extend-loan-term+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Extend Loan Term
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByExtendTermLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{loanId}:
+    get:
+      description: Retrieve a loan by its ID
+      parameters:
+      - description: Flag indicating if collaterals should be included in embedded
+        in: query
+        name: includeCollaterals
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if counterparties should be included in embedded
+        in: query
+        name: includeCounterparties
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if child loans should be included in embedded - Only applicable for agency lending parent loans
+        in: query
+        name: includeChildLoans
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if allocations should be included in embedded
+        in: query
+        name: includeLoanAllocations
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - description: Flag indicating if loan interest should be included in embedded - Only applicable for bilateral loans
+        in: query
+        name: includeLoanInterest
+        required: false
+        schema:
+          default: 'false'
+          type: boolean
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: loanId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Get Loan by ID
+      tags:
+      - Lending
+      operationId: getOrganizationsByOrganizationIdLoansByLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{payInterestLoanId}:
+    patch:
+      description: Create an interest payment request.
+      parameters:
+      - description: application/vnd.pay-loan-interest+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: payInterestLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.pay-loan-interest+json:
+            schema:
+              $ref: '#/components/schemas/PayInterest'
+      responses:
+        '200':
+          content:
+            application/vnd.pay-loan-interest+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Pay Loan Interest
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByPayInterestLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{rebalanceLoanId}:
+    patch:
+      description: Create a loan rebalance request. This action can only be carried out by the borrower and must be accepted by the lender.
+      parameters:
+      - description: application/vnd.rebalance-loan+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: rebalanceLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.rebalance-loan+json:
+            schema:
+              $ref: '#/components/schemas/RebalanceLoan'
+      responses:
+        '200':
+          content:
+            application/vnd.rebalance-loan+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Rebalance Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByRebalanceLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{rejectLoanId}:
+    patch:
+      description: Reject a loan. This action can only be carried out by the lender if a loan is in awaiting-approval state.
+      parameters:
+      - description: application/vnd.reject-loan+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: rejectLoanId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/vnd.reject-loan+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Reject Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByRejectLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{repayLoanId}:
+    patch:
+      description: Request the partial or full repayment of a loan. This request can be initiated by either the borrower or the lender. The resulting request needs to be accepted by the counterparty.
+      parameters:
+      - description: application/vnd.repay-loan+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: repayLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.repay-loan+json:
+            schema:
+              $ref: '#/components/schemas/RepayLoan'
+      responses:
+        '200':
+          content:
+            application/vnd.repay-loan+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Repay Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByRepayLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{rerateLoanId}:
+    patch:
+      description: Request a new loan interest rerate. The new interest rate must be stated in BPS. This action can only be carried out by the lender.
+      parameters:
+      - description: application/vnd.rerate-loan+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: rerateLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.rerate-loan+json:
+            schema:
+              $ref: '#/components/schemas/RerateLoan'
+      responses:
+        '200':
+          content:
+            application/vnd.rerate-loan+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Rerate Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByRerateLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{secureCollateralLoanId}:
+    patch:
+      description: Secure collateral for a loan. This action can only be carried out by the borrower and should be invoked for both initial and subsequent collateral top ups.
+      parameters:
+      - description: application/vnd.secure-collateral+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: secureCollateralLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.secure-collateral+json:
+            schema:
+              $ref: '#/components/schemas/AddCollateral'
+      responses:
+        '200':
+          content:
+            application/vnd.secure-collateral+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Secure Collateral Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansBySecureCollateralLoanId
+      x-operation-id-source: derived
+  /organizations/{organizationId}/loans/{topUpLoanId}:
+    patch:
+      description: Request a loan top up. This action can only be carried out by the lender and must be accepted by the borrower.
+      parameters:
+      - description: application/vnd.top-up-loan+json
+        in: header
+        name: Content-Type
+        required: false
+        schema:
+          type: string
+      - in: path
+        name: organizationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: topUpLoanId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/vnd.top-up-loan+json:
+            schema:
+              $ref: '#/components/schemas/TopUpLoan'
+      responses:
+        '200':
+          content:
+            application/vnd.top-up-loan+json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+          description: OK
+        '400':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - bad-request
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Bad Request
+        '403':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - forbidden
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                properties:
+                  error:
+                    description: The machine-readable error code
+                    examples:
+                    - conflict
+                    type: string
+                  message:
+                    description: A human-readable message providing more details about the error
+                    type: string
+                type: object
+          description: Conflict
+      summary: Top Up Loan
+      tags:
+      - Lending
+      operationId: patchOrganizationsByOrganizationIdLoansByTopUpLoanId
+      x-operation-id-source: derived
 components:
   schemas:
-    RebalanceLoan:
+    Loan:
       properties:
         amount:
-          description: The amount of collateral that is requested to be released
+          description: The amount of the loan
+          type: string
+        borrowerCounterpartyId:
+          description: The counterparty ID of the borrower
+          type: string
+        borrowerOrganizationId:
+          description: The organization ID of the borrower. Obfuscated for lender
+          type: string
+        borrowerPortfolioId:
+          description: The ID of the account which is to be the destination of disbursed funds. Obfuscated for lender
+          type: string
+        createdAt:
+          description: Timestamp in epoch milliseconds of the loan creation
+          type: string
+        createdBy:
+          description: The ID of the user that created the loan
           type: string
         currency:
-          description: Currency code of the asset being used for collateral
+          description: Currency code of the asset being lent
           type: string
+        debtRatio:
+          description: The LTV of the loan
+          type: string
+        debtRatioStatus:
+          $ref: '#/components/schemas/DebtRatioStatus'
+          description: The LTV status of the loan (healthy, margin-call, default)
+        debtRatioUpdatedAt:
+          description: Timestamp in epoch milliseconds when the LTV was last updated
+          type: string
+        defaultReason:
+          description: The reason for the loan default
+          type: string
+        embedded:
+          $ref: '#/components/schemas/LoanEmbedded'
+          description: Additional data linked to the loan
+          type: object
+        externalId:
+          description: Unique identifier for externally originated loans, must be unique
+          type: string
+        extra:
+          $ref: '#/components/schemas/LoanExtra'
+          description: Additional data for the loan
+          type: object
+        interestRate:
+          description: The interest rate for the loan in basis points (BPS)
+          type: string
+        lenderCounterpartyId:
+          description: The counterparty ID of the lender
+          type: string
+        lenderOrganizationId:
+          description: The organization ID of the lender. Obfuscated for borrower
+          type: string
+        lenderPortfolioId:
+          description: The ID of the account which is to be used for disbursing the loan to the borrower. Obfuscated for borrower
+          type: string
+        loanId:
+          description: Unique identifier of the loan
+          type: string
+        loanType:
+          $ref: '#/components/schemas/LoanType'
+          description: The type of the loan. [See details](/enums/LoanType)
         mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
+          description: Currency code of the network being used to transfer the asset
           type: string
-        portfolioId:
-          description: The account in which the collateral shall be delivered to
+        maturityDate:
+          description: Timestamp in epoch milliseconds of the maturity date
+          type: string
+        originalLoanAmount:
+          description: The original amount of the loan at time of disbursal
+          type: string
+        originalLoanValue:
+          description: The original value of the loan at time of disbursal
+          type: string
+        startDate:
+          description: Timestamp in epoch milliseconds the loan is meant to be disbursed and activated
+          type: string
+        status:
+          $ref: '#/components/schemas/LoanStatus'
+          description: The status of the loan. [See details](/enums/LoanStatus)
+        terminatedAt:
+          description: Timestamp in epoch milliseconds of the loan termination
+          type: string
+        unrealisedAmount:
+          description: The amount of pending loan funds; can be positive and negative
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the most recent loan update
           type: string
       required:
+      - loanId
+      - externalId
+      - status
+      - loanType
       - amount
-      - portfolioId
       - currency
       - mainCurrency
-      type: object
-    EarlyTerminateLoan:
-      properties: {}
-      type: object
-    LoanModificationType:
-      enum:
-      - rerate
-      - extend-term
-      type: string
-    RerateLoan:
-      properties:
-        newInterestRate:
-          type: string
-      required:
-      - newInterestRate
-      type: object
-    LoanType_2:
-      enum:
-      - agency-lending-parent-loan
-      - agency-inventory
-      - agency-lending-collateralised-child-loan
-      - agency-title-transfer-collateralised-loan
-      - agency-lending-uncollateralised-child-loan
-      - agency-uncollateralised-loan
-      - agency-lending-first-lien-child-loan
-      - agency-clearloop-loan
-      - agency-lending-pledge-collateralised-child-loan
-      - agency-pledge-collateralised-loan
-      - bilateral-lending-title-transfer-collateralised-loan
-      - bilateral-title-transfer-collateralised-loan
-      - bilateral-lending-pledge-collateralised-loan
-      - bilateral-pledge-collateralised-loan
-      - bilateral-lending-uncollateralised-loan
-      - bilateral-uncollateralised-loan
-      type: string
-    AddCollateral:
-      properties:
-        amount:
-          description: The amount of collateral that is to be secured
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account from which the collateral shall be transferred from
-          type: string
-      required:
-      - portfolioId
-      - amount
-      - currency
-      - mainCurrency
+      - lenderOrganizationId
+      - lenderCounterpartyId
+      - borrowerOrganizationId
+      - borrowerCounterpartyId
+      - createdBy
       type: object
     CounterpartyExtra:
       properties:
         exchangeId:
           description: Counterparty exchange id
           type: string
-      type: object
-    Loans:
-      properties:
-        loans:
-          description: The list of loans
-          items:
-            $ref: '#/components/schemas/Loan'
-          type: array
-      required:
-      - loans
-      type: object
-    RepayLoan:
-      properties:
-        amount:
-          description: The amount to be repaid. Can be in part or in full
-          type: string
-        collateralPortfolioId:
-          description: The account where the collateral is to be returned to if initiated by the borrower and repaid in full
-          type: string
-      type: object
-    LoanModificationStatus:
-      enum:
-      - awaiting-acceptance
-      - accepted
-      - cancelled
-      type: string
-    Collateral_2:
-      properties:
-        amount:
-          description: The amount of the transferred collateral
-          type: string
-        collateralId:
-          description: Unique identifier of the collateral
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the collateral creation
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        loanId:
-          description: The ID of the loan
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account where the collateral is being held
-          type: string
-        unrealisedAmount:
-          description: The amount of pending collateral funds. Can be positive or negative
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last collateral update
-          type: string
-      required:
-      - collateralId
-      - loanId
-      - amount
-      - currency
-      - mainCurrency
-      - createdAt
-      type: object
-    LoanModification:
-      properties:
-        createdAt:
-          description: Timestamp in epoch milliseconds of the allocation creation
-          type: string
-        createdBy:
-          description: The ID of the user whose action resulted in the creation of the allocation
-          type: string
-        extra:
-          $ref: '#/components/schemas/LoanModificationExtra'
-          description: Additional data for the modification
-          type: object
-        loanId:
-          description: The ID of the loan
-          type: string
-        loanModificationId:
-          description: Unique identifier of the loan modification
-          type: string
-        modificationType:
-          $ref: '#/components/schemas/LoanModificationType'
-          description: The type of the modification. [See details](/enums/LoanModificationType)
-        requestorCounterpartyId:
-          description: The ID of the counterparty whose action resulted in the creation of the modification
-          type: string
-        status:
-          $ref: '#/components/schemas/LoanModificationStatus'
-          description: The status of the modification. [See details](/enums/LoanModificationStatus)
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last modification update
-          type: string
-      required:
-      - loanModificationId
-      - loanId
-      - createdAt
-      - status
-      - modificationType
-      - extra
-      type: object
-    EstimateLoanLtv:
-      properties:
-        amount:
-          type: string
-        collaterals:
-          items:
-            $ref: '#/components/schemas/RequiredCollateral'
-          type: array
-        includeInterest:
-          description: Include owed interest in LTV calculation. Only supported for Bilateral loans.
-          type: boolean
-      type: object
-    LoanModificationAction:
-      properties:
-        loanModificationId:
-          type: string
-      required:
-      - loanModificationId
-      type: object
-    SortingDirection:
-      enum:
-      - ASC
-      - DESC
-      type: string
-    CalculateLtvDryRun:
-      properties: {}
-      type: object
-    EstimateLoanLeverageRatio:
-      properties:
-        includeUnrealisedAmount:
-          default: 'false'
-          examples:
-          - 'false'
-          type: boolean
-        loanAdjustmentAmount:
-          type: string
-        ownedAdjustmentAmount:
-          type: string
-        ownedAdjustmentCurrency:
-          type: string
-        ownedAdjustmentMainCurrency:
-          type: string
-      type: object
-    LoanAllocationType:
-      enum:
-      - disburse
-      - top-up
-      - repay
-      - rebalance
-      - secure-collateral
-      - release-collateral
-      - disburse-externally
-      - top-up-externally
-      - repay-externally
-      type: string
-    LoanAllocationStatus:
-      enum:
-      - new
-      - awaiting-acceptance
-      - accepted
-      - cancelled
-      - order-created
-      - awaiting-confirmation
-      - confirmed
-      - awaiting-funds
-      - awaiting-signature
-      - completed
-      - failed
-      type: string
-    LoanEmbedded_2:
-      properties:
-        childLoans:
-          description: The list of child loans - Only applicable for agency lending parent loans
-          items:
-            $ref: '#/components/schemas/Loan_2'
-          type: array
-        collaterals:
-          description: The list of collaterals allocated to their respective loans
-          items:
-            $ref: '#/components/schemas/Collateral_2'
-          type: array
-        counterparties:
-          description: The list of counterparties
-          items:
-            $ref: '#/components/schemas/Counterparty'
-          type: array
-        loanAllocations:
-          description: The list of transactions allocated to their respective loans
-          items:
-            $ref: '#/components/schemas/LoanAllocation_2'
-          type: array
-        loanInterest:
-          $ref: '#/components/schemas/LoanInterest'
-          description: The interest of the loan - Only applicable for bilateral loans
-          type: object
-        loanModifications:
-          description: The list of modifications to their respective loans
-          items:
-            $ref: '#/components/schemas/LoanModification'
-          type: array
-        marginCall:
-          $ref: '#/components/schemas/MarginCall'
-          description: The margin call associated with the loan, if any
-          type: object
-      type: object
-    LtvDryRunResult:
-      properties: {}
-      type: object
-    PayInterest:
-      properties:
-        amount:
-          description: The amount of given currency to pay as interest
-          type: string
-        currency:
-          description: Currency code of the asset used to pay the interest
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the asset
-          type: string
-        portfolioId:
-          description: The account from/to which the interest is to be paid.
-          type: string
-      required:
-      - currency
-      - mainCurrency
       type: object
     LoanInterest:
       properties:
@@ -3514,70 +3196,78 @@ components:
       - accruedInterest
       - createdAt
       type: object
+    DebtRatioStatus:
+      enum: []
+      type: string
     LoanAllocationExtra:
       properties:
         acceptedAt:
           description: Timestamp in epoch milliseconds of the allocation acceptance
           type: string
         acceptedBy:
-          description: The id of the user that accepted the allocation
+          description: The ID of the user that accepted the allocation
           type: string
         cancelledAt:
           description: Timestamp in epoch milliseconds of the allocation cancellation
           type: string
         cancelledBy:
-          description: The id of the user that cancelled the allocation
+          description: The ID of the user that cancelled the allocation
           type: string
         confirmedAt:
           description: Timestamp in epoch milliseconds of the allocation confirmation. Only applicable for off-platform loans
           type: string
         confirmedBy:
-          description: The id of the user that confirmed the allocation. Only applicable for off-platform loans
+          description: The ID of the user that confirmed the allocation. Only applicable for off-platform loans
           type: string
-      type: object
-    Collateral:
-      properties:
-        amount:
-          description: The amount of the transferred collateral
+        effectiveDate:
+          description: Timestamp in epoch milliseconds of the effective date of external action. Only applicable for off-platform loans
           type: string
-        collateralId:
-          description: Unique identifier of the collateral
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the collateral creation
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        loanId:
-          description: The id of the loan
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account where the collateral is being held
-          type: string
-        unrealisedAmount:
-          description: The amount of pending collateral funds. Can be positive or negative
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last collateral update
-          type: string
-      required:
-      - collateralId
-      - loanId
-      - amount
-      - currency
-      - mainCurrency
-      - createdAt
       type: object
     LoanType:
       enum:
+      - agency-lending-parent-loan
+      - agency-inventory
+      - agency-lending-collateralised-child-loan
+      - agency-title-transfer-collateralised-loan
+      - agency-lending-uncollateralised-child-loan
+      - agency-uncollateralised-loan
+      - agency-lending-first-lien-child-loan
+      - agency-clearloop-loan
+      - agency-lending-pledge-collateralised-child-loan
+      - agency-pledge-collateralised-loan
       - bilateral-lending-title-transfer-collateralised-loan
+      - bilateral-title-transfer-collateralised-loan
+      - bilateral-lending-pledge-collateralised-loan
+      - bilateral-pledge-collateralised-loan
+      - bilateral-lending-uncollateralised-loan
+      - bilateral-uncollateralised-loan
       type: string
-    MarginCall:
-      properties: {}
+    LoanModificationType:
+      enum:
+      - rerate
+      - extend-term
+      type: string
+    Loans:
+      properties:
+        loans:
+          description: The list of loans
+          items:
+            $ref: '#/components/schemas/Loan'
+          type: array
+      required:
+      - loans
+      type: object
+    RepayLoan:
+      properties:
+        amount:
+          description: The amount to be repaid. Can be in part or in full
+          type: string
+        collateralPortfolioId:
+          description: The account where the collateral is to be returned to if initiated by the borrower and repaid in full
+          type: string
+        effectiveDate:
+          description: Timestamp of effective repayment in epoch milliseconds, if external
+          type: string
       type: object
     CreateLoan:
       properties:
@@ -3585,7 +3275,7 @@ components:
           description: The amount of the loan
           type: string
         counterpartyId:
-          description: The counterparty id of the borrower
+          description: The counterparty ID of the borrower
           type: string
         currency:
           description: Currency code of the asset being lent
@@ -3596,11 +3286,23 @@ components:
         externalId:
           description: Unique identifier for externally originated loans, must be unique
           type: string
+        interestRate:
+          description: The interest rate for the loan in basis points (BPS)
+          type: string
+        lenderFeeShare:
+          description: Portion of interest fees allocated to the principal lender, expressed in basis points
+          type: string
+        lenderFeeSharePercentage:
+          description: Portion of interest fees allocated to the principal lender, expressed as a percentage
+          type: string
         loanType:
           $ref: '#/components/schemas/LoanType'
           description: The type of loan. [See details](/enums/LoanType)
         mainCurrency:
           description: Currency code of the network being used to transfer the asset
+          type: string
+        marginCallExpiryPeriod:
+          description: Duration of the margin call expiry period in hours, doesn't apply to ClearLoop loans
           type: string
         marginCallThreshold:
           description: The LTV threshold at which the loan is in margin call
@@ -3608,8 +3310,11 @@ components:
         maturityDate:
           description: Timestamp in epoch milliseconds of the maturity date
           type: string
+        parentLoanId:
+          description: The loan ID of the parent loan - Only applicable for agency lending child loans
+          type: string
         portfolioId:
-          description: The id of the account which is to be used for disbursing the loan to the borrower
+          description: The ID of the account which is to be used for disbursing the loan to the borrower
           type: string
         rebalanceThreshold:
           description: The LTV threshold at which the borrower can request a rebalance
@@ -3630,11 +3335,42 @@ components:
       - currency
       - mainCurrency
       type: object
-    LoanSide:
+    RerateLoan:
+      properties:
+        newInterestRate:
+          description: The new interest rate for the loan in basis points (BPS)
+          type: string
+      required:
+      - newInterestRate
+      type: object
+    InterestPaymentAction:
+      properties:
+        effectiveDate:
+          description: Timestamp of effective interest payment in epoch milliseconds, if external
+          type: string
+        loanAllocationId:
+          type: string
+        portfolioId:
+          description: The account from/to which the interest is to be paid.
+          type: string
+      required:
+      - loanAllocationId
+      type: object
+    CounterpartyTag:
       enum:
-      - lend
-      - borrow
+      - featured
       type: string
+    TopUpLoan:
+      properties:
+        amount:
+          description: The agreed upon amount the lender wishes to top up the loan by
+          type: string
+        effectiveDate:
+          description: Timestamp of effective top up in epoch milliseconds, if external
+          type: string
+      required:
+      - amount
+      type: object
     LoanAllocation:
       properties:
         allocationType:
@@ -3650,7 +3386,7 @@ components:
           description: Timestamp in epoch milliseconds of the allocation creation
           type: string
         createdBy:
-          description: The id of the user whose action resulted in the creation of the allocation
+          description: The ID of the user whose action resulted in the creation of the allocation
           type: string
         currency:
           description: Currency code of the asset being used for collateral
@@ -3669,7 +3405,7 @@ components:
           description: Unique identifier of the loan allocation
           type: string
         loanId:
-          description: The id of the loan
+          description: The ID of the loan
           type: string
         mainCurrency:
           description: Currency code of the network being used to transfer the collateral
@@ -3678,7 +3414,7 @@ components:
           description: The underlying withdrawal id
           type: string
         requestorCounterpartyId:
-          description: The id of the counterparty whose action resulted in the creation of the allocation
+          description: The ID of the counterparty whose action resulted in the creation of the allocation
           type: string
         status:
           $ref: '#/components/schemas/LoanAllocationStatus'
@@ -3744,35 +3480,111 @@ components:
       - networkTag
       - counterpartyType
       type: object
-    CounterpartyType:
+    LoanModification:
+      properties:
+        createdAt:
+          description: Timestamp in epoch milliseconds of the allocation creation
+          type: string
+        createdBy:
+          description: The ID of the user whose action resulted in the creation of the allocation
+          type: string
+        extra:
+          $ref: '#/components/schemas/LoanModificationExtra'
+          description: Additional data for the modification
+          type: object
+        loanId:
+          description: The ID of the loan
+          type: string
+        loanModificationId:
+          description: Unique identifier of the loan modification
+          type: string
+        modificationType:
+          $ref: '#/components/schemas/LoanModificationType'
+          description: The type of the modification. [See details](/enums/LoanModificationType)
+        requestorCounterpartyId:
+          description: The ID of the counterparty whose action resulted in the creation of the modification
+          type: string
+        status:
+          $ref: '#/components/schemas/LoanModificationStatus'
+          description: The status of the modification. [See details](/enums/LoanModificationStatus)
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last modification update
+          type: string
+      required:
+      - loanModificationId
+      - loanId
+      - createdAt
+      - status
+      - modificationType
+      - extra
+      type: object
+    PayInterest:
+      properties:
+        amount:
+          description: The amount of given currency to pay as interest
+          type: string
+        currency:
+          description: Currency code of the asset used to pay the interest
+          type: string
+        effectiveDate:
+          description: Timestamp of effective interest payment in epoch milliseconds, if external
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the asset
+          type: string
+        portfolioId:
+          description: The account from/to which the interest is to be paid.
+          type: string
+      required:
+      - currency
+      - mainCurrency
+      type: object
+    LoanAllocationType:
       enum:
-      - standard
-      - clearloop-exchange
-      - agency-desk
+      - disburse
+      - top-up
+      - repay
+      - rebalance
+      - secure-collateral
+      - release-collateral
+      - disburse-externally
+      - top-up-externally
+      - repay-externally
       type: string
-    LoanStatus:
+    LoanSide:
       enum:
-      - awaiting-approval
-      - awaiting-acceptance
-      - awaiting-collateral
-      - awaiting-interest-payment
-      - disbursing
-      - active
-      - repaying
-      - defaulting
-      - defaulted
-      - cancelled
-      - rejected
-      - errored
-      - repaid
-      - repaying-interest
-      - interest-repaid
-      - securing-collateral
-      - collateral-secured
-      - releasing-collateral
-      - collateral-released
-      - closed
+      - lend
+      - borrow
       type: string
+    RequiredCollateral:
+      properties:
+        amount:
+          description: The amount of the collateral required
+          type: string
+        amountInUsd:
+          description: The value of the collateral denominated in US Dollars
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      type: object
+    LtvDryRunResult:
+      properties: {}
+      type: object
+    LoanModificationAction:
+      properties:
+        loanModificationId:
+          type: string
+      required:
+      - loanModificationId
+      type: object
     LoanEmbedded:
       properties:
         childLoans:
@@ -3795,483 +3607,44 @@ components:
           items:
             $ref: '#/components/schemas/LoanAllocation'
           type: array
+        loanInterest:
+          $ref: '#/components/schemas/LoanInterest'
+          description: The interest of the loan - Only applicable for bilateral loans
+          type: object
+        loanModifications:
+          description: The list of modifications to their respective loans
+          items:
+            $ref: '#/components/schemas/LoanModification'
+          type: array
+        marginCall:
+          $ref: '#/components/schemas/MarginCall'
+          description: The margin call associated with the loan, if any
+          type: object
       type: object
-    AcceptLoan:
-      properties:
-        borrowerPortfolioId:
-          description: The account where the loan will be disbursed into
-          type: string
+    MarginCall:
+      properties: {}
       type: object
-    DebtRatioStatus:
-      enum: []
-      type: string
-    LoanAllocationExtra_2:
+    RebalanceLoan:
       properties:
-        acceptedAt:
-          description: Timestamp in epoch milliseconds of the allocation acceptance
-          type: string
-        acceptedBy:
-          description: The ID of the user that accepted the allocation
-          type: string
-        cancelledAt:
-          description: Timestamp in epoch milliseconds of the allocation cancellation
-          type: string
-        cancelledBy:
-          description: The ID of the user that cancelled the allocation
-          type: string
-        confirmedAt:
-          description: Timestamp in epoch milliseconds of the allocation confirmation. Only applicable for off-platform loans
-          type: string
-        confirmedBy:
-          description: The ID of the user that confirmed the allocation. Only applicable for off-platform loans
-          type: string
-        effectiveDate:
-          description: Timestamp in epoch milliseconds of the effective date of external action. Only applicable for off-platform loans
-          type: string
-      type: object
-    LoanAllocation_2:
-      properties:
-        allocationType:
-          $ref: '#/components/schemas/LoanAllocationType'
-          description: The type of the allocation. [See details](/enums/LoanAllocationType)
         amount:
-          description: The amount of the loan allocation
-          type: string
-        counterpartyOrderId:
-          description: The underlying deposit id
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the allocation creation
-          type: string
-        createdBy:
-          description: The ID of the user whose action resulted in the creation of the allocation
+          description: The amount of collateral that is requested to be released
           type: string
         currency:
           description: Currency code of the asset being used for collateral
           type: string
-        externalFailureDescription:
-          description: The failure description of an allocation. Only populated when status is "failed" and the failure reason is known
-          type: string
-        extra:
-          $ref: '#/components/schemas/LoanAllocationExtra_2'
-          description: Additional data for the allocation
-          type: object
-        fromPortfolioId:
-          description: The account that funds are transferred out of. Obfuscated depending on allocation type and requestor
-          type: string
-        loanAllocationId:
-          description: Unique identifier of the loan allocation
-          type: string
-        loanId:
-          description: The ID of the loan
-          type: string
         mainCurrency:
           description: Currency code of the network being used to transfer the collateral
           type: string
-        orderId:
-          description: The underlying withdrawal id
-          type: string
-        requestorCounterpartyId:
-          description: The ID of the counterparty whose action resulted in the creation of the allocation
-          type: string
-        status:
-          $ref: '#/components/schemas/LoanAllocationStatus'
-          description: The status of the allocation. [See details](/enums/LoanAllocationStatus)
-        terminatedAt:
-          description: Timestamp in epoch milliseconds of the allocation termination
-          type: string
-        toPortfolioId:
-          description: The account that funds are transferred to. Obfuscated depending on allocation type and requestor
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last allocation update
+        portfolioId:
+          description: The account in which the collateral shall be delivered to
           type: string
       required:
-      - loanAllocationId
-      - loanId
       - amount
+      - portfolioId
       - currency
       - mainCurrency
-      - status
-      - allocationType
-      - extra
-      - createdAt
-      type: object
-    ExtendLoan:
-      properties: {}
-      type: object
-    InterestPaymentAction:
-      properties: {}
       type: object
     LoanExtra:
-      properties:
-        acceptedAt:
-          description: Timestamp in epoch milliseconds of the loan acceptance
-          type: string
-        acceptedBy:
-          description: The id of the user that accepted the loan
-          type: string
-        approvedAt:
-          description: Timestamp in epoch milliseconds of the loan approval
-          type: string
-        approvedBy:
-          description: The id of the user that approved the loan
-          type: string
-        cancelledAt:
-          description: Timestamp in epoch milliseconds of the loan cancellation
-          type: string
-        cancelledBy:
-          description: The id of the user that cancelled the loan
-          type: string
-        defaultReason:
-          description: The reason for the loan default
-          type: string
-        defaultThreshold:
-          description: The LTV threshold at which the loan is in default
-          type: string
-        defaultedAt:
-          description: Timestamp in epoch milliseconds of the loan default
-          type: string
-        defaultedBy:
-          description: The id of the user that defaulted the loan
-          type: string
-        disbursedAt:
-          description: Timestamp in epoch milliseconds of the loan disbursal
-          type: string
-        externalDisbursal:
-          description: Boolean representing if the loan funds are disbursed and managed off-platform
-          type: boolean
-        externalInterestPayment:
-          description: Boolean representing if interest payments are managed off-platform
-          type: boolean
-        initialLtv:
-          description: The LTV based off the initial collateral requirement
-          type: string
-        initiallyRequiredCollateralUsd:
-          description: The value of the initially required collateral denominated in US Dollars
-          type: string
-        marginCallThreshold:
-          description: The LTV threshold at which the loan is in margin call
-          type: string
-        rebalanceThreshold:
-          description: The LTV threshold at which the borrower can request a rebalance
-          type: string
-        rejectedAt:
-          description: Timestamp in epoch milliseconds of the loan rejection
-          type: string
-        rejectedBy:
-          description: The id of the user that rejected the loan
-          type: string
-        repaidAt:
-          description: Timestamp in epoch milliseconds of the loan repayment
-          type: string
-        repaidBy:
-          description: The id of the user that repaid the loan
-          type: string
-        requiredCollaterals:
-          description: The amount of the collateral required. Currently only a single collateral currency is supported
-          items:
-            $ref: '#/components/schemas/RequiredCollateral'
-          type: array
-      type: object
-    CounterpartyTag:
-      enum:
-      - featured
-      type: string
-    LoanStatus_2:
-      enum:
-      - awaiting-approval
-      - awaiting-acceptance
-      - awaiting-collateral
-      - awaiting-interest-payment
-      - disbursing
-      - active
-      - repaying
-      - defaulting
-      - partially-defaulting
-      - early-termination-in-progress
-      - early-termination-completed
-      - defaulted
-      - default-resolved
-      - cancelled
-      - rejected
-      - errored
-      - repaid
-      - repaying-interest
-      - interest-repaid
-      - securing-collateral
-      - collateral-secured
-      - releasing-collateral
-      - collateral-released
-      - closed
-      type: string
-    ActionLoan:
-      properties:
-        collateralPortfolioId:
-          description: The account where the collateral is to be returned to if accepted by the borrower and repaid in full
-          type: string
-        loanAllocationId:
-          description: The id of the loan allocation
-          type: string
-      required:
-      - loanAllocationId
-      type: object
-    TopUpLoan:
-      properties:
-        amount:
-          description: The agreed upon amount the lender wishes to top up the loan by
-          type: string
-      required:
-      - amount
-      type: object
-    Loan_2:
-      properties:
-        amount:
-          description: The amount of the loan
-          type: string
-        borrowerCounterpartyId:
-          description: The counterparty ID of the borrower
-          type: string
-        borrowerOrganizationId:
-          description: The organization ID of the borrower. Obfuscated for lender
-          type: string
-        borrowerPortfolioId:
-          description: The ID of the account which is to be the destination of disbursed funds. Obfuscated for lender
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the loan creation
-          type: string
-        createdBy:
-          description: The ID of the user that created the loan
-          type: string
-        currency:
-          description: Currency code of the asset being lent
-          type: string
-        debtRatio:
-          description: The LTV of the loan
-          type: string
-        debtRatioStatus:
-          $ref: '#/components/schemas/DebtRatioStatus'
-          description: The LTV status of the loan (healthy, margin-call, default)
-        debtRatioUpdatedAt:
-          description: Timestamp in epoch milliseconds when the LTV was last updated
-          type: string
-        defaultReason:
-          description: The reason for the loan default
-          type: string
-        embedded:
-          $ref: '#/components/schemas/LoanEmbedded_2'
-          description: Additional data linked to the loan
-          type: object
-        externalId:
-          description: Unique identifier for externally originated loans, must be unique
-          type: string
-        extra:
-          $ref: '#/components/schemas/LoanExtra_2'
-          description: Additional data for the loan
-          type: object
-        interestRate:
-          description: The interest rate for the loan in basis points (BPS)
-          type: string
-        lenderCounterpartyId:
-          description: The counterparty ID of the lender
-          type: string
-        lenderOrganizationId:
-          description: The organization ID of the lender. Obfuscated for borrower
-          type: string
-        lenderPortfolioId:
-          description: The ID of the account which is to be used for disbursing the loan to the borrower. Obfuscated for borrower
-          type: string
-        loanId:
-          description: Unique identifier of the loan
-          type: string
-        loanType:
-          $ref: '#/components/schemas/LoanType_2'
-          description: The type of the loan. [See details](/enums/LoanType)
-        mainCurrency:
-          description: Currency code of the network being used to transfer the asset
-          type: string
-        maturityDate:
-          description: Timestamp in epoch milliseconds of the maturity date
-          type: string
-        originalLoanAmount:
-          description: The original amount of the loan at time of disbursal
-          type: string
-        originalLoanValue:
-          description: The original value of the loan at time of disbursal
-          type: string
-        startDate:
-          description: Timestamp in epoch milliseconds the loan is meant to be disbursed and activated
-          type: string
-        status:
-          $ref: '#/components/schemas/LoanStatus_2'
-          description: The status of the loan. [See details](/enums/LoanStatus)
-        terminatedAt:
-          description: Timestamp in epoch milliseconds of the loan termination
-          type: string
-        unrealisedAmount:
-          description: The amount of pending loan funds; can be positive and negative
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the most recent loan update
-          type: string
-      required:
-      - loanId
-      - externalId
-      - status
-      - loanType
-      - amount
-      - currency
-      - mainCurrency
-      - lenderOrganizationId
-      - lenderCounterpartyId
-      - borrowerOrganizationId
-      - borrowerCounterpartyId
-      - createdBy
-      type: object
-    Loan:
-      properties:
-        amount:
-          description: The amount of the loan
-          type: string
-        borrowerCounterpartyId:
-          description: The counterparty id of the borrower
-          type: string
-        borrowerOrganizationId:
-          description: The organization id of the borrower. Obfuscated for lender
-          type: string
-        borrowerPortfolioId:
-          description: The id of the account which is to be the destination of disbursed funds. Obfuscated for lender
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the loan creation
-          type: string
-        createdBy:
-          description: The id of the user that created the loan
-          type: string
-        currency:
-          description: Currency code of the asset being lent
-          type: string
-        debtRatio:
-          description: The LTV of the loan
-          type: string
-        debtRatioStatus:
-          $ref: '#/components/schemas/DebtRatioStatus'
-          description: The LTV status of the loan (healthy, margin-call, default)
-        debtRatioUpdatedAt:
-          description: Timestamp in epoch milliseconds when the LTV was last updated
-          type: string
-        embedded:
-          $ref: '#/components/schemas/LoanEmbedded'
-          description: Additional data linked to the loan
-          type: object
-        externalId:
-          description: Unique identifier for externally originated loans, must be unique
-          type: string
-        extra:
-          $ref: '#/components/schemas/LoanExtra'
-          description: Additional data for the loan
-          type: object
-        interestRate:
-          description: The interest rate for the loan in basis points (BPS)
-          type: string
-        lenderCounterpartyId:
-          description: The counterparty id of the lender
-          type: string
-        lenderOrganizationId:
-          description: The organization id of the lender. Obfuscated for borrower
-          type: string
-        lenderPortfolioId:
-          description: The id of the account which is to be used for disbursing the loan to the borrower. Obfuscated for borrower
-          type: string
-        loanId:
-          description: Unique identifier of the loan
-          type: string
-        loanType:
-          $ref: '#/components/schemas/LoanType'
-          description: The type of the loan. [See details](/enums/LoanType)
-        mainCurrency:
-          description: Currency code of the network being used to transfer the asset
-          type: string
-        maturityDate:
-          description: Timestamp in epoch milliseconds of the maturity date
-          type: string
-        startDate:
-          description: Timestamp in epoch milliseconds the loan is meant to be disbursed and activated
-          type: string
-        status:
-          $ref: '#/components/schemas/LoanStatus'
-          description: The status of the loan. [See details](/enums/LoanStatus)
-        terminatedAt:
-          description: Timestamp in epoch milliseconds of the loan termination
-          type: string
-        unrealisedAmount:
-          description: The amount of pending loan funds; can be positive and negative
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the most recent loan update
-          type: string
-      required:
-      - loanId
-      - externalId
-      - status
-      - loanType
-      - amount
-      - currency
-      - mainCurrency
-      - lenderOrganizationId
-      - lenderCounterpartyId
-      - borrowerOrganizationId
-      - borrowerCounterpartyId
-      - createdBy
-      type: object
-    LoanModificationExtra:
-      properties:
-        acceptedAt:
-          description: Timestamp in epoch milliseconds of the modification acceptance
-          type: string
-        acceptedBy:
-          description: The ID of the user that accepted the modification
-          type: string
-        cancelledAt:
-          description: Timestamp in epoch milliseconds of the modification cancellation
-          type: string
-        cancelledBy:
-          description: The ID of the user that cancelled the modification
-          type: string
-        currentInterestRate:
-          description: The current interest rate of the loan in basis points (BPS)
-          type: string
-        currentMaturityDate:
-          description: The current maturity date as timestamp in epoch milliseconds
-          type: string
-        newInterestRate:
-          description: The new interest rate for the loan in basis points (BPS)
-          type: string
-        newMaturityDate:
-          description: The new maturity date as timestamp in epoch milliseconds
-          type: string
-      type: object
-    RequiredCollateral:
-      properties:
-        amount:
-          description: The amount of the collateral required
-          type: string
-        amountInUsd:
-          description: The value of the collateral denominated in US Dollars
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-      required:
-      - amount
-      - currency
-      - mainCurrency
-      type: object
-    LoanExtra_2:
       properties:
         acceptedAt:
           description: Timestamp in epoch milliseconds of the loan acceptance
@@ -4348,6 +3721,203 @@ components:
             $ref: '#/components/schemas/RequiredCollateral'
           type: array
       type: object
-x-refined-from:
-- copper-co-lending-openapi.json
-- copper-co-platform-openapi.json
+    Collateral:
+      properties:
+        amount:
+          description: The amount of the transferred collateral
+          type: string
+        collateralId:
+          description: Unique identifier of the collateral
+          type: string
+        createdAt:
+          description: Timestamp in epoch milliseconds of the collateral creation
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        loanId:
+          description: The ID of the loan
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account where the collateral is being held
+          type: string
+        unrealisedAmount:
+          description: The amount of pending collateral funds. Can be positive or negative
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last collateral update
+          type: string
+      required:
+      - collateralId
+      - loanId
+      - amount
+      - currency
+      - mainCurrency
+      - createdAt
+      type: object
+    AddCollateral:
+      properties:
+        amount:
+          description: The amount of collateral that is to be secured
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account from which the collateral shall be transferred from
+          type: string
+      required:
+      - portfolioId
+      - amount
+      - currency
+      - mainCurrency
+      type: object
+    LoanModificationStatus:
+      enum:
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      type: string
+    EstimateLoanLtv:
+      properties:
+        amount:
+          type: string
+        collaterals:
+          items:
+            $ref: '#/components/schemas/RequiredCollateral'
+          type: array
+      type: object
+    CounterpartyType:
+      enum:
+      - standard
+      - clearloop-exchange
+      - agency-desk
+      type: string
+    LoanAllocationStatus:
+      enum:
+      - new
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      - order-created
+      - awaiting-confirmation
+      - confirmed
+      - awaiting-funds
+      - awaiting-signature
+      - completed
+      - failed
+      type: string
+    AcceptLoan:
+      properties:
+        borrowerPortfolioId:
+          description: The account where the loan will be disbursed into
+          type: string
+      type: object
+    LoanModificationExtra:
+      properties:
+        acceptedAt:
+          description: Timestamp in epoch milliseconds of the modification acceptance
+          type: string
+        acceptedBy:
+          description: The ID of the user that accepted the modification
+          type: string
+        cancelledAt:
+          description: Timestamp in epoch milliseconds of the modification cancellation
+          type: string
+        cancelledBy:
+          description: The ID of the user that cancelled the modification
+          type: string
+        currentInterestRate:
+          description: The current interest rate of the loan in basis points (BPS)
+          type: string
+        currentMaturityDate:
+          description: The current maturity date as timestamp in epoch milliseconds
+          type: string
+        newInterestRate:
+          description: The new interest rate for the loan in basis points (BPS)
+          type: string
+        newMaturityDate:
+          description: The new maturity date as timestamp in epoch milliseconds
+          type: string
+      type: object
+    EstimateLoanLeverageRatio:
+      properties:
+        includeUnrealisedAmount:
+          default: 'false'
+          examples:
+          - 'false'
+          type: boolean
+        loanAdjustmentAmount:
+          type: string
+        ownedAdjustmentAmount:
+          type: string
+        ownedAdjustmentCurrency:
+          type: string
+        ownedAdjustmentMainCurrency:
+          type: string
+        portfolioId:
+          type: string
+      type: object
+    LoanStatus:
+      enum:
+      - awaiting-approval
+      - awaiting-acceptance
+      - awaiting-collateral
+      - awaiting-interest-payment
+      - disbursing
+      - active
+      - repaying
+      - defaulting
+      - partially-defaulting
+      - early-termination-in-progress
+      - early-termination-completed
+      - defaulted
+      - default-resolved
+      - cancelled
+      - rejected
+      - errored
+      - repaid
+      - repaying-interest
+      - interest-repaid
+      - securing-collateral
+      - collateral-secured
+      - releasing-collateral
+      - collateral-released
+      - closed
+      type: string
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
+      type: string
+    ActionLoan:
+      properties:
+        collateralPortfolioId:
+          description: The account where the collateral is to be returned to if accepted by the borrower and repaid in full
+          type: string
+        loanAllocationId:
+          description: The ID of the loan allocation
+          type: string
+      required:
+      - loanAllocationId
+      type: object
+    EarlyTerminateLoan:
+      properties: {}
+      type: object
+    ExtendLoan:
+      properties:
+        newMaturityDate:
+          description: The new maturity date as timestamp in epoch milliseconds
+          type: string
+      required:
+      - newMaturityDate
+      type: object
+    CalculateLtvDryRun:
+      properties: {}
+      type: object

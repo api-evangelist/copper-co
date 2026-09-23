@@ -27,6 +27,8 @@ paths:
                 $ref: '#/components/schemas/SignAsyncResponse'
       tags:
       - Sign Async
+      operationId: postSignAsync
+      x-operation-id-source: derived
   /sign-async/{transactionRequestId}:
     get:
       summary: Get status of the sign request
@@ -45,35 +47,21 @@ paths:
                 $ref: '#/components/schemas/SignAsyncStatusResponse'
       tags:
       - Sign Async
+      operationId: getSignAsyncByTransactionRequestId
+      x-operation-id-source: derived
 components:
   schemas:
-    SignAsyncStatus:
-      type: object
-      enum:
-      - starting
-      - session-established
-      - in-progress
-      - completed
-      - error
-      description: '* `starting`: The request is accepted for processing
-
-        * `session-established`: The CU session has been established
-
-        * `in-progress`: The signature is being generated
-
-        * `completed`: The transaction has been signed
-
-        * `error`: Something went wrong, see the message field'
-    SignAsyncStatusResponse:
+    SignAsyncResponse:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/SignAsyncStatus'
+        transactionRequestId:
           type: string
-        message:
+        sessionKey:
+          type: string
+        sessionTimestamp:
           type: string
           examples:
-          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=
+          - '1608296004000'
     SignAsyncRequest:
       type: object
       properties:
@@ -111,14 +99,30 @@ components:
       - apiKey
       - apiSecret
       - signRequest
-    SignAsyncResponse:
+    SignAsyncStatus:
+      type: object
+      enum:
+      - starting
+      - session-established
+      - in-progress
+      - completed
+      - error
+      description: '* `starting`: The request is accepted for processing
+
+        * `session-established`: The CU session has been established
+
+        * `in-progress`: The signature is being generated
+
+        * `completed`: The transaction has been signed
+
+        * `error`: Something went wrong, see the message field'
+    SignAsyncStatusResponse:
       type: object
       properties:
-        transactionRequestId:
+        status:
+          $ref: '#/components/schemas/SignAsyncStatus'
           type: string
-        sessionKey:
-          type: string
-        sessionTimestamp:
+        message:
           type: string
           examples:
-          - '1608296004000'
+          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=

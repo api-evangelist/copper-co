@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Orders API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: orders
+- name: Orders
 paths:
   /dry-run-orders:
     post:
@@ -78,7 +74,9 @@ paths:
           description: Conflict
       summary: Dry Run Order
       tags:
-      - orders
+      - Orders
+      operationId: postDryRunOrders
+      x-operation-id-source: derived
   /orders:
     get:
       parameters:
@@ -286,7 +284,9 @@ paths:
           description: Conflict
       summary: Get Orders
       tags:
-      - orders
+      - Orders
+      operationId: getOrders
+      x-operation-id-source: derived
     post:
       requestBody:
         content:
@@ -347,7 +347,9 @@ paths:
           description: Conflict
       summary: Create Order
       tags:
-      - orders
+      - Orders
+      operationId: postOrders
+      x-operation-id-source: derived
   /orders/:
     post:
       description: Bulk orders creation. If the execution of an order fails, it will not affect the execution of other orders. Failed orders will be returned in the response. The bulk size should be less than 50 orders.
@@ -417,7 +419,9 @@ paths:
           description: Conflict
       summary: Create Multiple Orders
       tags:
-      - orders
+      - Orders
+      operationId: postOrders
+      x-operation-id-source: derived
   /orders/{acceptOtcOrderId}:
     patch:
       description: Accept counterparty settlement order
@@ -487,7 +491,9 @@ paths:
           description: Conflict
       summary: Accept Order
       tags:
-      - orders
+      - Orders
+      operationId: patchOrdersByAcceptOtcOrderId
+      x-operation-id-source: derived
   /orders/{cancelOrderId}:
     patch:
       parameters:
@@ -561,7 +567,9 @@ paths:
           description: Conflict
       summary: Cancel Order
       tags:
-      - orders
+      - Orders
+      operationId: patchOrdersByCancelOrderId
+      x-operation-id-source: derived
   /orders/{coSignOrderId}:
     patch:
       parameters:
@@ -635,7 +643,9 @@ paths:
           description: Conflict
       summary: Approve (co-sign) Order
       tags:
-      - orders
+      - Orders
+      operationId: patchOrdersByCoSignOrderId
+      x-operation-id-source: derived
   /orders/{orderId}:
     get:
       parameters:
@@ -698,7 +708,9 @@ paths:
           description: Conflict
       summary: Get Order by ID
       tags:
-      - orders
+      - Orders
+      operationId: getOrdersByOrderId
+      x-operation-id-source: derived
     patch:
       parameters:
       - description: application/vnd.enter-master-password+json
@@ -771,7 +783,9 @@ paths:
           description: Conflict
       summary: Provide master password for Order
       tags:
-      - orders
+      - Orders
+      operationId: patchOrdersByOrderId
+      x-operation-id-source: derived
   /orders/{startSigningOrderId}:
     patch:
       description: Start crypto signing for an order
@@ -841,15 +855,159 @@ paths:
           description: Conflict
       summary: Start Signing
       tags:
-      - orders
+      - Orders
+      operationId: patchOrdersByStartSigningOrderId
+      x-operation-id-source: derived
 components:
   schemas:
-    UserAbstraction:
+    DryRunOrderRequest:
+      properties:
+        amount:
+          type: string
+        baseCurrency:
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          description: '[See details](/enums/DeliveryType)'
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: '[See details](/enums/FeeLevel)'
+        includeFeeInWithdraw:
+          type: boolean
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: '[See details](/enums/LimitType)'
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        payload:
+          type: string
+        payloads:
+          items:
+            type: string
+          type: array
+        portfolioId:
+          type: string
+        priceLimit:
+          type: string
+        quoteAmount:
+          type: string
+        quoteCurrency:
+          type: string
+        quoteMainCurrency:
+          type: string
+        requestedNetworkFees:
+          $ref: '#/components/schemas/RequestedNetworkFees'
+          type: object
+        toCounterpartyId:
+          type: string
+        toCryptoAddressId:
+          type: string
+        toInvoiceId:
+          type: string
+        toLendingInvoiceId:
+          type: string
+        toPortfolioId:
+          type: string
+      required:
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    AddressTag:
       enum: []
       type: string
-    UploadPartSignedTx:
+    TargetType:
+      enum:
+      - external
+      - portfolio
+      type: string
+    FeeEstimation:
+      properties:
+        baseFeePerGas:
+          description: The base fee for the block in Gwei
+          type: string
+        estimatedTime:
+          description: The estimated time in milliseconds for the transaction to be confirmed
+          type: string
+        fee:
+          description: The amount of the fee
+          type: string
+        feeCurrency:
+          description: The currency in which the fee is denominated
+          type: string
+        feePerByte:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The fee per byte of the transaction
+          type: object
+        feeType:
+          $ref: '#/components/schemas/FeeType'
+          description: The type of the fee
+        gasLimit:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The gas limit for the transaction
+          type: object
+        gasPriceGwei:
+          description: The gas price in Gwei
+          type: string
+        maxFeePerGas:
+          description: The max gas fee wiling to pay in Gwei
+          type: string
+        maxPriorityFeePerGas:
+          description: The max priority fee wiling to pay in Gwei
+          type: string
+        reportingCurrencyRate:
+          description: The fee amount in the reporting currency
+          type: string
+        transactionBytes:
+          description: The number of bytes in the transaction
+          type: string
+      required:
+      - fee
+      - feeCurrency
+      type: object
+    MinimalUnit:
       properties: {}
       type: object
+    BlockchainTransactionType:
+      enum:
+      - send
+      - multi-withdraw
+      - account-set
+      - approve-hot-key
+      - approve-builder-fee
+      - allowance
+      - smart-call
+      - multi-smart-call
+      - activate
+      - activate-trading
+      - stake-delegation
+      - stake-nomination
+      - stake-undelegation
+      - complete-withdrawal
+      - stake-complete-deposit
+      - take-reward
+      - pool-creation
+      - edit-pool
+      - governance-vote
+      - unjail
+      - importance-transfer
+      - transfer-stake
+      - rebond-stake
+      - chill
+      - cross-chain-send
+      - accept-deposit
+      - reject-deposit
+      - create-referral
+      - set-referral
+      type: string
     CryptoAddress:
       properties:
         _embedded:
@@ -931,44 +1089,164 @@ components:
       - isWhitelist
       - addressType
       type: object
-    OrderReceiver:
+    EnterMasterPassword:
       properties:
+        masterPassword:
+          description: Withdrawal password (also known as Master Password)
+          type: string
+      required:
+      - masterPassword
+      type: object
+    CancelOrder:
+      properties:
+        reason:
+          type: string
+      type: object
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
+    CreateOrder:
+      properties:
+        agentAddress:
+          description: Agent address for orders created by agents on behalf of users
+          type: string
+        agentName:
+          description: Agent name for orders created by agents on behalf of users
+          type: string
         amount:
           description: The amount of order in baseCurrency
           examples:
           - '0.1'
           type: string
+        baseCurrency:
+          description: The currency of the order amount
+          examples:
+          - BTC
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        builderFeeAddress:
+          description: Builder fee address for Hyperliquid builder approval and activation
+          type: string
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          default: payment-vs-payment
+          description: Settlement order type only applicable for settle orders. [See details](/enums/DeliveryType)
+          examples:
+          - payment-vs-payment
+        description:
+          description: The description of the order
+          examples:
+          - Withdrawal to my wallet
+          type: string
+        externalBroadcast:
+          default: 'false'
+          description: 'Sets broadcast mode. If true: manual broadcast. If false: automatic broadcast. Copper automatically broadcasts transactions to the network after fully signing'
+          examples:
+          - 'false'
+          type: boolean
+        externalOrderId:
+          description: Unique order identifier from client (should be unique for the portfolio)
+          type: string
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: 'Flat fees that Copper charges for withdrawing cryptocurrency to an external address. Flat fees are set per currency and do not change depending on transaction size and type. Flat fees are divided into three fee levels: low, medium and high, which define the speed of transaction processing—the higher the flat fee, the faster the speed. Flat fees are based on average network fees at the start of settlement. [See details](/enums/FeeLevel)'
+        includeFeeInWithdraw:
+          default: 'false'
+          description: Indicates, whether the fee should be included in the withdrawal amount or added on top of it
+          examples:
+          - 'false'
+          type: boolean
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: The limit type of the order. Used to create settle orders. [See details](/enums/LimitType)
+        mainCurrency:
+          description: The main currency of the base currency
+          type: string
+        masterPassword:
+          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
+          type: string
+        memo:
+          description: Withdraw memo (destination tag for XRP)
+          type: string
+        netuid:
+          description: Subnet Network ID in TAO blockchain
+          type: string
+        nextTransferTo:
+          description: The list of next transfer targets for chained transfer orders
+          items:
+            $ref: '#/components/schemas/WithdrawTarget'
+          type: array
+        optInReferralProgram:
+          description: Opt in to the referral program during Hyperliquid activation
+          type: boolean
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: The order type. [See details](/enums/OrderType)
+        payload:
+          description: Serialised [data](https://ethereum.org/en/developers/docs/transactions/#the-data-field) payload for a smart contract
+          type: string
+        payloads:
+          description: Serialised list of unsigned transactions. For Ethereum only type 0 (legacy) transactions are supported
+          items:
+            type: string
+          type: array
+        portfolioId:
+          description: The ID of the portfolio where the order should be placed
+          type: string
+        priceLimit:
+          description: The price of the order in quote currency, only applicable for settle orders
+          type: string
+        quoteAmount:
+          description: The amount of order in quoteCurrency
+          examples:
+          - '10'
+          type: string
+        quoteCurrency:
+          description: The currency of the quote amount
+          examples:
+          - USD
+          type: string
+        quoteMainCurrency:
+          description: The main currency of the quote currency
+          type: string
+        referralCode:
+          description: Referral code
+          type: string
         toAddress:
           description: The address where the funds should be transferred
           type: string
+        toCounterpartyId:
+          description: The ID of the counterparty to transfer money to
+          type: string
         toCryptoAddressId:
-          description: In case of a withdrawal, the destination crypto address ID from the Address Book
+          description: In case of a withdrawal, the destination crypto address ID from an Address Book
           type: string
-      type: object
-    AddressCategory:
-      enum:
-      - smart-contract
-      - payable-smart-contract
-      - mining
-      - unknown
-      - self-hosted
-      - vasp
-      type: string
-    DepositOrigin:
-      enum: []
-      type: string
-    FeeType:
-      enum: []
-      type: string
-    Warning:
-      properties:
-        code:
+        toPortfolioId:
+          description: In case of a withdrawal on a different portfolio, the portfolio ID of the destination account
           type: string
-        message:
-          type: string
+        toReceivers:
+          description: Is used for multi withdrawal orders instead of toAddress
+          items:
+            $ref: '#/components/schemas/OrderReceiver'
+          type: array
+        userAbstract:
+          $ref: '#/components/schemas/UserAbstraction'
+          description: Account type for Hyperliquid account-set and activation
       required:
-      - message
+      - externalOrderId
+      - orderType
+      - portfolioId
+      - baseCurrency
       type: object
+    UserAbstraction:
+      enum: []
+      type: string
     CurrencyConfiguration:
       properties:
         createdAt:
@@ -1015,6 +1293,77 @@ components:
       - createdAt
       - isWhitelist
       type: object
+    ClearLoopExtra:
+      properties:
+        clearLoopExternalNetted:
+          description: Whether the order is linked to the ClearLoop multi-custody model that works by netting settlement amounts
+          type: boolean
+        clearLoopSettlementId:
+          description: Id uniquely identifying the ClearLoop settlement the order is part of
+          type: string
+      type: object
+    DepositOrigin:
+      enum: []
+      type: string
+    Orders:
+      properties:
+        orders:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+      required:
+      - orders
+      type: object
+    UploadFullSignedTx:
+      properties: {}
+      type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    UpdateOrderCoSigners:
+      properties:
+        masterPassword:
+          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
+          type: string
+      type: object
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string
+    Warning:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    AddressCategory:
+      enum:
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
+      type: string
     OrderStatus:
       enum:
       - new
@@ -1061,18 +1410,40 @@ components:
       - waiting-accept-deposit
       - waiting-reject-deposit
       type: string
-    DeliveryType:
-      enum:
-      - free-of-payment
-      - payment-vs-payment
-      type: string
-    AddressType:
-      enum:
-      - externally-owned-account
-      - internal-account
-      - smart-contract
-      - payable-smart-contract
-      type: string
+    DryRunOrder:
+      properties:
+        amount:
+          type: string
+        baseCurrency:
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrderExtra'
+          type: object
+        mainCurrency:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        portfolioId:
+          type: string
+        warning:
+          $ref: '#/components/schemas/Warning'
+          type: object
+      required:
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    CreateOrders:
+      properties:
+        orders:
+          description: List of orders to create
+          items:
+            $ref: '#/components/schemas/CreateOrder'
+          type: array
+      required:
+      - orders
+      type: object
     OrderExtra:
       properties:
         availableCoSigners:
@@ -1261,95 +1632,11 @@ components:
           description: The ID of a withdraw order where a deposit was made from
           type: string
       type: object
-    TargetType:
+    LimitType:
       enum:
-      - external
-      - portfolio
+      - otc
+      - rfq
       type: string
-    FeeEstimation:
-      properties:
-        baseFeePerGas:
-          description: The base fee for the block in Gwei
-          type: string
-        estimatedTime:
-          description: The estimated time in milliseconds for the transaction to be confirmed
-          type: string
-        fee:
-          description: The amount of the fee
-          type: string
-        feeCurrency:
-          description: The currency in which the fee is denominated
-          type: string
-        feePerByte:
-          $ref: '#/components/schemas/MinimalUnit'
-          description: The fee per byte of the transaction
-          type: object
-        feeType:
-          $ref: '#/components/schemas/FeeType'
-          description: The type of the fee
-        gasLimit:
-          $ref: '#/components/schemas/MinimalUnit'
-          description: The gas limit for the transaction
-          type: object
-        gasPriceGwei:
-          description: The gas price in Gwei
-          type: string
-        maxFeePerGas:
-          description: The max gas fee wiling to pay in Gwei
-          type: string
-        maxPriorityFeePerGas:
-          description: The max priority fee wiling to pay in Gwei
-          type: string
-        reportingCurrencyRate:
-          description: The fee amount in the reporting currency
-          type: string
-        transactionBytes:
-          description: The number of bytes in the transaction
-          type: string
-      required:
-      - fee
-      - feeCurrency
-      type: object
-    Orders:
-      properties:
-        orders:
-          items:
-            $ref: '#/components/schemas/Order'
-          type: array
-      required:
-      - orders
-      type: object
-    UploadFullSignedTx:
-      properties: {}
-      type: object
-    UpdateOrderCoSigners:
-      properties:
-        masterPassword:
-          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
-          type: string
-      type: object
-    CryptoAddressExtra:
-      properties: {}
-      type: object
-    CurrencyConfigurationExtra:
-      properties: {}
-      type: object
-    CreateOrders:
-      properties:
-        orders:
-          description: List of orders to create
-          items:
-            $ref: '#/components/schemas/CreateOrder'
-          type: array
-      required:
-      - orders
-      type: object
-    AddressTag:
-      enum: []
-      type: string
-    MinimalUnit:
-      properties: {}
-      type: object
     CryptoAddressEmbedded:
       properties:
         currencyConfigurations:
@@ -1357,6 +1644,27 @@ components:
           items:
             $ref: '#/components/schemas/CurrencyConfiguration'
           type: array
+      type: object
+    FeeType:
+      enum: []
+      type: string
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    WithdrawTarget:
+      properties:
+        cryptoAddressId:
+          type: string
+        portfolioId:
+          type: string
+        targetType:
+          $ref: '#/components/schemas/TargetType'
+          description: '[See details](/enums/TargetType)'
+      required:
+      - targetType
       type: object
     Order:
       properties:
@@ -1426,78 +1734,25 @@ components:
       - baseCurrency
       - createdAt
       type: object
-    DryRunOrderRequest:
+    UploadPartSignedTx:
+      properties: {}
+      type: object
+    CryptoAddressExtra:
+      properties: {}
+      type: object
+    OrderReceiver:
       properties:
         amount:
+          description: The amount of order in baseCurrency
+          examples:
+          - '0.1'
           type: string
-        baseCurrency:
-          type: string
-        blockchainTransactionType:
-          $ref: '#/components/schemas/BlockchainTransactionType'
-          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
-        deliveryType:
-          $ref: '#/components/schemas/DeliveryType'
-          description: '[See details](/enums/DeliveryType)'
-        feeLevel:
-          $ref: '#/components/schemas/FeeLevel'
-          description: '[See details](/enums/FeeLevel)'
-        includeFeeInWithdraw:
-          type: boolean
-        limitType:
-          $ref: '#/components/schemas/LimitType'
-          description: '[See details](/enums/LimitType)'
-        mainCurrency:
-          type: string
-        memo:
-          type: string
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-          description: '[See details](/enums/OrderType)'
-        payload:
-          type: string
-        payloads:
-          items:
-            type: string
-          type: array
-        portfolioId:
-          type: string
-        priceLimit:
-          type: string
-        quoteAmount:
-          type: string
-        quoteCurrency:
-          type: string
-        quoteMainCurrency:
-          type: string
-        requestedNetworkFees:
-          $ref: '#/components/schemas/RequestedNetworkFees'
-          type: object
-        toCounterpartyId:
+        toAddress:
+          description: The address where the funds should be transferred
           type: string
         toCryptoAddressId:
+          description: In case of a withdrawal, the destination crypto address ID from the Address Book
           type: string
-        toInvoiceId:
-          type: string
-        toLendingInvoiceId:
-          type: string
-        toPortfolioId:
-          type: string
-      required:
-      - orderType
-      - portfolioId
-      - baseCurrency
-      type: object
-    WithdrawTarget:
-      properties:
-        cryptoAddressId:
-          type: string
-        portfolioId:
-          type: string
-        targetType:
-          $ref: '#/components/schemas/TargetType'
-          description: '[See details](/enums/TargetType)'
-      required:
-      - targetType
       type: object
     RequestedNetworkFees:
       properties:
@@ -1512,250 +1767,11 @@ components:
         maxPriorityFeePerGas:
           type: string
       type: object
-    PortfolioType:
+    DeliveryType:
       enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
+      - free-of-payment
+      - payment-vs-payment
       type: string
-    FeeLevel:
-      enum:
-      - low
-      - medium
-      - high
-      type: string
-    LimitType:
-      enum:
-      - otc
-      - rfq
-      type: string
-    CancelOrder:
-      properties:
-        reason:
-          type: string
-      type: object
-    DryRunOrder:
-      properties:
-        amount:
-          type: string
-        baseCurrency:
-          type: string
-        extra:
-          $ref: '#/components/schemas/OrderExtra'
-          type: object
-        mainCurrency:
-          type: string
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-          description: '[See details](/enums/OrderType)'
-        portfolioId:
-          type: string
-        warning:
-          $ref: '#/components/schemas/Warning'
-          type: object
-      required:
-      - orderType
-      - portfolioId
-      - baseCurrency
-      type: object
-    OrderType:
-      enum:
-      - sell
-      - buy
-      - deposit
-      - withdraw
-      - multi-withdraw
-      - wallet-message
-      - retrieved-deposit
-      - earn-reward
-      - earn-shared-reward
-      - claim-shared-reward
-      - cross-chain-deposit
-      - cross-chain-withdraw
-      type: string
-    CreateOrder:
-      properties:
-        agentAddress:
-          description: Agent address for orders created by agents on behalf of users
-          type: string
-        agentName:
-          description: Agent name for orders created by agents on behalf of users
-          type: string
-        amount:
-          description: The amount of order in baseCurrency
-          examples:
-          - '0.1'
-          type: string
-        baseCurrency:
-          description: The currency of the order amount
-          examples:
-          - BTC
-          type: string
-        blockchainTransactionType:
-          $ref: '#/components/schemas/BlockchainTransactionType'
-          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
-        builderFeeAddress:
-          description: Builder fee address for Hyperliquid builder approval and activation
-          type: string
-        deliveryType:
-          $ref: '#/components/schemas/DeliveryType'
-          default: payment-vs-payment
-          description: Settlement order type only applicable for settle orders. [See details](/enums/DeliveryType)
-          examples:
-          - payment-vs-payment
-        description:
-          description: The description of the order
-          examples:
-          - Withdrawal to my wallet
-          type: string
-        externalBroadcast:
-          default: 'false'
-          description: 'Sets broadcast mode. If true: manual broadcast. If false: automatic broadcast. Copper automatically broadcasts transactions to the network after fully signing'
-          examples:
-          - 'false'
-          type: boolean
-        externalOrderId:
-          description: Unique order identifier from client (should be unique for the portfolio)
-          type: string
-        feeLevel:
-          $ref: '#/components/schemas/FeeLevel'
-          description: 'Flat fees that Copper charges for withdrawing cryptocurrency to an external address. Flat fees are set per currency and do not change depending on transaction size and type. Flat fees are divided into three fee levels: low, medium and high, which define the speed of transaction processing—the higher the flat fee, the faster the speed. Flat fees are based on average network fees at the start of settlement. [See details](/enums/FeeLevel)'
-        includeFeeInWithdraw:
-          default: 'false'
-          description: Indicates, whether the fee should be included in the withdrawal amount or added on top of it
-          examples:
-          - 'false'
-          type: boolean
-        limitType:
-          $ref: '#/components/schemas/LimitType'
-          description: The limit type of the order. Used to create settle orders. [See details](/enums/LimitType)
-        mainCurrency:
-          description: The main currency of the base currency
-          type: string
-        masterPassword:
-          description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
-          type: string
-        memo:
-          description: Withdraw memo (destination tag for XRP)
-          type: string
-        netuid:
-          description: Subnet Network ID in TAO blockchain
-          type: string
-        nextTransferTo:
-          description: The list of next transfer targets for chained transfer orders
-          items:
-            $ref: '#/components/schemas/WithdrawTarget'
-          type: array
-        optInReferralProgram:
-          description: Opt in to the referral program during Hyperliquid activation
-          type: boolean
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-          description: The order type. [See details](/enums/OrderType)
-        payload:
-          description: Serialised [data](https://ethereum.org/en/developers/docs/transactions/#the-data-field) payload for a smart contract
-          type: string
-        payloads:
-          description: Serialised list of unsigned transactions. For Ethereum only type 0 (legacy) transactions are supported
-          items:
-            type: string
-          type: array
-        portfolioId:
-          description: The ID of the portfolio where the order should be placed
-          type: string
-        priceLimit:
-          description: The price of the order in quote currency, only applicable for settle orders
-          type: string
-        quoteAmount:
-          description: The amount of order in quoteCurrency
-          examples:
-          - '10'
-          type: string
-        quoteCurrency:
-          description: The currency of the quote amount
-          examples:
-          - USD
-          type: string
-        quoteMainCurrency:
-          description: The main currency of the quote currency
-          type: string
-        referralCode:
-          description: Referral code
-          type: string
-        toAddress:
-          description: The address where the funds should be transferred
-          type: string
-        toCounterpartyId:
-          description: The ID of the counterparty to transfer money to
-          type: string
-        toCryptoAddressId:
-          description: In case of a withdrawal, the destination crypto address ID from an Address Book
-          type: string
-        toPortfolioId:
-          description: In case of a withdrawal on a different portfolio, the portfolio ID of the destination account
-          type: string
-        toReceivers:
-          description: Is used for multi withdrawal orders instead of toAddress
-          items:
-            $ref: '#/components/schemas/OrderReceiver'
-          type: array
-        userAbstract:
-          $ref: '#/components/schemas/UserAbstraction'
-          description: Account type for Hyperliquid account-set and activation
-      required:
-      - externalOrderId
-      - orderType
-      - portfolioId
-      - baseCurrency
-      type: object
-    ClearLoopExtra:
-      properties:
-        clearLoopExternalNetted:
-          description: Whether the order is linked to the ClearLoop multi-custody model that works by netting settlement amounts
-          type: boolean
-        clearLoopSettlementId:
-          description: Id uniquely identifying the ClearLoop settlement the order is part of
-          type: string
-      type: object
-    BlockchainTransactionType:
-      enum:
-      - send
-      - multi-withdraw
-      - account-set
-      - approve-hot-key
-      - approve-builder-fee
-      - allowance
-      - smart-call
-      - multi-smart-call
-      - activate
-      - activate-trading
-      - stake-delegation
-      - stake-nomination
-      - stake-undelegation
-      - complete-withdrawal
-      - stake-complete-deposit
-      - take-reward
-      - pool-creation
-      - edit-pool
-      - governance-vote
-      - unjail
-      - importance-transfer
-      - transfer-stake
-      - rebond-stake
-      - chill
-      - cross-chain-send
-      - accept-deposit
-      - reject-deposit
-      - create-referral
-      - set-referral
-      type: string
-    EnterMasterPassword:
-      properties:
-        masterPassword:
-          description: Withdrawal password (also known as Master Password)
-          type: string
-      required:
-      - masterPassword
+    CurrencyConfigurationExtra:
+      properties: {}
       type: object

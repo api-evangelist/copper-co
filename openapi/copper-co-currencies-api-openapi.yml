@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Currencies API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: currencies
+- name: Currencies
 paths:
   /currencies:
     get:
@@ -104,7 +100,9 @@ paths:
           description: Conflict
       summary: Get Currencies
       tags:
-      - currencies
+      - Currencies
+      operationId: getCurrencies
+      x-operation-id-source: derived
   /currencies/{currency}-{mainCurrency}:
     get:
       parameters:
@@ -172,7 +170,9 @@ paths:
           description: Conflict
       summary: Get Currency
       tags:
-      - currencies
+      - Currencies
+      operationId: getCurrenciesByCurrency}{mainCurrency
+      x-operation-id-source: derived
   /currencies/{currency}-{mainCurrency}/trading-fees:
     get:
       description: Calculates trading fees for a given amount and a currency pair
@@ -249,35 +249,11 @@ paths:
           description: Conflict
       summary: Currency Trading Fees for Amount
       tags:
-      - currencies
+      - Currencies
+      operationId: getCurrenciesByCurrency}{mainCurrencyTradingFees
+      x-operation-id-source: derived
 components:
   schemas:
-    UniverseCurrencyExtra:
-      properties: {}
-      type: object
-    FeeLevel:
-      enum:
-      - low
-      - medium
-      - high
-      type: string
-    FeesLevels:
-      properties:
-        feesLevels:
-          items:
-            $ref: '#/components/schemas/FeesLevel'
-          type: array
-      type: object
-    CurrenciesData:
-      properties:
-        currencies:
-          description: Currencies list
-          items:
-            $ref: '#/components/schemas/CurrencyData'
-          type: array
-      required:
-      - currencies
-      type: object
     CurrencyData:
       properties:
         confirmations:
@@ -344,6 +320,13 @@ components:
       - show-clearloop
       - defi-allowed
       type: string
+    FeesLevels:
+      properties:
+        feesLevels:
+          items:
+            $ref: '#/components/schemas/FeesLevel'
+          type: array
+      type: object
     FeesLevel:
       properties:
         currency:
@@ -354,3 +337,22 @@ components:
         value:
           type: string
       type: object
+    CurrenciesData:
+      properties:
+        currencies:
+          description: Currencies list
+          items:
+            $ref: '#/components/schemas/CurrencyData'
+          type: array
+      required:
+      - currencies
+      type: object
+    UniverseCurrencyExtra:
+      properties: {}
+      type: object
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string

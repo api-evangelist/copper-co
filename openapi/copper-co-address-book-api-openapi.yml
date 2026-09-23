@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Address Book API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: address-book
+- name: Address Book
 paths:
   /crypto-addresses:
     get:
@@ -157,7 +153,9 @@ paths:
           description: Conflict
       summary: Get Crypto Addresses
       tags:
-      - address-book
+      - Address Book
+      operationId: getCryptoAddresses
+      x-operation-id-source: derived
     post:
       description: Create a new crypto address in an organization's address book
       requestBody:
@@ -219,7 +217,9 @@ paths:
           description: Conflict
       summary: Create Crypto Address
       tags:
-      - address-book
+      - Address Book
+      operationId: postCryptoAddresses
+      x-operation-id-source: derived
   /crypto-addresses/{cryptoAddressId}:
     delete:
       description: Deactivate a crypto address in an organization's address book
@@ -283,7 +283,9 @@ paths:
           description: Conflict
       summary: Deactivate Crypto Address
       tags:
-      - address-book
+      - Address Book
+      operationId: deleteCryptoAddressesByCryptoAddressId
+      x-operation-id-source: derived
     get:
       description: Retrieve information about a crypto address in an organization's address book
       parameters:
@@ -346,19 +348,141 @@ paths:
           description: Conflict
       summary: Get Crypto Address by ID
       tags:
-      - address-book
+      - Address Book
+      operationId: getCryptoAddressesByCryptoAddressId
+      x-operation-id-source: derived
 components:
   schemas:
-    AddressType:
+    AddressCategory:
       enum:
-      - externally-owned-account
-      - internal-account
       - smart-contract
       - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
       type: string
     AddressTag:
       enum: []
       type: string
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
+      type: object
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
+      type: object
+    CryptoAddresses:
+      properties:
+        cryptoAddresses:
+          description: List of crypto addresses
+          items:
+            $ref: '#/components/schemas/CryptoAddress'
+          type: array
+      required:
+      - cryptoAddresses
+      type: object
+    CryptoAddressExtra:
+      properties: {}
+      type: object
+    CreateCryptoAddress:
+      properties:
+        acceptTokens:
+          description: Indicates, if address can be used for network tokens
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: '[See details](/enums/AddressType)'
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        isWhitelist:
+          default: 'false'
+          description: Indicates, if address is whitelisted
+          examples:
+          - 'false'
+          type: boolean
+        mainCurrency:
+          description: Main currency (network) of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of the address
+          type: string
+        portfolioIds:
+          description: Comma-separated portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      type: object
+    Unit:
+      properties: {}
+      type: object
     CryptoAddress:
       properties:
         _embedded:
@@ -440,133 +564,13 @@ components:
       - isWhitelist
       - addressType
       type: object
-    AddressCategory:
-      enum:
-      - smart-contract
-      - payable-smart-contract
-      - mining
-      - unknown
-      - self-hosted
-      - vasp
-      type: string
-    CryptoAddressEmbedded:
-      properties:
-        currencyConfigurations:
-          description: Crypto address currency configuration
-          items:
-            $ref: '#/components/schemas/CurrencyConfiguration'
-          type: array
-      type: object
-    CreateCryptoAddress:
-      properties:
-        acceptTokens:
-          description: Indicates, if address can be used for network tokens
-          type: boolean
-        address:
-          description: Address
-          type: string
-        addressTags:
-          description: Address tags
-          items:
-            $ref: '#/components/schemas/AddressTag'
-          type: array
-        addressType:
-          $ref: '#/components/schemas/AddressType'
-          description: '[See details](/enums/AddressType)'
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        isWhitelist:
-          default: 'false'
-          description: Indicates, if address is whitelisted
-          examples:
-          - 'false'
-          type: boolean
-        mainCurrency:
-          description: Main currency (network) of an address
-          type: string
-        memo:
-          description: Address memo (destination tag for XRP)
-          type: string
-        name:
-          description: Name of the address
-          type: string
-        portfolioIds:
-          description: Comma-separated portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-      required:
-      - cryptoAddressId
-      - currency
-      - name
-      - address
-      type: object
-    CryptoAddressExtra:
-      properties: {}
-      type: object
-    CurrencyConfiguration:
-      properties:
-        createdAt:
-          description: Created at timestamp
-          type: string
-        createdBy:
-          description: Created by user id
-          type: string
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        currencyConfigurationId:
-          description: Currency configuration id
-          type: string
-        extra:
-          $ref: '#/components/schemas/CurrencyConfigurationExtra'
-          description: Extra information for an address
-          type: object
-        isWhitelist:
-          description: Indicates, if an address is whitelisted
-          type: boolean
-        lastUsedAt:
-          description: Last used at
-          type: string
-        portfolioIds:
-          description: Portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-        updatedAt:
-          description: Last updated Updated at timestamp
-          type: string
-        updatedBy:
-          description: Updated by user id
-          type: string
-      required:
-      - currencyConfigurationId
-      - cryptoAddressId
-      - currency
-      - createdBy
-      - createdAt
-      - isWhitelist
-      type: object
-    Unit:
-      properties: {}
-      type: object
-    CryptoAddresses:
-      properties:
-        cryptoAddresses:
-          description: List of crypto addresses
-          items:
-            $ref: '#/components/schemas/CryptoAddress'
-          type: array
-      required:
-      - cryptoAddresses
-      type: object
     CurrencyConfigurationExtra:
       properties: {}
       type: object
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string

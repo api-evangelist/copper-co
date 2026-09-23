@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Deposit Targets API
   version: latest
 servers:
@@ -152,6 +148,8 @@ paths:
       summary: Get Deposit Targets
       tags:
       - deposit-targets
+      operationId: getDepositTargets
+      x-operation-id-source: derived
     post:
       description: Create a new deposit target
       requestBody:
@@ -214,6 +212,8 @@ paths:
       summary: Create Deposit Target
       tags:
       - deposit-targets
+      operationId: postDepositTargets
+      x-operation-id-source: derived
   /deposit-targets/{depositTargetId}:
     patch:
       description: Update deposit target
@@ -289,36 +289,10 @@ paths:
       summary: Activate Deposit Target Currency
       tags:
       - deposit-targets
+      operationId: patchDepositTargetsByDepositTargetId
+      x-operation-id-source: derived
 components:
   schemas:
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    SortingDirection:
-      enum:
-      - ASC
-      - DESC
-      type: string
-    DepositTargets:
-      properties:
-        depositTargets:
-          items:
-            $ref: '#/components/schemas/DepositTarget'
-          type: array
-      required:
-      - depositTargets
-      type: object
-    DepositTargetType:
-      enum:
-      - proxy
-      - direct
-      - external-wallet
-      type: string
     DepositTarget:
       properties:
         acceptAllTokens:
@@ -387,6 +361,24 @@ components:
     DepositTargetOrderGroup:
       enum: []
       type: string
+    ActivatedToken:
+      properties: {}
+      type: object
+    DepositTargetType:
+      enum:
+      - proxy
+      - direct
+      - external-wallet
+      type: string
+    DepositTargets:
+      properties:
+        depositTargets:
+          items:
+            $ref: '#/components/schemas/DepositTarget'
+          type: array
+      required:
+      - depositTargets
+      type: object
     DepositTargetStatus:
       enum:
       - new
@@ -396,6 +388,28 @@ components:
       - disabled
       - error
       - portfolio-archived
+      type: string
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
+      type: string
+    ActivateCurrency:
+      properties:
+        currency:
+          type: string
+        mainCurrency:
+          type: string
+      required:
+      - currency
+      type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
       type: string
     CreateTarget:
       properties:
@@ -420,16 +434,4 @@ components:
       - portfolioId
       - currency
       - mainCurrency
-      type: object
-    ActivatedToken:
-      properties: {}
-      type: object
-    ActivateCurrency:
-      properties:
-        currency:
-          type: string
-        mainCurrency:
-          type: string
-      required:
-      - currency
       type: object

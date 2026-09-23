@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Trades API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: trades
+- name: Trades
 paths:
   /trades:
     get:
@@ -192,7 +188,9 @@ paths:
           description: Conflict
       summary: Get Trades
       tags:
-      - trades
+      - Trades
+      operationId: getTrades
+      x-operation-id-source: derived
     post:
       description: Initiate a new trade. The counterparty will need to accept the trade.
       requestBody:
@@ -254,7 +252,9 @@ paths:
           description: Conflict
       summary: Create Trade
       tags:
-      - trades
+      - Trades
+      operationId: postTrades
+      x-operation-id-source: derived
   /trades/{acceptClosureTradeId}:
     patch:
       description: Accept a pending trade closure initiated by the counterparty.
@@ -329,7 +329,9 @@ paths:
           description: Conflict
       summary: Accept Trade Close
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByAcceptClosureTradeId
+      x-operation-id-source: derived
   /trades/{acceptDefaultTradeId}:
     patch:
       description: Accept a pending trade default initiated by the counterparty.
@@ -404,7 +406,9 @@ paths:
           description: Conflict
       summary: Accept Trade Default
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByAcceptDefaultTradeId
+      x-operation-id-source: derived
   /trades/{acceptTradeId}:
     patch:
       description: Accept a trade. This action can only be carried out by the counterparty.
@@ -479,7 +483,9 @@ paths:
           description: Conflict
       summary: Accept Trade
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByAcceptTradeId
+      x-operation-id-source: derived
   /trades/{cancelClosureTradeId}:
     patch:
       description: Cancel a pending trade closure before it has been accepted.
@@ -554,7 +560,9 @@ paths:
           description: Conflict
       summary: Cancel Trade Close
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCancelClosureTradeId
+      x-operation-id-source: derived
   /trades/{cancelCollateralTopUpTradeId}:
     patch:
       description: Cancel a pending collateral top-up request before it has been reviewed.
@@ -629,7 +637,9 @@ paths:
           description: Conflict
       summary: Cancel Collateral Top-Up Request
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCancelCollateralTopUpTradeId
+      x-operation-id-source: derived
   /trades/{cancelCollateralTradeId}:
     patch:
       description: Cancel a pending collateral release request before it has been reviewed.
@@ -704,7 +714,9 @@ paths:
           description: Conflict
       summary: Cancel Collateral Release Request
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCancelCollateralTradeId
+      x-operation-id-source: derived
   /trades/{cancelDefaultTradeId}:
     patch:
       description: Cancel a pending trade default before it has been accepted.
@@ -779,7 +791,9 @@ paths:
           description: Conflict
       summary: Cancel Trade Default
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCancelDefaultTradeId
+      x-operation-id-source: derived
   /trades/{cancelTradeId}:
     patch:
       description: Cancel a trade. Can be initiated by either party before the trade is active.
@@ -854,7 +868,9 @@ paths:
           description: Conflict
       summary: Cancel Trade
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCancelTradeId
+      x-operation-id-source: derived
   /trades/{closeTradeId}:
     patch:
       description: Initiate the closure of an active trade and release collateral.
@@ -929,7 +945,9 @@ paths:
           description: Conflict
       summary: Close Trade
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCloseTradeId
+      x-operation-id-source: derived
   /trades/{collateralTopUpTradeId}:
     patch:
       description: Add additional collateral to an active trade.
@@ -1004,7 +1022,9 @@ paths:
           description: Conflict
       summary: Top Up Trade Collateral
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByCollateralTopUpTradeId
+      x-operation-id-source: derived
   /trades/{declineTradeId}:
     patch:
       description: Decline a trade. This action can only be carried out by the counterparty.
@@ -1079,7 +1099,9 @@ paths:
           description: Conflict
       summary: Decline Trade
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByDeclineTradeId
+      x-operation-id-source: derived
   /trades/{defaultTradeId}:
     patch:
       description: Mark a trade as defaulted and transfer collateral to the specified portfolio.
@@ -1154,7 +1176,9 @@ paths:
           description: Conflict
       summary: Default Trade
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByDefaultTradeId
+      x-operation-id-source: derived
   /trades/{requestCollateralReleaseTradeId}:
     patch:
       description: Request the release of collateral held against the trade.
@@ -1229,7 +1253,9 @@ paths:
           description: Conflict
       summary: Request Collateral Release
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByRequestCollateralReleaseTradeId
+      x-operation-id-source: derived
   /trades/{requestCollateralTradeId}:
     patch:
       description: Request the counterparty to top up their collateral position on the trade.
@@ -1304,7 +1330,9 @@ paths:
           description: Conflict
       summary: Request Collateral Top-Up
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByRequestCollateralTradeId
+      x-operation-id-source: derived
   /trades/{reviewCollateralReleaseTradeId}:
     patch:
       description: Approve or reject a pending collateral release request.
@@ -1379,7 +1407,9 @@ paths:
           description: Conflict
       summary: Review Collateral Release Request
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByReviewCollateralReleaseTradeId
+      x-operation-id-source: derived
   /trades/{reviewCollateraltradeId}:
     patch:
       description: Approve or reject a pending collateral top-up request.
@@ -1454,7 +1484,9 @@ paths:
           description: Conflict
       summary: Review Collateral Top-Up Request
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesByReviewCollateraltradeId
+      x-operation-id-source: derived
   /trades/{secureTradeId}:
     patch:
       description: Lock collateral positions against the trade obligations.
@@ -1529,7 +1561,9 @@ paths:
           description: Conflict
       summary: Secure Trade Collateral
       tags:
-      - trades
+      - Trades
+      operationId: patchTradesBySecureTradeId
+      x-operation-id-source: derived
   /trades/{tradeId}:
     get:
       description: Retrieve a single trade by its unique identifier.
@@ -1629,74 +1663,52 @@ paths:
           description: Conflict
       summary: Get Trade by ID
       tags:
-      - trades
+      - Trades
+      operationId: getTradesByTradeId
+      x-operation-id-source: derived
 components:
   schemas:
-    ActionTrade:
+    DefaultTrade:
       properties:
+        defaultReason:
+          description: Optional reason for the default
+          type: string
         organizationId:
           description: Organization ID of the requesting party
           type: string
-        tradeActionId:
-          description: Unique identifier of the trade action being acted upon
+        toPortfolioId:
+          description: Portfolio ID to transfer defaulted collateral to
           type: string
         tradeId:
-          description: Unique identifier of the trade
+          description: Unique identifier of the trade to default
           type: string
       required:
-      - tradeActionId
       - tradeId
       - organizationId
+      - toPortfolioId
       type: object
-    TradeActionExtra:
+    CollateralDetails:
       properties:
-        acceptedAt:
-          description: Time when the action was accepted. Format is unix timestamp (ms)
+        amount:
+          description: Amount of collateral
           type: string
-        acceptedBy:
-          description: User ID of the person who accepted the action
+        currency:
+          description: Currency of the collateral amount
           type: string
-        cancelledAt:
-          description: Time when the action was cancelled. Format is unix timestamp (ms)
+        fromPortfolioId:
+          description: Portfolio ID to transfer collateral from
           type: string
-        cancelledBy:
-          description: User ID of the person who cancelled the action
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
           type: string
-        closeTradeAction:
-          $ref: '#/components/schemas/CloseTradeAction'
-          description: Details of the close trade action, if applicable
-          type: object
-        collateralProviderId:
-          description: Counterparty ID of the collateral provider involved in the action
+        toPortfolioId:
+          description: Portfolio ID to transfer collateral to
           type: string
-        defaultTradeAction:
-          $ref: '#/components/schemas/DefaultTradeAction'
-          description: Details of the default trade action, if applicable
-          type: object
-        rejectedAt:
-          description: Time when the action was rejected. Format is unix timestamp (ms)
-          type: string
-        rejectedBy:
-          description: User ID of the person who rejected the action
-          type: string
-        requestReleaseCollateralAction:
-          $ref: '#/components/schemas/RequestReleaseCollateralAction'
-          description: Details of the request release collateral action, if applicable
-          type: object
-        requestTopUpTradeAction:
-          $ref: '#/components/schemas/RequestTopUpTradeAction'
-          description: Details of the request top-up trade action, if applicable
-          type: object
-        secureCollateralAction:
-          $ref: '#/components/schemas/SecureCollateralAction'
-          description: Details of the secure collateral action, if applicable
-          type: object
+      required:
+      - amount
+      - currency
+      - mainCurrency
       type: object
-    ReviewType:
-      enum:
-      - approve
-      - reject
-      type: string
     DeclineTrade:
       properties:
         organizationId:
@@ -1708,34 +1720,6 @@ components:
       required:
       - organizationId
       - tradeId
-      type: object
-    CloseTradeAction:
-      properties:
-        collateralDetails:
-          description: List of collateral positions being released as part of the close
-          items:
-            $ref: '#/components/schemas/CollateralDetails'
-          type: array
-        toPortfolioId:
-          description: Portfolio ID to release collateral to upon closing
-          type: string
-      required:
-      - toPortfolioId
-      type: object
-    CloseTrade:
-      properties:
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        toPortfolioId:
-          description: Portfolio ID to release collateral to upon closing; defaults to originating portfolio if omitted
-          type: string
-        tradeId:
-          description: Unique identifier of the trade to close
-          type: string
-      required:
-      - tradeId
-      - organizationId
       type: object
     ReviewTopUpRequest:
       properties:
@@ -1762,13 +1746,54 @@ components:
       - tradeActionId
       - reviewType
       type: object
-    CancelTrade:
+    ActionTrade:
       properties:
         organizationId:
           description: Organization ID of the requesting party
           type: string
+        tradeActionId:
+          description: Unique identifier of the trade action being acted upon
+          type: string
         tradeId:
-          description: Unique identifier of the trade to cancel
+          description: Unique identifier of the trade
+          type: string
+      required:
+      - tradeActionId
+      - tradeId
+      - organizationId
+      type: object
+    RequestReleaseCollateralAction:
+      properties:
+        collateralActionDetails:
+          description: List of collateral positions requested for release in this action
+          items:
+            $ref: '#/components/schemas/CollateralActionDetails'
+          type: array
+      required:
+      - collateralActionDetails
+      type: object
+    TradeActionStatus:
+      enum:
+      - new
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      - failed
+      - completed
+      - rejected
+      - processing
+      - requires-manual-intervention
+      type: string
+    AcceptTrade:
+      properties:
+        collateralPortfolioId:
+          description: Portfolio ID to use as collateral source for the acceptor
+          type: string
+        organizationId:
+          description: Organization ID of the trade acceptor
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to accept
           type: string
       required:
       - organizationId
@@ -1784,198 +1809,6 @@ components:
           type: string
       required:
       - toPortfolioId
-      type: object
-    SecureCollateralAction:
-      properties:
-        amount:
-          description: Amount of collateral being secured
-          type: string
-        currency:
-          description: Currency of the collateral amount
-          type: string
-        fromPortfolioId:
-          description: Portfolio ID the collateral is transferred from
-          type: string
-        mainCurrency:
-          description: Network of the currency (E.G. "SOL" for Solana network)
-          type: string
-        toPortfolioId:
-          description: Portfolio ID the collateral is transferred to
-          type: string
-      required:
-      - amount
-      - currency
-      - mainCurrency
-      - fromPortfolioId
-      - toPortfolioId
-      type: object
-    CollateralTransactionType:
-      enum: []
-      type: string
-    CreateTrade:
-      properties:
-        collateralPortfolioId:
-          description: Portfolio ID to use as collateral source for the creator
-          type: string
-        counterpartyId:
-          description: Counterparty ID of the intended trade acceptor
-          type: string
-        effectiveDate:
-          description: Time when the trade becomes effective. Format is unix timestamp (ms)
-          type: string
-        maturityDate:
-          description: Time when the trade matures; omit for open-ended trades. Format is unix timestamp (ms)
-          type: string
-        organizationId:
-          description: Organization ID of the trade creator
-          type: string
-        requiredCollaterals:
-          description: List of collateral obligations required for this trade
-          items:
-            $ref: '#/components/schemas/InitialCollateral'
-          type: array
-        tradeReferenceId:
-          description: External reference ID for the trade, provided by the creator
-          type: string
-        tradeSide:
-          $ref: '#/components/schemas/TradeSide'
-          description: Side of the trade from the creator's perspective (buy, sell, not-applicable)
-        tradeType:
-          $ref: '#/components/schemas/TradeType'
-          description: Type of trade (forward, option, swap, other, not-applicable)
-      required:
-      - organizationId
-      - counterpartyId
-      - tradeReferenceId
-      - tradeType
-      - tradeSide
-      - effectiveDate
-      - requiredCollaterals
-      type: object
-    CollateralTransactionStatus:
-      enum:
-      - new
-      - order-created
-      - awaiting-funds
-      - awaiting-signature
-      - completed
-      - failed
-      type: string
-    CollateralActionDetails:
-      properties: {}
-      type: object
-    TopUpTradeCollateral:
-      properties:
-        collateralDetails:
-          description: List of collateral positions to add to the trade
-          items:
-            $ref: '#/components/schemas/CollateralDetails'
-          type: array
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        tradeId:
-          description: Unique identifier of the trade to top up collateral for
-          type: string
-      required:
-      - tradeId
-      - organizationId
-      - collateralDetails
-      type: object
-    DefaultTrade:
-      properties:
-        defaultReason:
-          description: Optional reason for the default
-          type: string
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        toPortfolioId:
-          description: Portfolio ID to transfer defaulted collateral to
-          type: string
-        tradeId:
-          description: Unique identifier of the trade to default
-          type: string
-      required:
-      - tradeId
-      - organizationId
-      - toPortfolioId
-      type: object
-    Trades:
-      properties:
-        trades:
-          description: List of trades matching the query
-          items:
-            $ref: '#/components/schemas/Trade'
-          type: array
-      type: object
-    Collateral:
-      properties:
-        amount:
-          description: The amount of the transferred collateral
-          type: string
-        collateralId:
-          description: Unique identifier of the collateral
-          type: string
-        collateralType:
-          $ref: '#/components/schemas/CollateralType'
-          description: The type of collateral. [See details](/enums/CollateralType)
-        createdAt:
-          description: Timestamp in epoch milliseconds of the collateral creation
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        externalId:
-          description: The unique identifier of associated trade or loan
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account where the collateral is being held
-          type: string
-        unrealisedAmount:
-          description: The amount of pending collateral funds; can be positive and negative
-          type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last collateral update
-          type: string
-      required:
-      - collateralId
-      - externalId
-      - collateralType
-      - amount
-      - currency
-      - mainCurrency
-      - createdAt
-      type: object
-    TradeActionType:
-      enum:
-      - secure-collateral
-      - close-trade
-      - default-trade
-      - top-up-collateral
-      - top-up-collateral-request
-      - release-collateral-request
-      type: string
-    ReleaseCollateralRequest:
-      properties:
-        collateralDetails:
-          description: List of collateral positions to release
-          items:
-            $ref: '#/components/schemas/CollateralDetails'
-          type: array
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        tradeId:
-          description: Unique identifier of the trade to request collateral release for
-          type: string
-      required:
-      - tradeId
-      - organizationId
-      - collateralDetails
       type: object
     Trade:
       properties:
@@ -2061,26 +1894,40 @@ components:
       - effectiveDate
       - createdAt
       type: object
-    TradeActionStatus:
+    TradeActionType:
+      enum:
+      - secure-collateral
+      - close-trade
+      - default-trade
+      - top-up-collateral
+      - top-up-collateral-request
+      - release-collateral-request
+      type: string
+    CollateralActionDetails:
+      properties: {}
+      type: object
+    CloseTradeAction:
+      properties:
+        collateralDetails:
+          description: List of collateral positions being released as part of the close
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        toPortfolioId:
+          description: Portfolio ID to release collateral to upon closing
+          type: string
+      required:
+      - toPortfolioId
+      type: object
+    CollateralTransactionStatus:
       enum:
       - new
-      - awaiting-acceptance
-      - accepted
-      - cancelled
-      - failed
+      - order-created
+      - awaiting-funds
+      - awaiting-signature
       - completed
-      - rejected
-      - processing
-      - requires-manual-intervention
+      - failed
       type: string
-    TradeActionEmbedded:
-      properties:
-        collateralTransactions:
-          description: List of collateral transactions associated with this trade action
-          items:
-            $ref: '#/components/schemas/CollateralTransaction'
-          type: array
-      type: object
     RequestTopUpTradeAction:
       properties:
         collateralActionDetails:
@@ -2090,6 +1937,169 @@ components:
           type: array
       required:
       - collateralActionDetails
+      type: object
+    InitialCollateral:
+      properties:
+        amount:
+          description: Required collateral amount
+          type: string
+        collateralArrangementType:
+          $ref: '#/components/schemas/CollateralArrangementType'
+          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
+        collateralProviderCounterpartyId:
+          description: Counterparty ID of the party providing the collateral
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      - collateralProviderCounterpartyId
+      - collateralArrangementType
+      type: object
+    RequiredCollateral:
+      properties:
+        amount:
+          description: Required collateral amount
+          type: string
+        collateralArrangementType:
+          $ref: '#/components/schemas/CollateralArrangementType'
+          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
+        collateralId:
+          description: Unique identifier of the collateral record
+          type: string
+        collateralProviderCounterpartyId:
+          description: Counterparty ID of the party providing the collateral
+          type: string
+        collateralReceiverCounterpartyId:
+          description: Counterparty ID of the party receiving the collateral
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+        tradeId:
+          description: Unique identifier of the trade this collateral is associated with
+          type: string
+      required:
+      - collateralId
+      - tradeId
+      - amount
+      - currency
+      - mainCurrency
+      - collateralProviderCounterpartyId
+      - collateralReceiverCounterpartyId
+      - collateralArrangementType
+      type: object
+    CloseTrade:
+      properties:
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        toPortfolioId:
+          description: Portfolio ID to release collateral to upon closing; defaults to originating portfolio if omitted
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to close
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      type: object
+    TopUpRequest:
+      properties:
+        collateralDetails:
+          description: List of collateral positions requested in the top-up
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to request a collateral top-up for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    TradeType:
+      enum: []
+      type: string
+    TopUpTradeCollateral:
+      properties:
+        collateralDetails:
+          description: List of collateral positions to add to the trade
+          items:
+            $ref: '#/components/schemas/CollateralDetails'
+          type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to top up collateral for
+          type: string
+      required:
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    Collateral:
+      properties:
+        amount:
+          description: The amount of the transferred collateral
+          type: string
+        collateralId:
+          description: Unique identifier of the collateral
+          type: string
+        collateralType:
+          $ref: '#/components/schemas/CollateralType'
+          description: The type of collateral. [See details](/enums/CollateralType)
+        createdAt:
+          description: Timestamp in epoch milliseconds of the collateral creation
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        externalId:
+          description: The unique identifier of associated trade or loan
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account where the collateral is being held
+          type: string
+        unrealisedAmount:
+          description: The amount of pending collateral funds; can be positive and negative
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last collateral update
+          type: string
+      required:
+      - collateralId
+      - externalId
+      - collateralType
+      - amount
+      - currency
+      - mainCurrency
+      - createdAt
+      type: object
+    TradeEmbedded:
+      properties:
+        tradeActions:
+          description: List of actions performed on this trade
+          items:
+            $ref: '#/components/schemas/TradeAction'
+          type: array
       type: object
     SecureTradeCollateral:
       properties:
@@ -2109,55 +2119,50 @@ components:
       - organizationId
       - collateralDetails
       type: object
-    TradeAction:
+    ReviewType:
+      enum:
+      - approve
+      - reject
+      type: string
+    CancelTrade:
       properties:
-        acceptorCounterpartyId:
-          description: Counterparty ID of the party who must respond to the action
-          type: string
-        actionType:
-          $ref: '#/components/schemas/TradeActionType'
-          description: The type of the action. [See details](/enums/TradeActionType)
-        createdAt:
-          description: Time when the action was created. Format is unix timestamp (ms)
-          type: string
-        createdBy:
-          description: User ID of the person who created the action
-          type: string
-        embedded:
-          $ref: '#/components/schemas/TradeActionEmbedded'
-          description: Additional data linked to the trade
-          type: object
-        extra:
-          $ref: '#/components/schemas/TradeActionExtra'
-          description: Additional metadata associated with this action
-          type: object
-        requestorCounterpartyId:
-          description: Counterparty ID of the party who initiated the action
-          type: string
-        status:
-          $ref: '#/components/schemas/TradeActionStatus'
-          description: The status of the action. [See details](/enums/TradeActionStatus)
-        terminatedAt:
-          description: Time when the action reached a terminal state. Format is unix timestamp (ms)
-          type: string
-        tradeActionId:
-          description: Unique identifier of the trade action
+        organizationId:
+          description: Organization ID of the requesting party
           type: string
         tradeId:
-          description: The ID of the trade
-          type: string
-        updatedAt:
-          description: Time when the action was last updated. Format is unix timestamp (ms)
+          description: Unique identifier of the trade to cancel
           type: string
       required:
-      - tradeActionId
+      - organizationId
       - tradeId
-      - status
-      - actionType
-      - createdBy
-      - createdAt
-      - requestorCounterpartyId
       type: object
+    SecureCollateralAction:
+      properties:
+        amount:
+          description: Amount of collateral being secured
+          type: string
+        currency:
+          description: Currency of the collateral amount
+          type: string
+        fromPortfolioId:
+          description: Portfolio ID the collateral is transferred from
+          type: string
+        mainCurrency:
+          description: Network of the currency (E.G. "SOL" for Solana network)
+          type: string
+        toPortfolioId:
+          description: Portfolio ID the collateral is transferred to
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      - fromPortfolioId
+      - toPortfolioId
+      type: object
+    CollateralTransactionType:
+      enum: []
+      type: string
     CancelCollateralReleaseRequest:
       properties:
         organizationId:
@@ -2174,61 +2179,48 @@ components:
       - organizationId
       - tradeActionId
       type: object
-    TradeType:
-      enum: []
-      type: string
     TradeSide:
       enum: []
       type: string
-    CancelTopUpRequest:
-      properties:
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        tradeActionId:
-          description: Unique identifier of the top-up trade action to cancel
-          type: string
-        tradeId:
-          description: Unique identifier of the trade
-          type: string
-      required:
-      - tradeId
-      - organizationId
-      - tradeActionId
-      type: object
-    CollateralArrangementType:
-      enum:
-      - title-transfer
-      - pledge
-      type: string
-    TradeEmbedded:
-      properties:
-        tradeActions:
-          description: List of actions performed on this trade
-          items:
-            $ref: '#/components/schemas/TradeAction'
-          type: array
-      type: object
-    CollateralType:
-      enum:
-      - trade-collateral
-      - loan-collateral
-      - external-collateral
-      type: string
-    AcceptTrade:
+    CreateTrade:
       properties:
         collateralPortfolioId:
-          description: Portfolio ID to use as collateral source for the acceptor
+          description: Portfolio ID to use as collateral source for the creator
+          type: string
+        counterpartyId:
+          description: Counterparty ID of the intended trade acceptor
+          type: string
+        effectiveDate:
+          description: Time when the trade becomes effective. Format is unix timestamp (ms)
+          type: string
+        maturityDate:
+          description: Time when the trade matures; omit for open-ended trades. Format is unix timestamp (ms)
           type: string
         organizationId:
-          description: Organization ID of the trade acceptor
+          description: Organization ID of the trade creator
           type: string
-        tradeId:
-          description: Unique identifier of the trade to accept
+        requiredCollaterals:
+          description: List of collateral obligations required for this trade
+          items:
+            $ref: '#/components/schemas/InitialCollateral'
+          type: array
+        tradeReferenceId:
+          description: External reference ID for the trade, provided by the creator
           type: string
+        tradeSide:
+          $ref: '#/components/schemas/TradeSide'
+          description: Side of the trade from the creator's perspective (buy, sell, not-applicable)
+        tradeType:
+          $ref: '#/components/schemas/TradeType'
+          description: Type of trade (forward, option, swap, other, not-applicable)
       required:
       - organizationId
-      - tradeId
+      - counterpartyId
+      - tradeReferenceId
+      - tradeType
+      - tradeSide
+      - effectiveDate
+      - requiredCollaterals
       type: object
     CollateralTransaction:
       properties:
@@ -2290,35 +2282,13 @@ components:
       - status
       - createdAt
       type: object
-    TopUpRequest:
+    TradeActionEmbedded:
       properties:
-        collateralDetails:
-          description: List of collateral positions requested in the top-up
+        collateralTransactions:
+          description: List of collateral transactions associated with this trade action
           items:
-            $ref: '#/components/schemas/CollateralDetails'
+            $ref: '#/components/schemas/CollateralTransaction'
           type: array
-        organizationId:
-          description: Organization ID of the requesting party
-          type: string
-        tradeId:
-          description: Unique identifier of the trade to request a collateral top-up for
-          type: string
-      required:
-      - tradeId
-      - organizationId
-      - collateralDetails
-      type: object
-    TopUpTradeDetail:
-      properties:
-        collateralId:
-          description: Unique identifier of the collateral being used for the top-up
-          type: string
-        fromPortfolioId:
-          description: Portfolio ID from which the top-up trade is being initiated
-          type: string
-      required:
-      - fromPortfolioId
-      - collateralId
       type: object
     ReviewCollateralReleaseRequest:
       properties:
@@ -2340,97 +2310,163 @@ components:
       - tradeActionId
       - reviewType
       type: object
-    InitialCollateral:
+    CollateralType:
+      enum:
+      - trade-collateral
+      - loan-collateral
+      - external-collateral
+      type: string
+    Trades:
       properties:
-        amount:
-          description: Required collateral amount
-          type: string
-        collateralArrangementType:
-          $ref: '#/components/schemas/CollateralArrangementType'
-          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
-        collateralProviderCounterpartyId:
-          description: Counterparty ID of the party providing the collateral
-          type: string
-        currency:
-          description: Currency of the collateral amount
-          type: string
-        mainCurrency:
-          description: Network of the currency (E.G. "SOL" for Solana network)
-          type: string
-      required:
-      - amount
-      - currency
-      - mainCurrency
-      - collateralProviderCounterpartyId
-      - collateralArrangementType
+        trades:
+          description: List of trades matching the query
+          items:
+            $ref: '#/components/schemas/Trade'
+          type: array
       type: object
-    CollateralDetails:
+    TradeActionExtra:
       properties:
-        amount:
-          description: Amount of collateral
+        acceptedAt:
+          description: Time when the action was accepted. Format is unix timestamp (ms)
           type: string
-        currency:
-          description: Currency of the collateral amount
+        acceptedBy:
+          description: User ID of the person who accepted the action
           type: string
-        fromPortfolioId:
-          description: Portfolio ID to transfer collateral from
+        cancelledAt:
+          description: Time when the action was cancelled. Format is unix timestamp (ms)
           type: string
-        mainCurrency:
-          description: Network of the currency (E.G. "SOL" for Solana network)
+        cancelledBy:
+          description: User ID of the person who cancelled the action
           type: string
-        toPortfolioId:
-          description: Portfolio ID to transfer collateral to
+        closeTradeAction:
+          $ref: '#/components/schemas/CloseTradeAction'
+          description: Details of the close trade action, if applicable
+          type: object
+        collateralProviderId:
+          description: Counterparty ID of the collateral provider involved in the action
           type: string
-      required:
-      - amount
-      - currency
-      - mainCurrency
+        defaultTradeAction:
+          $ref: '#/components/schemas/DefaultTradeAction'
+          description: Details of the default trade action, if applicable
+          type: object
+        rejectedAt:
+          description: Time when the action was rejected. Format is unix timestamp (ms)
+          type: string
+        rejectedBy:
+          description: User ID of the person who rejected the action
+          type: string
+        requestReleaseCollateralAction:
+          $ref: '#/components/schemas/RequestReleaseCollateralAction'
+          description: Details of the request release collateral action, if applicable
+          type: object
+        requestTopUpTradeAction:
+          $ref: '#/components/schemas/RequestTopUpTradeAction'
+          description: Details of the request top-up trade action, if applicable
+          type: object
+        secureCollateralAction:
+          $ref: '#/components/schemas/SecureCollateralAction'
+          description: Details of the secure collateral action, if applicable
+          type: object
       type: object
-    RequiredCollateral:
+    CancelTopUpRequest:
       properties:
-        amount:
-          description: Required collateral amount
+        organizationId:
+          description: Organization ID of the requesting party
           type: string
-        collateralArrangementType:
-          $ref: '#/components/schemas/CollateralArrangementType'
-          description: Type of collateral arrangement (e.g. pledge, title-transfer). [See details](/enums/CollateralArrangementType)
-        collateralId:
-          description: Unique identifier of the collateral record
-          type: string
-        collateralProviderCounterpartyId:
-          description: Counterparty ID of the party providing the collateral
-          type: string
-        collateralReceiverCounterpartyId:
-          description: Counterparty ID of the party receiving the collateral
-          type: string
-        currency:
-          description: Currency of the collateral amount
-          type: string
-        mainCurrency:
-          description: Network of the currency (E.G. "SOL" for Solana network)
+        tradeActionId:
+          description: Unique identifier of the top-up trade action to cancel
           type: string
         tradeId:
-          description: Unique identifier of the trade this collateral is associated with
+          description: Unique identifier of the trade
           type: string
       required:
-      - collateralId
       - tradeId
-      - amount
-      - currency
-      - mainCurrency
-      - collateralProviderCounterpartyId
-      - collateralReceiverCounterpartyId
-      - collateralArrangementType
+      - organizationId
+      - tradeActionId
       type: object
-    RequestReleaseCollateralAction:
+    ReleaseCollateralRequest:
       properties:
-        collateralActionDetails:
-          description: List of collateral positions requested for release in this action
+        collateralDetails:
+          description: List of collateral positions to release
           items:
-            $ref: '#/components/schemas/CollateralActionDetails'
+            $ref: '#/components/schemas/CollateralDetails'
           type: array
+        organizationId:
+          description: Organization ID of the requesting party
+          type: string
+        tradeId:
+          description: Unique identifier of the trade to request collateral release for
+          type: string
       required:
-      - collateralActionDetails
+      - tradeId
+      - organizationId
+      - collateralDetails
+      type: object
+    CollateralArrangementType:
+      enum:
+      - title-transfer
+      - pledge
+      type: string
+    TradeAction:
+      properties:
+        acceptorCounterpartyId:
+          description: Counterparty ID of the party who must respond to the action
+          type: string
+        actionType:
+          $ref: '#/components/schemas/TradeActionType'
+          description: The type of the action. [See details](/enums/TradeActionType)
+        createdAt:
+          description: Time when the action was created. Format is unix timestamp (ms)
+          type: string
+        createdBy:
+          description: User ID of the person who created the action
+          type: string
+        embedded:
+          $ref: '#/components/schemas/TradeActionEmbedded'
+          description: Additional data linked to the trade
+          type: object
+        extra:
+          $ref: '#/components/schemas/TradeActionExtra'
+          description: Additional metadata associated with this action
+          type: object
+        requestorCounterpartyId:
+          description: Counterparty ID of the party who initiated the action
+          type: string
+        status:
+          $ref: '#/components/schemas/TradeActionStatus'
+          description: The status of the action. [See details](/enums/TradeActionStatus)
+        terminatedAt:
+          description: Time when the action reached a terminal state. Format is unix timestamp (ms)
+          type: string
+        tradeActionId:
+          description: Unique identifier of the trade action
+          type: string
+        tradeId:
+          description: The ID of the trade
+          type: string
+        updatedAt:
+          description: Time when the action was last updated. Format is unix timestamp (ms)
+          type: string
+      required:
+      - tradeActionId
+      - tradeId
+      - status
+      - actionType
+      - createdBy
+      - createdAt
+      - requestorCounterpartyId
+      type: object
+    TopUpTradeDetail:
+      properties:
+        collateralId:
+          description: Unique identifier of the collateral being used for the top-up
+          type: string
+        fromPortfolioId:
+          description: Portfolio ID from which the top-up trade is being initiated
+          type: string
+      required:
+      - fromPortfolioId
+      - collateralId
       type: object
     TradeStatus:
       enum: []

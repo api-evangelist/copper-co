@@ -1,10 +1,6 @@
 openapi: 3.2.0
 info:
-  description: 'Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
-
-    By default, the request should include a Content-Type header set as application/json. Some requests require different header fields, as well as other Content-Type values. In this case, a proper header will be stated in an example.
-
-    When interacting with the API, please note that all numerical values, such as order amounts or timestamps, should be transmitted as strings. This ensures consistent data representation and prevents potential issues with floating-point precision'
+  description: Copper API is based on the REST API interface provided for data exchange between a client and a server with the use of HTTPS requests and responses.
   title: Copper Platform Portfolios API
   version: latest
 servers:
@@ -15,7 +11,7 @@ servers:
 - description: testnet.copper.co
   url: https://api.testnet.copper.co/platform
 tags:
-- name: portfolios
+- name: Portfolios
 paths:
   /portfolios:
     get:
@@ -141,7 +137,9 @@ paths:
           description: Conflict
       summary: Get Portfolios
       tags:
-      - portfolios
+      - Portfolios
+      operationId: getPortfolios
+      x-operation-id-source: derived
     post:
       description: Create a new portfolio
       requestBody:
@@ -203,7 +201,9 @@ paths:
           description: Conflict
       summary: Create Portfolio
       tags:
-      - portfolios
+      - Portfolios
+      operationId: postPortfolios
+      x-operation-id-source: derived
   /portfolios/{portfolioId}:
     delete:
       parameters:
@@ -266,7 +266,9 @@ paths:
           description: Conflict
       summary: Archive Portfolio
       tags:
-      - portfolios
+      - Portfolios
+      operationId: deletePortfoliosByPortfolioId
+      x-operation-id-source: derived
     get:
       parameters:
       - in: path
@@ -328,25 +330,11 @@ paths:
           description: Conflict
       summary: Retrieve Portfolio by ID
       tags:
-      - portfolios
+      - Portfolios
+      operationId: getPortfoliosByPortfolioId
+      x-operation-id-source: derived
 components:
   schemas:
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    AutodiscoveredAccountStatus:
-      enum: []
-      type: string
-    BalanceType:
-      enum:
-      - real
-      - margin
-      type: string
     PortfolioExtra:
       properties:
         autodiscoveredAccountStatus:
@@ -394,53 +382,9 @@ components:
           description: Withdrawal limit of the portfolio in USD
           type: string
       type: object
-    SigningFlowType:
+    AutodiscoveredAccountStatus:
       enum: []
       type: string
-    Portfolios:
-      properties:
-        portfolios:
-          description: List of portfolios
-          items:
-            $ref: '#/components/schemas/Portfolio'
-          type: array
-      required:
-      - portfolios
-      type: object
-    CreatePortfolio:
-      properties:
-        isDefiVault:
-          description: Flag to indicate if the portfolio is a DeFi vault
-          type: boolean
-        organizationId:
-          description: Organization id
-          type: string
-        parentPortfolioId:
-          description: Parent portfolio id
-          type: string
-        portfolioDescription:
-          description: Portfolio description
-          examples:
-          - My portfolio description
-          type: string
-        portfolioId:
-          description: Portfolio id
-          type: string
-        portfolioName:
-          description: Portfolio name
-          examples:
-          - My portfolio
-          type: string
-        portfolioType:
-          $ref: '#/components/schemas/PortfolioType'
-          description: Portfolio type. [See details](/enums/PortfolioType)
-          examples:
-          - custody
-      required:
-      - portfolioId
-      - portfolioName
-      - portfolioType
-      type: object
     Portfolio:
       properties:
         createdAt:
@@ -502,12 +446,72 @@ components:
       - createdAt
       - isActive
       type: object
+    ExchangeAccountType:
+      enum: []
+      type: string
+    Portfolios:
+      properties:
+        portfolios:
+          description: List of portfolios
+          items:
+            $ref: '#/components/schemas/Portfolio'
+          type: array
+      required:
+      - portfolios
+      type: object
     Unit:
       properties: {}
       type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    CreatePortfolio:
+      properties:
+        isDefiVault:
+          description: Flag to indicate if the portfolio is a DeFi vault
+          type: boolean
+        organizationId:
+          description: Organization id
+          type: string
+        parentPortfolioId:
+          description: Parent portfolio id
+          type: string
+        portfolioDescription:
+          description: Portfolio description
+          examples:
+          - My portfolio description
+          type: string
+        portfolioId:
+          description: Portfolio id
+          type: string
+        portfolioName:
+          description: Portfolio name
+          examples:
+          - My portfolio
+          type: string
+        portfolioType:
+          $ref: '#/components/schemas/PortfolioType'
+          description: Portfolio type. [See details](/enums/PortfolioType)
+          examples:
+          - custody
+      required:
+      - portfolioId
+      - portfolioName
+      - portfolioType
+      type: object
+    SigningFlowType:
+      enum: []
+      type: string
     PortfolioStatus:
       enum: []
       type: string
-    ExchangeAccountType:
-      enum: []
+    BalanceType:
+      enum:
+      - real
+      - margin
       type: string
