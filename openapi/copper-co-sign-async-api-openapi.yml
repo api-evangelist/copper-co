@@ -62,6 +62,33 @@ components:
           type: string
           examples:
           - '1608296004000'
+    SignAsyncStatusResponse:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/SignAsyncStatus'
+          type: string
+        message:
+          type: string
+          examples:
+          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=
+    SignAsyncStatus:
+      type: object
+      enum:
+      - starting
+      - session-established
+      - in-progress
+      - completed
+      - error
+      description: '* `starting`: The request is accepted for processing
+
+        * `session-established`: The CU session has been established
+
+        * `in-progress`: The signature is being generated
+
+        * `completed`: The transaction has been signed
+
+        * `error`: Something went wrong, see the message field'
     SignAsyncRequest:
       type: object
       properties:
@@ -99,30 +126,3 @@ components:
       - apiKey
       - apiSecret
       - signRequest
-    SignAsyncStatus:
-      type: object
-      enum:
-      - starting
-      - session-established
-      - in-progress
-      - completed
-      - error
-      description: '* `starting`: The request is accepted for processing
-
-        * `session-established`: The CU session has been established
-
-        * `in-progress`: The signature is being generated
-
-        * `completed`: The transaction has been signed
-
-        * `error`: Something went wrong, see the message field'
-    SignAsyncStatusResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/SignAsyncStatus'
-          type: string
-        message:
-          type: string
-          examples:
-          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=

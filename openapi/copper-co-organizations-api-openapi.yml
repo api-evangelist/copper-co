@@ -279,18 +279,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OrganizationMemberEmbedded:
-      properties:
-        permissionGroups:
-          description: List of permission groups the member belongs to
-          items:
-            type: string
-          type: array
-        user:
-          $ref: '#/components/schemas/User'
-          description: Member's user information
-          type: object
-      type: object
     OrganizationMember:
       properties:
         _embedded:
@@ -323,12 +311,22 @@ components:
       - userId
       - isActive
       type: object
-    Activities:
+    MemberType:
+      enum:
+      - user
+      - service
+      type: string
+    OrganizationMemberEmbedded:
       properties:
-        activities:
+        permissionGroups:
+          description: List of permission groups the member belongs to
           items:
-            $ref: '#/components/schemas/Activity'
+            type: string
           type: array
+        user:
+          $ref: '#/components/schemas/User'
+          description: Member's user information
+          type: object
       type: object
     ActivityType:
       enum:
@@ -415,6 +413,43 @@ components:
       - loan-extension-accepted
       - loan-extension-cancelled
       type: string
+    OrganizationExtra:
+      properties:
+        defaultFiatPortfolioId:
+          description: Portfolio id where fiat deposits are credited (must be a trading portfolio)
+          type: string
+      type: object
+    Organizations:
+      properties:
+        organizations:
+          description: List of organizations
+          items:
+            $ref: '#/components/schemas/Organization'
+          type: array
+      required:
+      - organizations
+      type: object
+    User:
+      properties:
+        createdAt:
+          description: Created at timestamp in milliseconds
+          type: string
+        firstName:
+          description: The user's first name
+          type: string
+        lastName:
+          description: The user's last name
+          type: string
+        userId:
+          description: The user ID
+          type: string
+      required:
+      - userId
+      type: object
+    OrganizationType:
+      enum:
+      - standard
+      type: string
     OrganizationMembers:
       properties:
         members:
@@ -456,47 +491,12 @@ components:
       - reportingCurrency
       - organizationType
       type: object
-    MemberType:
-      enum:
-      - user
-      - service
-      type: string
-    User:
+    Activities:
       properties:
-        createdAt:
-          description: Created at timestamp in milliseconds
-          type: string
-        firstName:
-          description: The user's first name
-          type: string
-        lastName:
-          description: The user's last name
-          type: string
-        userId:
-          description: The user ID
-          type: string
-      required:
-      - userId
-      type: object
-    OrganizationExtra:
-      properties:
-        defaultFiatPortfolioId:
-          description: Portfolio id where fiat deposits are credited (must be a trading portfolio)
-          type: string
-      type: object
-    OrganizationType:
-      enum:
-      - standard
-      type: string
-    Organizations:
-      properties:
-        organizations:
-          description: List of organizations
+        activities:
           items:
-            $ref: '#/components/schemas/Organization'
+            $ref: '#/components/schemas/Activity'
           type: array
-      required:
-      - organizations
       type: object
     Activity:
       properties:

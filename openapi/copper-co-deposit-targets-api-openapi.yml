@@ -358,26 +358,13 @@ components:
       - acceptAllTokens
       - requireTokensActivation
       type: object
-    DepositTargetOrderGroup:
-      enum: []
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
       type: string
     ActivatedToken:
       properties: {}
-      type: object
-    DepositTargetType:
-      enum:
-      - proxy
-      - direct
-      - external-wallet
-      type: string
-    DepositTargets:
-      properties:
-        depositTargets:
-          items:
-            $ref: '#/components/schemas/DepositTarget'
-          type: array
-      required:
-      - depositTargets
       type: object
     DepositTargetStatus:
       enum:
@@ -388,28 +375,6 @@ components:
       - disabled
       - error
       - portfolio-archived
-      type: string
-    SortingDirection:
-      enum:
-      - ASC
-      - DESC
-      type: string
-    ActivateCurrency:
-      properties:
-        currency:
-          type: string
-        mainCurrency:
-          type: string
-      required:
-      - currency
-      type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
       type: string
     CreateTarget:
       properties:
@@ -435,3 +400,38 @@ components:
       - currency
       - mainCurrency
       type: object
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    DepositTargets:
+      properties:
+        depositTargets:
+          items:
+            $ref: '#/components/schemas/DepositTarget'
+          type: array
+      required:
+      - depositTargets
+      type: object
+    ActivateCurrency:
+      properties:
+        currency:
+          type: string
+        mainCurrency:
+          type: string
+      required:
+      - currency
+      type: object
+    DepositTargetType:
+      enum:
+      - proxy
+      - direct
+      - external-wallet
+      type: string
+    DepositTargetOrderGroup:
+      enum: []
+      type: string

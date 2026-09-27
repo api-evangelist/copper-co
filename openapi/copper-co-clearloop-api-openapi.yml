@@ -729,55 +729,52 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ClearLoopSettlementV2:
+    ClearLoopSettlementDetails:
       properties:
-        completedAt:
-          description: Unix timestamp (in milliseconds) of the date and time when the settlement was fully completed
+        clientAccountId:
+          description: Unique exchange account identifier
           type: string
-        createdAt:
-          description: Unix timestamp (in milliseconds) of the date and time when the settlement started
+        exchangeSettlementId:
+          description: Unique identifier assigned by the exchange for the settlement
           type: string
-        custodian:
-          description: Custodian associated to settlement
+        exclusionDetails:
+          $ref: '#/components/schemas/ClearLoopSettlementExclusionDetails'
+          description: Exclusion details
+          type: object
+        organizationId:
+          description: Unique identifier for the client organisation tied to a settlement record
           type: string
-        cycleEndTimestamp:
-          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has ended
+        pnlAttributionEndTimestamp:
+          description: Unix timestamp (in milliseconds) of the end of the period used to attribute profit and loss (PnL) for the settlement
           type: string
-        cycleStartTimestamp:
-          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started
+        pnlAttributionStartTimestamp:
+          description: Unix timestamp (in milliseconds) of the start of the period used to attribute profit and loss (PnL) for the settlement
           type: string
-        deadline:
-          description: Unix timestamp (in milliseconds) of the settlement deadline
+        portfolioId:
+          description: Unique Copper account identifier
           type: string
-        exchange:
-          description: Exchange name
-          type: string
-        exchangeId:
-          description: Exchange identifier
-          type: string
-        failureReason:
-          type: string
-        settlementDetails:
-          description: Array of settlement detail records for each client account linked to a given settlement ID
+        settlementInstructions:
+          description: Array of settlement instruction records, grouped by settlement currency and client account, linked to a given settlement ID
           items:
-            $ref: '#/components/schemas/ClearLoopSettlementDetails'
+            $ref: '#/components/schemas/ClearLoopSettlementInstruction'
           type: array
-        settlementId:
-          description: Unique Copper settlement identifier
-          type: string
-        settlementStatus:
+        status:
           $ref: '#/components/schemas/ClearLoopSettlementStatus'
-          description: Status describing the settlement. [See details](/enums/ClearLoopSettlementStatus)
-        settlementSubStatus:
-          $ref: '#/components/schemas/ClearLoopSettlementSubStatus'
-          description: Sub-status providing additional context to the status of the settlement
+          description: Client settlement status. [See details](/enums/ClearLoopSettlementStatus)
       required:
-      - settlementId
-      - settlementStatus
-      - settlementSubStatus
-      - cycleStartTimestamp
-      - exchange
-      - exchangeId
+      - portfolioId
+      - clientAccountId
+      - exchangeSettlementId
+      - settlementInstructions
+      type: object
+    ClearLoopExchangeSettlementDetails:
+      properties:
+        frequency:
+          description: Frequency of the settlement in milliseconds
+          type: string
+        nextSettlementTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the next settlement cycle will start
+          type: string
       type: object
     ClearLoopSettlementExclusionDetails:
       properties:
@@ -790,6 +787,15 @@ components:
       required:
       - exclusionReason
       type: object
+    PortfolioSettlementDetails:
+      properties:
+        comments:
+          description: Optional comments, for example, reason for exclusion
+          type: string
+        status:
+          $ref: '#/components/schemas/PortfolioSettlementStatus'
+          description: Settlement status of the ClearLoop portfolio. [See details](/enums/PortfolioSettlementStatus)
+      type: object
     ClearLoopExchangesResponse:
       properties:
         clearLoopExchanges:
@@ -800,109 +806,46 @@ components:
       required:
       - clearLoopExchanges
       type: object
-    ClearLoopSettlementStatus:
-      enum:
-      - new
-      - pending-exchange-confirmation
-      - in-progress
-      - completed
-      - failed
-      - cancelled
-      - partially-completed
-      - ignored
-      - on-chain-orders-in-progress
-      - excluded
-      type: string
-    ClearLoopSettlementInstruction:
+    ClearLoopPagination:
       properties:
-        balance:
-          description: Client's delegated balance in Copper, fetched at the time of settlement
+        limit:
+          description: Numerical limit of records for any given page
           type: string
-        currency:
-          description: Settlement currency
+        page:
+          description: Current page index (numerical)
           type: string
-        orderId:
-          description: Identifier of the order linked to the settlement for the specified client account and currency
+        pages:
+          description: Total number of pages matching the query
           type: string
-        orderStatus:
-          $ref: '#/components/schemas/OrderStatus'
-          description: Status of the order associated with the settlement for the given client account and currency. [See details](/enums/OrderStatus)
-        settlementAmount:
-          description: Aggregate amount to be settled across main and subaccounts within the exchange
+        totalItems:
+          description: Total number of records returned
           type: string
-        settlementAmountUSD:
-          description: USD equivalent of the `settlementAmount`
-          type: string
-        settlementInstructionId:
-          description: Unique identifier for the settlement instruction (per client account and currency per cycle)
-          type: string
-        status:
-          $ref: '#/components/schemas/ClearLoopSettlementStatus'
-          description: Status of the settlement at client account and currency level. [See details](/enums/ClearLoopSettlementStatus)
-      required:
-      - currency
-      - settlementAmount
       type: object
-    PortfolioCustodyType:
-      enum:
-      - segregated-trust-wallet
-      - clearloop-omnibus
-      - external
-      type: string
-    ClearLoopBalances:
+    GetActionsResponse:
       properties:
-        balances:
-          description: Array of balance records per wallet
+        actions:
+          description: Wrapper containing an array of delegation and undelegation action records
           items:
-            $ref: '#/components/schemas/ManagedFund'
+            $ref: '#/components/schemas/ClearLoopAction'
+          type: array
+        pagination:
+          $ref: '#/components/schemas/ClearLoopPagination'
+          description: Object containing pagination-related info
+          type: object
+      required:
+      - actions
+      type: object
+    ClearLoopSettlementsResponseV2:
+      properties:
+        pagination:
+          $ref: '#/components/schemas/ClearLoopPagination'
+          type: object
+        settlements:
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementV2'
           type: array
       required:
-      - balances
-      type: object
-    ManagedFund:
-      properties:
-        amount:
-          description: 'Delegated available balance: full delegated amount minus reserved balance'
-          type: string
-        available:
-          description: 'Available balance to undelegate: minimum between exchange funds and delegated balance'
-          type: string
-        balance:
-          description: Total balance value held in the account
-          type: string
-        clientAccountId:
-          description: Unique identifier for the client's exchange account
-          type: string
-        currency:
-          description: Currency associated with the balance
-          type: string
-        delegatedOrganizationId:
-          description: Identifier of the organisation on the exchange to which the balance is delegated
-          type: string
-        exchangeId:
-          description: Identifier of the exchange where the balance is held
-          type: string
-        mainCurrency:
-          description: Network or main currency associated with the wallet
-          type: string
-        organizationId:
-          description: Identifier of the client organisation owning the account
-          type: string
-        portfolioId:
-          description: Unique Copper portfolio identifier
-          type: string
-        reserve:
-          description: Reserved balance allocated for open orders
-          type: string
-        totalAvailableToUndelegate:
-          description: 'Total available balance to undelegate: minimum across all exchange funds (main and subaccounts) and Copper delegated balance'
-          type: string
-      required:
-      - currency
-      - balance
-      - amount
-      - clientAccountId
-      - portfolioId
+      - settlements
       type: object
     ClearLoopPortfolioResponse:
       properties:
@@ -958,33 +901,6 @@ components:
       - exchangeId
       - name
       type: object
-    ClearLoopExchangeSettlementDetails:
-      properties:
-        frequency:
-          description: Frequency of the settlement in milliseconds
-          type: string
-        nextSettlementTimestamp:
-          description: Unix timestamp (in milliseconds) of the date and time when the next settlement cycle will start
-          type: string
-      type: object
-    ClearLoopSettlementSubStatus:
-      enum: []
-      type: string
-    ClearLoopPagination:
-      properties:
-        limit:
-          description: Numerical limit of records for any given page
-          type: string
-        page:
-          description: Current page index (numerical)
-          type: string
-        pages:
-          description: Total number of pages matching the query
-          type: string
-        totalItems:
-          description: Total number of records returned
-          type: string
-      type: object
     OrderStatus:
       enum:
       - new
@@ -1031,6 +947,13 @@ components:
       - waiting-accept-deposit
       - waiting-reject-deposit
       type: string
+    ClearLoopExchangeCollateralDetails:
+      properties:
+        currencies:
+          items:
+            $ref: '#/components/schemas/ClearLoopCurrencyCollateralDetails'
+          type: array
+      type: object
     ClearLoopCurrencyCollateralDetails:
       properties:
         buffer:
@@ -1050,69 +973,130 @@ components:
         updatedAt:
           type: string
       type: object
-    ClearLoopSettlementDetails:
+    ClearLoopSettlementV2:
       properties:
+        completedAt:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement was fully completed
+          type: string
+        createdAt:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement started
+          type: string
+        custodian:
+          description: Custodian associated to settlement
+          type: string
+        cycleEndTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has ended
+          type: string
+        cycleStartTimestamp:
+          description: Unix timestamp (in milliseconds) of the date and time when the settlement cycle has started
+          type: string
+        deadline:
+          description: Unix timestamp (in milliseconds) of the settlement deadline
+          type: string
+        exchange:
+          description: Exchange name
+          type: string
+        exchangeId:
+          description: Exchange identifier
+          type: string
+        failureReason:
+          type: string
+        settlementDetails:
+          description: Array of settlement detail records for each client account linked to a given settlement ID
+          items:
+            $ref: '#/components/schemas/ClearLoopSettlementDetails'
+          type: array
+        settlementId:
+          description: Unique Copper settlement identifier
+          type: string
+        settlementStatus:
+          $ref: '#/components/schemas/ClearLoopSettlementStatus'
+          description: Status describing the settlement. [See details](/enums/ClearLoopSettlementStatus)
+        settlementSubStatus:
+          $ref: '#/components/schemas/ClearLoopSettlementSubStatus'
+          description: Sub-status providing additional context to the status of the settlement
+      required:
+      - settlementId
+      - settlementStatus
+      - settlementSubStatus
+      - cycleStartTimestamp
+      - exchange
+      - exchangeId
+      type: object
+    ManagedFund:
+      properties:
+        amount:
+          description: 'Delegated available balance: full delegated amount minus reserved balance'
+          type: string
+        available:
+          description: 'Available balance to undelegate: minimum between exchange funds and delegated balance'
+          type: string
+        balance:
+          description: Total balance value held in the account
+          type: string
         clientAccountId:
-          description: Unique exchange account identifier
+          description: Unique identifier for the client's exchange account
           type: string
-        exchangeSettlementId:
-          description: Unique identifier assigned by the exchange for the settlement
+        currency:
+          description: Currency associated with the balance
           type: string
-        exclusionDetails:
-          $ref: '#/components/schemas/ClearLoopSettlementExclusionDetails'
-          description: Exclusion details
-          type: object
+        delegatedOrganizationId:
+          description: Identifier of the organisation on the exchange to which the balance is delegated
+          type: string
+        exchangeId:
+          description: Identifier of the exchange where the balance is held
+          type: string
+        mainCurrency:
+          description: Network or main currency associated with the wallet
+          type: string
         organizationId:
-          description: Unique identifier for the client organisation tied to a settlement record
-          type: string
-        pnlAttributionEndTimestamp:
-          description: Unix timestamp (in milliseconds) of the end of the period used to attribute profit and loss (PnL) for the settlement
-          type: string
-        pnlAttributionStartTimestamp:
-          description: Unix timestamp (in milliseconds) of the start of the period used to attribute profit and loss (PnL) for the settlement
+          description: Identifier of the client organisation owning the account
           type: string
         portfolioId:
-          description: Unique Copper account identifier
+          description: Unique Copper portfolio identifier
           type: string
-        settlementInstructions:
-          description: Array of settlement instruction records, grouped by settlement currency and client account, linked to a given settlement ID
-          items:
-            $ref: '#/components/schemas/ClearLoopSettlementInstruction'
-          type: array
+        reserve:
+          description: Reserved balance allocated for open orders
+          type: string
+        totalAvailableToUndelegate:
+          description: 'Total available balance to undelegate: minimum across all exchange funds (main and subaccounts) and Copper delegated balance'
+          type: string
+      required:
+      - currency
+      - balance
+      - amount
+      - clientAccountId
+      - portfolioId
+      type: object
+    ClearLoopSettlementInstruction:
+      properties:
+        balance:
+          description: Client's delegated balance in Copper, fetched at the time of settlement
+          type: string
+        currency:
+          description: Settlement currency
+          type: string
+        orderId:
+          description: Identifier of the order linked to the settlement for the specified client account and currency
+          type: string
+        orderStatus:
+          $ref: '#/components/schemas/OrderStatus'
+          description: Status of the order associated with the settlement for the given client account and currency. [See details](/enums/OrderStatus)
+        settlementAmount:
+          description: Aggregate amount to be settled across main and subaccounts within the exchange
+          type: string
+        settlementAmountUSD:
+          description: USD equivalent of the `settlementAmount`
+          type: string
+        settlementInstructionId:
+          description: Unique identifier for the settlement instruction (per client account and currency per cycle)
+          type: string
         status:
           $ref: '#/components/schemas/ClearLoopSettlementStatus'
-          description: Client settlement status. [See details](/enums/ClearLoopSettlementStatus)
+          description: Status of the settlement at client account and currency level. [See details](/enums/ClearLoopSettlementStatus)
       required:
-      - portfolioId
-      - clientAccountId
-      - exchangeSettlementId
-      - settlementInstructions
-      type: object
-    GetActionsResponse:
-      properties:
-        actions:
-          description: Wrapper containing an array of delegation and undelegation action records
-          items:
-            $ref: '#/components/schemas/ClearLoopAction'
-          type: array
-        pagination:
-          $ref: '#/components/schemas/ClearLoopPagination'
-          description: Object containing pagination-related info
-          type: object
-      required:
-      - actions
-      type: object
-    ClearLoopSettlementsResponseV2:
-      properties:
-        pagination:
-          $ref: '#/components/schemas/ClearLoopPagination'
-          type: object
-        settlements:
-          items:
-            $ref: '#/components/schemas/ClearLoopSettlementV2'
-          type: array
-      required:
-      - settlements
+      - currency
+      - settlementAmount
       type: object
     ClearLoopPortfoliosResponse:
       properties:
@@ -1122,6 +1106,32 @@ components:
             $ref: '#/components/schemas/ClearLoopPortfolioResponse'
           type: array
       type: object
+    ClearLoopBalances:
+      properties:
+        balances:
+          description: Array of balance records per wallet
+          items:
+            $ref: '#/components/schemas/ManagedFund'
+          type: array
+      required:
+      - balances
+      type: object
+    ClearLoopSettlementSubStatus:
+      enum: []
+      type: string
+    PortfolioSettlementStatus:
+      enum:
+      - not-yet-settled
+      - eligibility-checks
+      - awaiting-exchange-calculation
+      - in-progress
+      - order-processing
+      - completed
+      - failed
+      - excluded
+      - paused-copper
+      - disabled
+      type: string
     ClearLoopAction:
       properties:
         action:
@@ -1178,32 +1188,22 @@ components:
       - amount
       - createdAt
       type: object
-    PortfolioSettlementDetails:
-      properties:
-        comments:
-          description: Optional comments, for example, reason for exclusion
-          type: string
-        status:
-          $ref: '#/components/schemas/PortfolioSettlementStatus'
-          description: Settlement status of the ClearLoop portfolio. [See details](/enums/PortfolioSettlementStatus)
-      type: object
-    ClearLoopExchangeCollateralDetails:
-      properties:
-        currencies:
-          items:
-            $ref: '#/components/schemas/ClearLoopCurrencyCollateralDetails'
-          type: array
-      type: object
-    PortfolioSettlementStatus:
+    PortfolioCustodyType:
       enum:
-      - not-yet-settled
-      - eligibility-checks
-      - awaiting-exchange-calculation
+      - segregated-trust-wallet
+      - clearloop-omnibus
+      - external
+      type: string
+    ClearLoopSettlementStatus:
+      enum:
+      - new
+      - pending-exchange-confirmation
       - in-progress
-      - order-processing
       - completed
       - failed
+      - cancelled
+      - partially-completed
+      - ignored
+      - on-chain-orders-in-progress
       - excluded
-      - paused-copper
-      - disabled
       type: string

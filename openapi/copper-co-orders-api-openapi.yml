@@ -860,255 +860,18 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DryRunOrderRequest:
-      properties:
-        amount:
-          type: string
-        baseCurrency:
-          type: string
-        blockchainTransactionType:
-          $ref: '#/components/schemas/BlockchainTransactionType'
-          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
-        deliveryType:
-          $ref: '#/components/schemas/DeliveryType'
-          description: '[See details](/enums/DeliveryType)'
-        feeLevel:
-          $ref: '#/components/schemas/FeeLevel'
-          description: '[See details](/enums/FeeLevel)'
-        includeFeeInWithdraw:
-          type: boolean
-        limitType:
-          $ref: '#/components/schemas/LimitType'
-          description: '[See details](/enums/LimitType)'
-        mainCurrency:
-          type: string
-        memo:
-          type: string
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-          description: '[See details](/enums/OrderType)'
-        payload:
-          type: string
-        payloads:
-          items:
-            type: string
-          type: array
-        portfolioId:
-          type: string
-        priceLimit:
-          type: string
-        quoteAmount:
-          type: string
-        quoteCurrency:
-          type: string
-        quoteMainCurrency:
-          type: string
-        requestedNetworkFees:
-          $ref: '#/components/schemas/RequestedNetworkFees'
-          type: object
-        toCounterpartyId:
-          type: string
-        toCryptoAddressId:
-          type: string
-        toInvoiceId:
-          type: string
-        toLendingInvoiceId:
-          type: string
-        toPortfolioId:
-          type: string
-      required:
-      - orderType
-      - portfolioId
-      - baseCurrency
-      type: object
-    AddressTag:
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    UserAbstraction:
       enum: []
       type: string
-    TargetType:
-      enum:
-      - external
-      - portfolio
-      type: string
-    FeeEstimation:
-      properties:
-        baseFeePerGas:
-          description: The base fee for the block in Gwei
-          type: string
-        estimatedTime:
-          description: The estimated time in milliseconds for the transaction to be confirmed
-          type: string
-        fee:
-          description: The amount of the fee
-          type: string
-        feeCurrency:
-          description: The currency in which the fee is denominated
-          type: string
-        feePerByte:
-          $ref: '#/components/schemas/MinimalUnit'
-          description: The fee per byte of the transaction
-          type: object
-        feeType:
-          $ref: '#/components/schemas/FeeType'
-          description: The type of the fee
-        gasLimit:
-          $ref: '#/components/schemas/MinimalUnit'
-          description: The gas limit for the transaction
-          type: object
-        gasPriceGwei:
-          description: The gas price in Gwei
-          type: string
-        maxFeePerGas:
-          description: The max gas fee wiling to pay in Gwei
-          type: string
-        maxPriorityFeePerGas:
-          description: The max priority fee wiling to pay in Gwei
-          type: string
-        reportingCurrencyRate:
-          description: The fee amount in the reporting currency
-          type: string
-        transactionBytes:
-          description: The number of bytes in the transaction
-          type: string
-      required:
-      - fee
-      - feeCurrency
-      type: object
-    MinimalUnit:
+    UploadFullSignedTx:
       properties: {}
       type: object
-    BlockchainTransactionType:
-      enum:
-      - send
-      - multi-withdraw
-      - account-set
-      - approve-hot-key
-      - approve-builder-fee
-      - allowance
-      - smart-call
-      - multi-smart-call
-      - activate
-      - activate-trading
-      - stake-delegation
-      - stake-nomination
-      - stake-undelegation
-      - complete-withdrawal
-      - stake-complete-deposit
-      - take-reward
-      - pool-creation
-      - edit-pool
-      - governance-vote
-      - unjail
-      - importance-transfer
-      - transfer-stake
-      - rebond-stake
-      - chill
-      - cross-chain-send
-      - accept-deposit
-      - reject-deposit
-      - create-referral
-      - set-referral
-      type: string
-    CryptoAddress:
-      properties:
-        _embedded:
-          $ref: '#/components/schemas/CryptoAddressEmbedded'
-          description: Additional information for this crypto address
-          type: object
-        acceptTokens:
-          description: Indicates an address can be used for tokens on the same blockchain network
-          type: boolean
-        address:
-          description: Address
-          type: string
-        addressTags:
-          description: Address tags
-          items:
-            $ref: '#/components/schemas/AddressTag'
-          type: array
-        addressType:
-          $ref: '#/components/schemas/AddressType'
-          description: Address type. [See details](/enums/AddressType)
-        category:
-          $ref: '#/components/schemas/AddressCategory'
-          description: Address category. [See details](/enums/AddressCategory)
-        createdAt:
-          description: Created at timestamp
-          type: string
-        createdBy:
-          description: Created by user id
-          type: string
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          deprecated: true
-          description: Currency of an address
-          type: string
-        extra:
-          $ref: '#/components/schemas/CryptoAddressExtra'
-          description: Extra information for an address
-          type: object
-        isWhitelist:
-          deprecated: true
-          description: Indicates, if an address is whitelisted
-          type: boolean
-        lastUsedAt:
-          description: Last used at
-          type: string
-        mainCurrency:
-          description: Main currency of an address
-          type: string
-        memo:
-          description: Address memo (destination tag for XRP)
-          type: string
-        name:
-          description: Name of an address
-          type: string
-        organizationId:
-          description: Organization id
-          type: string
-        portfolioIds:
-          deprecated: true
-          description: Portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-        updatedAt:
-          description: Last updated Updated at timestamp
-          type: string
-        updatedBy:
-          description: Updated by user id
-          type: string
-      required:
-      - cryptoAddressId
-      - currency
-      - name
-      - address
-      - createdBy
-      - createdAt
-      - isWhitelist
-      - addressType
-      type: object
-    EnterMasterPassword:
-      properties:
-        masterPassword:
-          description: Withdrawal password (also known as Master Password)
-          type: string
-      required:
-      - masterPassword
-      type: object
-    CancelOrder:
-      properties:
-        reason:
-          type: string
-      type: object
-    AddressType:
-      enum:
-      - externally-owned-account
-      - internal-account
-      - smart-contract
-      - payable-smart-contract
-      type: string
     CreateOrder:
       properties:
         agentAddress:
@@ -1244,86 +1007,35 @@ components:
       - portfolioId
       - baseCurrency
       type: object
-    UserAbstraction:
-      enum: []
+    TargetType:
+      enum:
+      - external
+      - portfolio
       type: string
-    CurrencyConfiguration:
-      properties:
-        createdAt:
-          description: Created at timestamp
-          type: string
-        createdBy:
-          description: Created by user id
-          type: string
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        currencyConfigurationId:
-          description: Currency configuration id
-          type: string
-        extra:
-          $ref: '#/components/schemas/CurrencyConfigurationExtra'
-          description: Extra information for an address
-          type: object
-        isWhitelist:
-          description: Indicates, if an address is whitelisted
-          type: boolean
-        lastUsedAt:
-          description: Last used at
-          type: string
-        portfolioIds:
-          description: Portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-        updatedAt:
-          description: Last updated Updated at timestamp
-          type: string
-        updatedBy:
-          description: Updated by user id
-          type: string
-      required:
-      - currencyConfigurationId
-      - cryptoAddressId
-      - currency
-      - createdBy
-      - createdAt
-      - isWhitelist
-      type: object
-    ClearLoopExtra:
-      properties:
-        clearLoopExternalNetted:
-          description: Whether the order is linked to the ClearLoop multi-custody model that works by netting settlement amounts
-          type: boolean
-        clearLoopSettlementId:
-          description: Id uniquely identifying the ClearLoop settlement the order is part of
-          type: string
-      type: object
-    DepositOrigin:
-      enum: []
-      type: string
-    Orders:
+    CreateOrders:
       properties:
         orders:
+          description: List of orders to create
           items:
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/CreateOrder'
           type: array
       required:
       - orders
       type: object
-    UploadFullSignedTx:
-      properties: {}
+    WithdrawTarget:
+      properties:
+        cryptoAddressId:
+          type: string
+        portfolioId:
+          type: string
+        targetType:
+          $ref: '#/components/schemas/TargetType'
+          description: '[See details](/enums/TargetType)'
+      required:
+      - targetType
       type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
+    AddressTag:
+      enum: []
       type: string
     UpdateOrderCoSigners:
       properties:
@@ -1331,39 +1043,6 @@ components:
           description: A SHA-256 encrypted hash of the withdrawal password (also known as master password), if required.
           type: string
       type: object
-    OrderType:
-      enum:
-      - sell
-      - buy
-      - deposit
-      - withdraw
-      - multi-withdraw
-      - wallet-message
-      - retrieved-deposit
-      - earn-reward
-      - earn-shared-reward
-      - claim-shared-reward
-      - cross-chain-deposit
-      - cross-chain-withdraw
-      type: string
-    Warning:
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-      - message
-      type: object
-    AddressCategory:
-      enum:
-      - smart-contract
-      - payable-smart-contract
-      - mining
-      - unknown
-      - self-hosted
-      - vasp
-      type: string
     OrderStatus:
       enum:
       - new
@@ -1410,40 +1089,6 @@ components:
       - waiting-accept-deposit
       - waiting-reject-deposit
       type: string
-    DryRunOrder:
-      properties:
-        amount:
-          type: string
-        baseCurrency:
-          type: string
-        extra:
-          $ref: '#/components/schemas/OrderExtra'
-          type: object
-        mainCurrency:
-          type: string
-        orderType:
-          $ref: '#/components/schemas/OrderType'
-          description: '[See details](/enums/OrderType)'
-        portfolioId:
-          type: string
-        warning:
-          $ref: '#/components/schemas/Warning'
-          type: object
-      required:
-      - orderType
-      - portfolioId
-      - baseCurrency
-      type: object
-    CreateOrders:
-      properties:
-        orders:
-          description: List of orders to create
-          items:
-            $ref: '#/components/schemas/CreateOrder'
-          type: array
-      required:
-      - orders
-      type: object
     OrderExtra:
       properties:
         availableCoSigners:
@@ -1632,39 +1277,171 @@ components:
           description: The ID of a withdraw order where a deposit was made from
           type: string
       type: object
-    LimitType:
+    AddressCategory:
       enum:
-      - otc
-      - rfq
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
       type: string
-    CryptoAddressEmbedded:
+    DryRunOrderRequest:
       properties:
-        currencyConfigurations:
-          description: Crypto address currency configuration
-          items:
-            $ref: '#/components/schemas/CurrencyConfiguration'
-          type: array
-      type: object
-    FeeType:
-      enum: []
-      type: string
-    FeeLevel:
-      enum:
-      - low
-      - medium
-      - high
-      type: string
-    WithdrawTarget:
-      properties:
-        cryptoAddressId:
+        amount:
           type: string
+        baseCurrency:
+          type: string
+        blockchainTransactionType:
+          $ref: '#/components/schemas/BlockchainTransactionType'
+          description: Blockchain transaction type. [See details](/enums/BlockchainTransactionType)
+        deliveryType:
+          $ref: '#/components/schemas/DeliveryType'
+          description: '[See details](/enums/DeliveryType)'
+        feeLevel:
+          $ref: '#/components/schemas/FeeLevel'
+          description: '[See details](/enums/FeeLevel)'
+        includeFeeInWithdraw:
+          type: boolean
+        limitType:
+          $ref: '#/components/schemas/LimitType'
+          description: '[See details](/enums/LimitType)'
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        payload:
+          type: string
+        payloads:
+          items:
+            type: string
+          type: array
         portfolioId:
           type: string
-        targetType:
-          $ref: '#/components/schemas/TargetType'
-          description: '[See details](/enums/TargetType)'
+        priceLimit:
+          type: string
+        quoteAmount:
+          type: string
+        quoteCurrency:
+          type: string
+        quoteMainCurrency:
+          type: string
+        requestedNetworkFees:
+          $ref: '#/components/schemas/RequestedNetworkFees'
+          type: object
+        toCounterpartyId:
+          type: string
+        toCryptoAddressId:
+          type: string
+        toInvoiceId:
+          type: string
+        toLendingInvoiceId:
+          type: string
+        toPortfolioId:
+          type: string
       required:
-      - targetType
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    OrderReceiver:
+      properties:
+        amount:
+          description: The amount of order in baseCurrency
+          examples:
+          - '0.1'
+          type: string
+        toAddress:
+          description: The address where the funds should be transferred
+          type: string
+        toCryptoAddressId:
+          description: In case of a withdrawal, the destination crypto address ID from the Address Book
+          type: string
+      type: object
+    DryRunOrder:
+      properties:
+        amount:
+          type: string
+        baseCurrency:
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrderExtra'
+          type: object
+        mainCurrency:
+          type: string
+        orderType:
+          $ref: '#/components/schemas/OrderType'
+          description: '[See details](/enums/OrderType)'
+        portfolioId:
+          type: string
+        warning:
+          $ref: '#/components/schemas/Warning'
+          type: object
+      required:
+      - orderType
+      - portfolioId
+      - baseCurrency
+      type: object
+    DeliveryType:
+      enum:
+      - free-of-payment
+      - payment-vs-payment
+      type: string
+    EnterMasterPassword:
+      properties:
+        masterPassword:
+          description: Withdrawal password (also known as Master Password)
+          type: string
+      required:
+      - masterPassword
+      type: object
+    BlockchainTransactionType:
+      enum:
+      - send
+      - multi-withdraw
+      - account-set
+      - approve-hot-key
+      - approve-builder-fee
+      - allowance
+      - smart-call
+      - multi-smart-call
+      - activate
+      - activate-trading
+      - stake-delegation
+      - stake-nomination
+      - stake-undelegation
+      - complete-withdrawal
+      - stake-complete-deposit
+      - take-reward
+      - pool-creation
+      - edit-pool
+      - governance-vote
+      - unjail
+      - importance-transfer
+      - transfer-stake
+      - rebond-stake
+      - chill
+      - cross-chain-send
+      - accept-deposit
+      - reject-deposit
+      - create-referral
+      - set-referral
+      type: string
+    RequestedNetworkFees:
+      properties:
+        feePerByte:
+          type: string
+        gasLimit:
+          type: string
+        gasPriceGwei:
+          type: string
+        maxFeePerGas:
+          type: string
+        maxPriorityFeePerGas:
+          type: string
       type: object
     Order:
       properties:
@@ -1734,44 +1511,267 @@ components:
       - baseCurrency
       - createdAt
       type: object
-    UploadPartSignedTx:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    LimitType:
+      enum:
+      - otc
+      - rfq
+      type: string
+    CurrencyConfigurationExtra:
+      properties: {}
+      type: object
+    CryptoAddress:
+      properties:
+        _embedded:
+          $ref: '#/components/schemas/CryptoAddressEmbedded'
+          description: Additional information for this crypto address
+          type: object
+        acceptTokens:
+          description: Indicates an address can be used for tokens on the same blockchain network
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: Address type. [See details](/enums/AddressType)
+        category:
+          $ref: '#/components/schemas/AddressCategory'
+          description: Address category. [See details](/enums/AddressCategory)
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          deprecated: true
+          description: Currency of an address
+          type: string
+        extra:
+          $ref: '#/components/schemas/CryptoAddressExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          deprecated: true
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        mainCurrency:
+          description: Main currency of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of an address
+          type: string
+        organizationId:
+          description: Organization id
+          type: string
+        portfolioIds:
+          deprecated: true
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      - createdBy
+      - createdAt
+      - isWhitelist
+      - addressType
+      type: object
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
+      type: object
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
+      type: object
+    Orders:
+      properties:
+        orders:
+          items:
+            $ref: '#/components/schemas/Order'
+          type: array
+      required:
+      - orders
+      type: object
+    ClearLoopExtra:
+      properties:
+        clearLoopExternalNetted:
+          description: Whether the order is linked to the ClearLoop multi-custody model that works by netting settlement amounts
+          type: boolean
+        clearLoopSettlementId:
+          description: Id uniquely identifying the ClearLoop settlement the order is part of
+          type: string
+      type: object
+    MinimalUnit:
       properties: {}
       type: object
     CryptoAddressExtra:
       properties: {}
       type: object
-    OrderReceiver:
-      properties:
-        amount:
-          description: The amount of order in baseCurrency
-          examples:
-          - '0.1'
-          type: string
-        toAddress:
-          description: The address where the funds should be transferred
-          type: string
-        toCryptoAddressId:
-          description: In case of a withdrawal, the destination crypto address ID from the Address Book
-          type: string
-      type: object
-    RequestedNetworkFees:
-      properties:
-        feePerByte:
-          type: string
-        gasLimit:
-          type: string
-        gasPriceGwei:
-          type: string
-        maxFeePerGas:
-          type: string
-        maxPriorityFeePerGas:
-          type: string
-      type: object
-    DeliveryType:
-      enum:
-      - free-of-payment
-      - payment-vs-payment
-      type: string
-    CurrencyConfigurationExtra:
+    UploadPartSignedTx:
       properties: {}
       type: object
+    Warning:
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+      - message
+      type: object
+    FeeType:
+      enum: []
+      type: string
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
+    CancelOrder:
+      properties:
+        reason:
+          type: string
+      type: object
+    FeeEstimation:
+      properties:
+        baseFeePerGas:
+          description: The base fee for the block in Gwei
+          type: string
+        estimatedTime:
+          description: The estimated time in milliseconds for the transaction to be confirmed
+          type: string
+        fee:
+          description: The amount of the fee
+          type: string
+        feeCurrency:
+          description: The currency in which the fee is denominated
+          type: string
+        feePerByte:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The fee per byte of the transaction
+          type: object
+        feeType:
+          $ref: '#/components/schemas/FeeType'
+          description: The type of the fee
+        gasLimit:
+          $ref: '#/components/schemas/MinimalUnit'
+          description: The gas limit for the transaction
+          type: object
+        gasPriceGwei:
+          description: The gas price in Gwei
+          type: string
+        maxFeePerGas:
+          description: The max gas fee wiling to pay in Gwei
+          type: string
+        maxPriorityFeePerGas:
+          description: The max priority fee wiling to pay in Gwei
+          type: string
+        reportingCurrencyRate:
+          description: The fee amount in the reporting currency
+          type: string
+        transactionBytes:
+          description: The number of bytes in the transaction
+          type: string
+      required:
+      - fee
+      - feeCurrency
+      type: object
+    DepositOrigin:
+      enum: []
+      type: string
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string

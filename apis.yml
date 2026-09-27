@@ -44,11 +44,15 @@ x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-24
+x-docs-hosting: vercel
 tags:
 - Company
 - Digital Asset Custody
 - Cryptocurrency
-- Financial-Services
+- Financial Services
 - Institutional Finance
 - Prime Brokerage
 - Collateral Management
@@ -57,6 +61,7 @@ tags:
 - Staking
 - Blockchain
 - Treasury Management
+- A2A
 tags_raw:
 - Company
 - Digital Asset Custody
@@ -70,6 +75,8 @@ tags_raw:
 - Staking
 - Blockchain
 - Treasury Management
+- Financial-Services
+- A2A
 apis:
 - aid: copper-co:copper-co-accounts-api
   name: Copper.co Accounts API
@@ -429,3 +436,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 26
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://developer.copper.co/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404

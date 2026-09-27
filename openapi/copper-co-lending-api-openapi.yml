@@ -3049,6 +3049,178 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ActionLoan:
+      properties:
+        collateralPortfolioId:
+          description: The account where the collateral is to be returned to if accepted by the borrower and repaid in full
+          type: string
+        loanAllocationId:
+          description: The ID of the loan allocation
+          type: string
+      required:
+      - loanAllocationId
+      type: object
+    RequiredCollateral:
+      properties:
+        amount:
+          description: The amount of the collateral required
+          type: string
+        amountInUsd:
+          description: The value of the collateral denominated in US Dollars
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+      required:
+      - amount
+      - currency
+      - mainCurrency
+      type: object
+    RepayLoan:
+      properties:
+        amount:
+          description: The amount to be repaid. Can be in part or in full
+          type: string
+        collateralPortfolioId:
+          description: The account where the collateral is to be returned to if initiated by the borrower and repaid in full
+          type: string
+        effectiveDate:
+          description: Timestamp of effective repayment in epoch milliseconds, if external
+          type: string
+      type: object
+    CounterpartyTag:
+      enum:
+      - featured
+      type: string
+    ExtendLoan:
+      properties:
+        newMaturityDate:
+          description: The new maturity date as timestamp in epoch milliseconds
+          type: string
+      required:
+      - newMaturityDate
+      type: object
+    EstimateLoanLeverageRatio:
+      properties:
+        includeUnrealisedAmount:
+          default: 'false'
+          examples:
+          - 'false'
+          type: boolean
+        loanAdjustmentAmount:
+          type: string
+        ownedAdjustmentAmount:
+          type: string
+        ownedAdjustmentCurrency:
+          type: string
+        ownedAdjustmentMainCurrency:
+          type: string
+        portfolioId:
+          type: string
+      type: object
+    LoanAllocationStatus:
+      enum:
+      - new
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      - order-created
+      - awaiting-confirmation
+      - confirmed
+      - awaiting-funds
+      - awaiting-signature
+      - completed
+      - failed
+      type: string
+    LoanAllocationType:
+      enum:
+      - disburse
+      - top-up
+      - repay
+      - rebalance
+      - secure-collateral
+      - release-collateral
+      - disburse-externally
+      - top-up-externally
+      - repay-externally
+      type: string
+    LoanModificationType:
+      enum:
+      - rerate
+      - extend-term
+      type: string
+    LoanType:
+      enum:
+      - agency-lending-parent-loan
+      - agency-inventory
+      - agency-lending-collateralised-child-loan
+      - agency-title-transfer-collateralised-loan
+      - agency-lending-uncollateralised-child-loan
+      - agency-uncollateralised-loan
+      - agency-lending-first-lien-child-loan
+      - agency-clearloop-loan
+      - agency-lending-pledge-collateralised-child-loan
+      - agency-pledge-collateralised-loan
+      - bilateral-lending-title-transfer-collateralised-loan
+      - bilateral-title-transfer-collateralised-loan
+      - bilateral-lending-pledge-collateralised-loan
+      - bilateral-pledge-collateralised-loan
+      - bilateral-lending-uncollateralised-loan
+      - bilateral-uncollateralised-loan
+      type: string
+    DebtRatioStatus:
+      enum: []
+      type: string
+    InterestPaymentAction:
+      properties:
+        effectiveDate:
+          description: Timestamp of effective interest payment in epoch milliseconds, if external
+          type: string
+        loanAllocationId:
+          type: string
+        portfolioId:
+          description: The account from/to which the interest is to be paid.
+          type: string
+      required:
+      - loanAllocationId
+      type: object
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
+      type: string
+    RerateLoan:
+      properties:
+        newInterestRate:
+          description: The new interest rate for the loan in basis points (BPS)
+          type: string
+      required:
+      - newInterestRate
+      type: object
+    PayInterest:
+      properties:
+        amount:
+          description: The amount of given currency to pay as interest
+          type: string
+        currency:
+          description: Currency code of the asset used to pay the interest
+          type: string
+        effectiveDate:
+          description: Timestamp of effective interest payment in epoch milliseconds, if external
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the asset
+          type: string
+        portfolioId:
+          description: The account from/to which the interest is to be paid.
+          type: string
+      required:
+      - currency
+      - mainCurrency
+      type: object
     Loan:
       properties:
         amount:
@@ -3154,11 +3326,25 @@ components:
       - borrowerCounterpartyId
       - createdBy
       type: object
-    CounterpartyExtra:
+    AddCollateral:
       properties:
-        exchangeId:
-          description: Counterparty exchange id
+        amount:
+          description: The amount of collateral that is to be secured
           type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account from which the collateral shall be transferred from
+          type: string
+      required:
+      - portfolioId
+      - amount
+      - currency
+      - mainCurrency
       type: object
     LoanInterest:
       properties:
@@ -3196,180 +3382,25 @@ components:
       - accruedInterest
       - createdAt
       type: object
-    DebtRatioStatus:
-      enum: []
-      type: string
-    LoanAllocationExtra:
-      properties:
-        acceptedAt:
-          description: Timestamp in epoch milliseconds of the allocation acceptance
-          type: string
-        acceptedBy:
-          description: The ID of the user that accepted the allocation
-          type: string
-        cancelledAt:
-          description: Timestamp in epoch milliseconds of the allocation cancellation
-          type: string
-        cancelledBy:
-          description: The ID of the user that cancelled the allocation
-          type: string
-        confirmedAt:
-          description: Timestamp in epoch milliseconds of the allocation confirmation. Only applicable for off-platform loans
-          type: string
-        confirmedBy:
-          description: The ID of the user that confirmed the allocation. Only applicable for off-platform loans
-          type: string
-        effectiveDate:
-          description: Timestamp in epoch milliseconds of the effective date of external action. Only applicable for off-platform loans
-          type: string
-      type: object
-    LoanType:
-      enum:
-      - agency-lending-parent-loan
-      - agency-inventory
-      - agency-lending-collateralised-child-loan
-      - agency-title-transfer-collateralised-loan
-      - agency-lending-uncollateralised-child-loan
-      - agency-uncollateralised-loan
-      - agency-lending-first-lien-child-loan
-      - agency-clearloop-loan
-      - agency-lending-pledge-collateralised-child-loan
-      - agency-pledge-collateralised-loan
-      - bilateral-lending-title-transfer-collateralised-loan
-      - bilateral-title-transfer-collateralised-loan
-      - bilateral-lending-pledge-collateralised-loan
-      - bilateral-pledge-collateralised-loan
-      - bilateral-lending-uncollateralised-loan
-      - bilateral-uncollateralised-loan
-      type: string
-    LoanModificationType:
-      enum:
-      - rerate
-      - extend-term
-      type: string
-    Loans:
-      properties:
-        loans:
-          description: The list of loans
-          items:
-            $ref: '#/components/schemas/Loan'
-          type: array
-      required:
-      - loans
-      type: object
-    RepayLoan:
+    RebalanceLoan:
       properties:
         amount:
-          description: The amount to be repaid. Can be in part or in full
-          type: string
-        collateralPortfolioId:
-          description: The account where the collateral is to be returned to if initiated by the borrower and repaid in full
-          type: string
-        effectiveDate:
-          description: Timestamp of effective repayment in epoch milliseconds, if external
-          type: string
-      type: object
-    CreateLoan:
-      properties:
-        amount:
-          description: The amount of the loan
-          type: string
-        counterpartyId:
-          description: The counterparty ID of the borrower
+          description: The amount of collateral that is requested to be released
           type: string
         currency:
-          description: Currency code of the asset being lent
+          description: Currency code of the asset being used for collateral
           type: string
-        defaultThreshold:
-          description: The LTV threshold at which the loan is in default
-          type: string
-        externalId:
-          description: Unique identifier for externally originated loans, must be unique
-          type: string
-        interestRate:
-          description: The interest rate for the loan in basis points (BPS)
-          type: string
-        lenderFeeShare:
-          description: Portion of interest fees allocated to the principal lender, expressed in basis points
-          type: string
-        lenderFeeSharePercentage:
-          description: Portion of interest fees allocated to the principal lender, expressed as a percentage
-          type: string
-        loanType:
-          $ref: '#/components/schemas/LoanType'
-          description: The type of loan. [See details](/enums/LoanType)
         mainCurrency:
-          description: Currency code of the network being used to transfer the asset
-          type: string
-        marginCallExpiryPeriod:
-          description: Duration of the margin call expiry period in hours, doesn't apply to ClearLoop loans
-          type: string
-        marginCallThreshold:
-          description: The LTV threshold at which the loan is in margin call
-          type: string
-        maturityDate:
-          description: Timestamp in epoch milliseconds of the maturity date
-          type: string
-        parentLoanId:
-          description: The loan ID of the parent loan - Only applicable for agency lending child loans
+          description: Currency code of the network being used to transfer the collateral
           type: string
         portfolioId:
-          description: The ID of the account which is to be used for disbursing the loan to the borrower
-          type: string
-        rebalanceThreshold:
-          description: The LTV threshold at which the borrower can request a rebalance
-          type: string
-        requiredCollaterals:
-          description: The amount of the collateral required. Currently only a single collateral currency is supported
-          items:
-            $ref: '#/components/schemas/RequiredCollateral'
-          type: array
-        startDate:
-          description: Timestamp in epoch milliseconds the loan is meant to be disbursed and activated
+          description: The account in which the collateral shall be delivered to
           type: string
       required:
-      - externalId
-      - counterpartyId
-      - loanType
       - amount
+      - portfolioId
       - currency
       - mainCurrency
-      type: object
-    RerateLoan:
-      properties:
-        newInterestRate:
-          description: The new interest rate for the loan in basis points (BPS)
-          type: string
-      required:
-      - newInterestRate
-      type: object
-    InterestPaymentAction:
-      properties:
-        effectiveDate:
-          description: Timestamp of effective interest payment in epoch milliseconds, if external
-          type: string
-        loanAllocationId:
-          type: string
-        portfolioId:
-          description: The account from/to which the interest is to be paid.
-          type: string
-      required:
-      - loanAllocationId
-      type: object
-    CounterpartyTag:
-      enum:
-      - featured
-      type: string
-    TopUpLoan:
-      properties:
-        amount:
-          description: The agreed upon amount the lender wishes to top up the loan by
-          type: string
-        effectiveDate:
-          description: Timestamp of effective top up in epoch milliseconds, if external
-          type: string
-      required:
-      - amount
       type: object
     LoanAllocation:
       properties:
@@ -3439,6 +3470,21 @@ components:
       - extra
       - createdAt
       type: object
+    CounterpartyExtra:
+      properties:
+        exchangeId:
+          description: Counterparty exchange id
+          type: string
+      type: object
+    EstimateLoanLtv:
+      properties:
+        amount:
+          type: string
+        collaterals:
+          items:
+            $ref: '#/components/schemas/RequiredCollateral'
+          type: array
+      type: object
     Counterparty:
       properties:
         backgroundImageId:
@@ -3480,6 +3526,106 @@ components:
       - networkTag
       - counterpartyType
       type: object
+    LoanAllocationExtra:
+      properties:
+        acceptedAt:
+          description: Timestamp in epoch milliseconds of the allocation acceptance
+          type: string
+        acceptedBy:
+          description: The ID of the user that accepted the allocation
+          type: string
+        cancelledAt:
+          description: Timestamp in epoch milliseconds of the allocation cancellation
+          type: string
+        cancelledBy:
+          description: The ID of the user that cancelled the allocation
+          type: string
+        confirmedAt:
+          description: Timestamp in epoch milliseconds of the allocation confirmation. Only applicable for off-platform loans
+          type: string
+        confirmedBy:
+          description: The ID of the user that confirmed the allocation. Only applicable for off-platform loans
+          type: string
+        effectiveDate:
+          description: Timestamp in epoch milliseconds of the effective date of external action. Only applicable for off-platform loans
+          type: string
+      type: object
+    CalculateLtvDryRun:
+      properties: {}
+      type: object
+    Collateral:
+      properties:
+        amount:
+          description: The amount of the transferred collateral
+          type: string
+        collateralId:
+          description: Unique identifier of the collateral
+          type: string
+        createdAt:
+          description: Timestamp in epoch milliseconds of the collateral creation
+          type: string
+        currency:
+          description: Currency code of the asset being used for collateral
+          type: string
+        loanId:
+          description: The ID of the loan
+          type: string
+        mainCurrency:
+          description: Currency code of the network being used to transfer the collateral
+          type: string
+        portfolioId:
+          description: The account where the collateral is being held
+          type: string
+        unrealisedAmount:
+          description: The amount of pending collateral funds. Can be positive or negative
+          type: string
+        updatedAt:
+          description: Timestamp in epoch milliseconds of the last collateral update
+          type: string
+      required:
+      - collateralId
+      - loanId
+      - amount
+      - currency
+      - mainCurrency
+      - createdAt
+      type: object
+    LoanModificationExtra:
+      properties:
+        acceptedAt:
+          description: Timestamp in epoch milliseconds of the modification acceptance
+          type: string
+        acceptedBy:
+          description: The ID of the user that accepted the modification
+          type: string
+        cancelledAt:
+          description: Timestamp in epoch milliseconds of the modification cancellation
+          type: string
+        cancelledBy:
+          description: The ID of the user that cancelled the modification
+          type: string
+        currentInterestRate:
+          description: The current interest rate of the loan in basis points (BPS)
+          type: string
+        currentMaturityDate:
+          description: The current maturity date as timestamp in epoch milliseconds
+          type: string
+        newInterestRate:
+          description: The new interest rate for the loan in basis points (BPS)
+          type: string
+        newMaturityDate:
+          description: The new maturity date as timestamp in epoch milliseconds
+          type: string
+      type: object
+    LoanModificationStatus:
+      enum:
+      - awaiting-acceptance
+      - accepted
+      - cancelled
+      type: string
+    MarginCall:
+      properties: {}
+      type: object
     LoanModification:
       properties:
         createdAt:
@@ -3518,72 +3664,23 @@ components:
       - modificationType
       - extra
       type: object
-    PayInterest:
-      properties:
-        amount:
-          description: The amount of given currency to pay as interest
-          type: string
-        currency:
-          description: Currency code of the asset used to pay the interest
-          type: string
-        effectiveDate:
-          description: Timestamp of effective interest payment in epoch milliseconds, if external
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the asset
-          type: string
-        portfolioId:
-          description: The account from/to which the interest is to be paid.
-          type: string
-      required:
-      - currency
-      - mainCurrency
-      type: object
-    LoanAllocationType:
-      enum:
-      - disburse
-      - top-up
-      - repay
-      - rebalance
-      - secure-collateral
-      - release-collateral
-      - disburse-externally
-      - top-up-externally
-      - repay-externally
-      type: string
-    LoanSide:
-      enum:
-      - lend
-      - borrow
-      type: string
-    RequiredCollateral:
-      properties:
-        amount:
-          description: The amount of the collateral required
-          type: string
-        amountInUsd:
-          description: The value of the collateral denominated in US Dollars
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-      required:
-      - amount
-      - currency
-      - mainCurrency
-      type: object
-    LtvDryRunResult:
-      properties: {}
-      type: object
     LoanModificationAction:
       properties:
         loanModificationId:
           type: string
       required:
       - loanModificationId
+      type: object
+    TopUpLoan:
+      properties:
+        amount:
+          description: The agreed upon amount the lender wishes to top up the loan by
+          type: string
+        effectiveDate:
+          description: Timestamp of effective top up in epoch milliseconds, if external
+          type: string
+      required:
+      - amount
       type: object
     LoanEmbedded:
       properties:
@@ -3621,29 +3718,66 @@ components:
           description: The margin call associated with the loan, if any
           type: object
       type: object
-    MarginCall:
+    EarlyTerminateLoan:
       properties: {}
       type: object
-    RebalanceLoan:
-      properties:
-        amount:
-          description: The amount of collateral that is requested to be released
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account in which the collateral shall be delivered to
-          type: string
-      required:
-      - amount
-      - portfolioId
-      - currency
-      - mainCurrency
+    LtvDryRunResult:
+      properties: {}
       type: object
+    Loans:
+      properties:
+        loans:
+          description: The list of loans
+          items:
+            $ref: '#/components/schemas/Loan'
+          type: array
+      required:
+      - loans
+      type: object
+    AcceptLoan:
+      properties:
+        borrowerPortfolioId:
+          description: The account where the loan will be disbursed into
+          type: string
+      type: object
+    LoanSide:
+      enum:
+      - lend
+      - borrow
+      type: string
+    LoanStatus:
+      enum:
+      - awaiting-approval
+      - awaiting-acceptance
+      - awaiting-collateral
+      - awaiting-interest-payment
+      - disbursing
+      - active
+      - repaying
+      - defaulting
+      - partially-defaulting
+      - early-termination-in-progress
+      - early-termination-completed
+      - defaulted
+      - default-resolved
+      - cancelled
+      - rejected
+      - errored
+      - repaid
+      - repaying-interest
+      - interest-repaid
+      - securing-collateral
+      - collateral-secured
+      - releasing-collateral
+      - collateral-released
+      - closed
+      type: string
+    CounterpartyType:
+      enum:
+      - standard
+      - clearloop-exchange
+      - agency-desk
+      type: string
     LoanExtra:
       properties:
         acceptedAt:
@@ -3721,203 +3855,69 @@ components:
             $ref: '#/components/schemas/RequiredCollateral'
           type: array
       type: object
-    Collateral:
+    CreateLoan:
       properties:
         amount:
-          description: The amount of the transferred collateral
+          description: The amount of the loan
           type: string
-        collateralId:
-          description: Unique identifier of the collateral
-          type: string
-        createdAt:
-          description: Timestamp in epoch milliseconds of the collateral creation
+        counterpartyId:
+          description: The counterparty ID of the borrower
           type: string
         currency:
-          description: Currency code of the asset being used for collateral
+          description: Currency code of the asset being lent
           type: string
-        loanId:
-          description: The ID of the loan
+        defaultThreshold:
+          description: The LTV threshold at which the loan is in default
           type: string
+        externalId:
+          description: Unique identifier for externally originated loans, must be unique
+          type: string
+        interestRate:
+          description: The interest rate for the loan in basis points (BPS)
+          type: string
+        lenderFeeShare:
+          description: Portion of interest fees allocated to the principal lender, expressed in basis points
+          type: string
+        lenderFeeSharePercentage:
+          description: Portion of interest fees allocated to the principal lender, expressed as a percentage
+          type: string
+        loanType:
+          $ref: '#/components/schemas/LoanType'
+          description: The type of loan. [See details](/enums/LoanType)
         mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
+          description: Currency code of the network being used to transfer the asset
+          type: string
+        marginCallExpiryPeriod:
+          description: Duration of the margin call expiry period in hours, doesn't apply to ClearLoop loans
+          type: string
+        marginCallThreshold:
+          description: The LTV threshold at which the loan is in margin call
+          type: string
+        maturityDate:
+          description: Timestamp in epoch milliseconds of the maturity date
+          type: string
+        parentLoanId:
+          description: The loan ID of the parent loan - Only applicable for agency lending child loans
           type: string
         portfolioId:
-          description: The account where the collateral is being held
+          description: The ID of the account which is to be used for disbursing the loan to the borrower
           type: string
-        unrealisedAmount:
-          description: The amount of pending collateral funds. Can be positive or negative
+        rebalanceThreshold:
+          description: The LTV threshold at which the borrower can request a rebalance
           type: string
-        updatedAt:
-          description: Timestamp in epoch milliseconds of the last collateral update
-          type: string
-      required:
-      - collateralId
-      - loanId
-      - amount
-      - currency
-      - mainCurrency
-      - createdAt
-      type: object
-    AddCollateral:
-      properties:
-        amount:
-          description: The amount of collateral that is to be secured
-          type: string
-        currency:
-          description: Currency code of the asset being used for collateral
-          type: string
-        mainCurrency:
-          description: Currency code of the network being used to transfer the collateral
-          type: string
-        portfolioId:
-          description: The account from which the collateral shall be transferred from
-          type: string
-      required:
-      - portfolioId
-      - amount
-      - currency
-      - mainCurrency
-      type: object
-    LoanModificationStatus:
-      enum:
-      - awaiting-acceptance
-      - accepted
-      - cancelled
-      type: string
-    EstimateLoanLtv:
-      properties:
-        amount:
-          type: string
-        collaterals:
+        requiredCollaterals:
+          description: The amount of the collateral required. Currently only a single collateral currency is supported
           items:
             $ref: '#/components/schemas/RequiredCollateral'
           type: array
-      type: object
-    CounterpartyType:
-      enum:
-      - standard
-      - clearloop-exchange
-      - agency-desk
-      type: string
-    LoanAllocationStatus:
-      enum:
-      - new
-      - awaiting-acceptance
-      - accepted
-      - cancelled
-      - order-created
-      - awaiting-confirmation
-      - confirmed
-      - awaiting-funds
-      - awaiting-signature
-      - completed
-      - failed
-      type: string
-    AcceptLoan:
-      properties:
-        borrowerPortfolioId:
-          description: The account where the loan will be disbursed into
-          type: string
-      type: object
-    LoanModificationExtra:
-      properties:
-        acceptedAt:
-          description: Timestamp in epoch milliseconds of the modification acceptance
-          type: string
-        acceptedBy:
-          description: The ID of the user that accepted the modification
-          type: string
-        cancelledAt:
-          description: Timestamp in epoch milliseconds of the modification cancellation
-          type: string
-        cancelledBy:
-          description: The ID of the user that cancelled the modification
-          type: string
-        currentInterestRate:
-          description: The current interest rate of the loan in basis points (BPS)
-          type: string
-        currentMaturityDate:
-          description: The current maturity date as timestamp in epoch milliseconds
-          type: string
-        newInterestRate:
-          description: The new interest rate for the loan in basis points (BPS)
-          type: string
-        newMaturityDate:
-          description: The new maturity date as timestamp in epoch milliseconds
-          type: string
-      type: object
-    EstimateLoanLeverageRatio:
-      properties:
-        includeUnrealisedAmount:
-          default: 'false'
-          examples:
-          - 'false'
-          type: boolean
-        loanAdjustmentAmount:
-          type: string
-        ownedAdjustmentAmount:
-          type: string
-        ownedAdjustmentCurrency:
-          type: string
-        ownedAdjustmentMainCurrency:
-          type: string
-        portfolioId:
-          type: string
-      type: object
-    LoanStatus:
-      enum:
-      - awaiting-approval
-      - awaiting-acceptance
-      - awaiting-collateral
-      - awaiting-interest-payment
-      - disbursing
-      - active
-      - repaying
-      - defaulting
-      - partially-defaulting
-      - early-termination-in-progress
-      - early-termination-completed
-      - defaulted
-      - default-resolved
-      - cancelled
-      - rejected
-      - errored
-      - repaid
-      - repaying-interest
-      - interest-repaid
-      - securing-collateral
-      - collateral-secured
-      - releasing-collateral
-      - collateral-released
-      - closed
-      type: string
-    SortingDirection:
-      enum:
-      - ASC
-      - DESC
-      type: string
-    ActionLoan:
-      properties:
-        collateralPortfolioId:
-          description: The account where the collateral is to be returned to if accepted by the borrower and repaid in full
-          type: string
-        loanAllocationId:
-          description: The ID of the loan allocation
+        startDate:
+          description: Timestamp in epoch milliseconds the loan is meant to be disbursed and activated
           type: string
       required:
-      - loanAllocationId
-      type: object
-    EarlyTerminateLoan:
-      properties: {}
-      type: object
-    ExtendLoan:
-      properties:
-        newMaturityDate:
-          description: The new maturity date as timestamp in epoch milliseconds
-          type: string
-      required:
-      - newMaturityDate
-      type: object
-    CalculateLtvDryRun:
-      properties: {}
+      - externalId
+      - counterpartyId
+      - loanType
+      - amount
+      - currency
+      - mainCurrency
       type: object

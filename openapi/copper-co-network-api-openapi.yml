@@ -143,16 +143,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CounterpartyExtra:
-      properties:
-        exchangeId:
-          description: Counterparty exchange id
-          type: string
-      type: object
-    CounterpartyTag:
-      enum:
-      - featured
-      type: string
     Counterparties:
       properties:
         counterparties:
@@ -163,12 +153,12 @@ components:
       required:
       - counterparties
       type: object
-    CounterpartyType:
-      enum:
-      - standard
-      - clearloop-exchange
-      - agency-desk
-      type: string
+    CounterpartyExtra:
+      properties:
+        exchangeId:
+          description: Counterparty exchange id
+          type: string
+      type: object
     Counterparty:
       properties:
         backgroundImageId:
@@ -210,3 +200,13 @@ components:
       - networkTag
       - counterpartyType
       type: object
+    CounterpartyTag:
+      enum:
+      - featured
+      type: string
+    CounterpartyType:
+      enum:
+      - standard
+      - clearloop-exchange
+      - agency-desk
+      type: string

@@ -335,53 +335,41 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PortfolioExtra:
-      properties:
-        autodiscoveredAccountStatus:
-          $ref: '#/components/schemas/AutodiscoveredAccountStatus'
-          description: Sub-status used to determine the state of walled-garden or clearloop portfolio
-        baseCurrency:
-          description: Base currency for external account that use margin pair
-          type: string
-        clearLoopDelegationsBlocked:
-          description: Portfolio Delegations are disabled/blocked
-          type: boolean
-        clearLoopPortfolioId:
-          description: Identifier of a ClearLoop portfolio, if any
-          type: string
-        clearLoopUnDelegationsBlocked:
-          description: Portfolio Undelegations are disabled/blocked
-          type: boolean
-        clientAccountId:
-          description: Unique client exchange's account identifier used for ClearLoop
-          type: string
-        customerId:
-          description: External customer identifier from an exchange
-          type: string
-        exchange:
-          description: External exchange associated with this portfolio
-          examples:
-          - okex
-          type: string
-        exchangeAccountType:
-          $ref: '#/components/schemas/ExchangeAccountType'
-          description: External portfolio exchange account type
-        externalAccountId:
-          description: Identifier of an external third-party account related to the portfolio
-          type: string
-        parentPortfolioId:
-          description: Identifier of a parent portfolio, if any
-          type: string
-        quoteCurrency:
-          description: Quote currency for external account that use margin pair
-          type: string
-        showWalletBalance:
-          $ref: '#/components/schemas/BalanceType'
-          description: Type of balance shown for the external account. [See details](/enums/BalanceType)
-        usdWithdrawalLimit:
-          description: Withdrawal limit of the portfolio in USD
-          type: string
+    BalanceType:
+      enum:
+      - real
+      - margin
+      type: string
+    ExchangeAccountType:
+      enum: []
+      type: string
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    Unit:
+      properties: {}
       type: object
+    PortfolioStatus:
+      enum: []
+      type: string
+    Portfolios:
+      properties:
+        portfolios:
+          description: List of portfolios
+          items:
+            $ref: '#/components/schemas/Portfolio'
+          type: array
+      required:
+      - portfolios
+      type: object
+    SigningFlowType:
+      enum: []
+      type: string
     AutodiscoveredAccountStatus:
       enum: []
       type: string
@@ -446,30 +434,53 @@ components:
       - createdAt
       - isActive
       type: object
-    ExchangeAccountType:
-      enum: []
-      type: string
-    Portfolios:
+    PortfolioExtra:
       properties:
-        portfolios:
-          description: List of portfolios
-          items:
-            $ref: '#/components/schemas/Portfolio'
-          type: array
-      required:
-      - portfolios
+        autodiscoveredAccountStatus:
+          $ref: '#/components/schemas/AutodiscoveredAccountStatus'
+          description: Sub-status used to determine the state of walled-garden or clearloop portfolio
+        baseCurrency:
+          description: Base currency for external account that use margin pair
+          type: string
+        clearLoopDelegationsBlocked:
+          description: Portfolio Delegations are disabled/blocked
+          type: boolean
+        clearLoopPortfolioId:
+          description: Identifier of a ClearLoop portfolio, if any
+          type: string
+        clearLoopUnDelegationsBlocked:
+          description: Portfolio Undelegations are disabled/blocked
+          type: boolean
+        clientAccountId:
+          description: Unique client exchange's account identifier used for ClearLoop
+          type: string
+        customerId:
+          description: External customer identifier from an exchange
+          type: string
+        exchange:
+          description: External exchange associated with this portfolio
+          examples:
+          - okex
+          type: string
+        exchangeAccountType:
+          $ref: '#/components/schemas/ExchangeAccountType'
+          description: External portfolio exchange account type
+        externalAccountId:
+          description: Identifier of an external third-party account related to the portfolio
+          type: string
+        parentPortfolioId:
+          description: Identifier of a parent portfolio, if any
+          type: string
+        quoteCurrency:
+          description: Quote currency for external account that use margin pair
+          type: string
+        showWalletBalance:
+          $ref: '#/components/schemas/BalanceType'
+          description: Type of balance shown for the external account. [See details](/enums/BalanceType)
+        usdWithdrawalLimit:
+          description: Withdrawal limit of the portfolio in USD
+          type: string
       type: object
-    Unit:
-      properties: {}
-      type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
     CreatePortfolio:
       properties:
         isDefiVault:
@@ -504,14 +515,3 @@ components:
       - portfolioName
       - portfolioType
       type: object
-    SigningFlowType:
-      enum: []
-      type: string
-    PortfolioStatus:
-      enum: []
-      type: string
-    BalanceType:
-      enum:
-      - real
-      - margin
-      type: string

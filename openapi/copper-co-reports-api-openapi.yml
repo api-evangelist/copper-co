@@ -399,24 +399,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OrderType:
-      enum:
-      - sell
-      - buy
-      - deposit
-      - withdraw
-      - multi-withdraw
-      - wallet-message
-      - retrieved-deposit
-      - earn-reward
-      - earn-shared-reward
-      - claim-shared-reward
-      - cross-chain-deposit
-      - cross-chain-withdraw
-      type: string
-    Report:
-      properties: {}
+    CreateStakeOrdersReport:
+      properties:
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+        reportType:
+          $ref: '#/components/schemas/StakeReportTypes'
+          description: Report type. [See details](/enums/StakeReportTypes)
+        terminatedAtFrom:
+          description: Timestamp in milliseconds of when orders were terminated from
+          type: string
+        terminatedAtTo:
+          description: Timestamp in milliseconds of when orders were terminated to
+          type: string
+      required:
+      - terminatedAtTo
       type: object
+    LoanSide:
+      enum:
+      - lend
+      - borrow
+      type: string
     LendingReportType:
       enum:
       - outstanding-loans-report
@@ -449,6 +464,19 @@ components:
       - dateFrom
       - dateTo
       type: object
+    StakeReportTypes:
+      enum:
+      - rewards
+      - staking-orders
+      type: string
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
     NetReportType:
       enum:
       - transfers
@@ -481,7 +509,22 @@ components:
       - organizationId
       - reportType
       type: object
-    CreateStakeOrdersReport:
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string
+    CreateStakeRewardsReport:
       properties:
         portfolioIds:
           description: List of portfolio ids for the report
@@ -508,15 +551,8 @@ components:
           type: string
       required:
       - terminatedAtTo
+      - reportType
       type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
     CreateOrdersNetReport:
       properties:
         orderTypes:
@@ -554,42 +590,6 @@ components:
       - terminatedAtTo
       - reportType
       type: object
-    LoanSide:
-      enum:
-      - lend
-      - borrow
-      type: string
-    CreateStakeRewardsReport:
-      properties:
-        portfolioIds:
-          description: List of portfolio ids for the report
-          examples:
-          - portfolioId1,portfolioId2
-          items:
-            type: string
-          type: array
-        portfolioTypes:
-          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
-          examples:
-          - custody,external
-          items:
-            $ref: '#/components/schemas/PortfolioType'
-          type: array
-        reportType:
-          $ref: '#/components/schemas/StakeReportTypes'
-          description: Report type. [See details](/enums/StakeReportTypes)
-        terminatedAtFrom:
-          description: Timestamp in milliseconds of when orders were terminated from
-          type: string
-        terminatedAtTo:
-          description: Timestamp in milliseconds of when orders were terminated to
-          type: string
-      required:
-      - terminatedAtTo
-      - reportType
+    Report:
+      properties: {}
       type: object
-    StakeReportTypes:
-      enum:
-      - rewards
-      - staking-orders
-      type: string

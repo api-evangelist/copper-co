@@ -353,18 +353,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    AddressCategory:
-      enum:
-      - smart-contract
-      - payable-smart-contract
-      - mining
-      - unknown
-      - self-hosted
-      - vasp
-      type: string
-    AddressTag:
-      enum: []
-      type: string
     CurrencyConfiguration:
       properties:
         createdAt:
@@ -411,25 +399,19 @@ components:
       - createdAt
       - isWhitelist
       type: object
-    CryptoAddressEmbedded:
-      properties:
-        currencyConfigurations:
-          description: Crypto address currency configuration
-          items:
-            $ref: '#/components/schemas/CurrencyConfiguration'
-          type: array
-      type: object
-    CryptoAddresses:
-      properties:
-        cryptoAddresses:
-          description: List of crypto addresses
-          items:
-            $ref: '#/components/schemas/CryptoAddress'
-          type: array
-      required:
-      - cryptoAddresses
-      type: object
+    AddressCategory:
+      enum:
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
+      type: string
     CryptoAddressExtra:
+      properties: {}
+      type: object
+    Unit:
       properties: {}
       type: object
     CreateCryptoAddress:
@@ -480,7 +462,24 @@ components:
       - name
       - address
       type: object
-    Unit:
+    CryptoAddresses:
+      properties:
+        cryptoAddresses:
+          description: List of crypto addresses
+          items:
+            $ref: '#/components/schemas/CryptoAddress'
+          type: array
+      required:
+      - cryptoAddresses
+      type: object
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
+    CurrencyConfigurationExtra:
       properties: {}
       type: object
     CryptoAddress:
@@ -564,13 +563,14 @@ components:
       - isWhitelist
       - addressType
       type: object
-    CurrencyConfigurationExtra:
-      properties: {}
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
       type: object
-    AddressType:
-      enum:
-      - externally-owned-account
-      - internal-account
-      - smart-contract
-      - payable-smart-contract
+    AddressTag:
+      enum: []
       type: string

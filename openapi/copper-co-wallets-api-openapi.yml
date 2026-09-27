@@ -320,20 +320,16 @@ components:
       - portfolioId
       - currency
       type: object
-    WalletExtra:
+    Wallets:
       properties:
-        externalAccountId:
-          description: Third-party identifier (ID of an external account)
-          type: string
+        wallets:
+          description: List of wallets
+          items:
+            $ref: '#/components/schemas/Wallet'
+          type: array
+      required:
+      - wallets
       type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
     CreateWallet:
       properties:
         currency:
@@ -353,13 +349,17 @@ components:
       - portfolioId
       - currency
       type: object
-    Wallets:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    WalletExtra:
       properties:
-        wallets:
-          description: List of wallets
-          items:
-            $ref: '#/components/schemas/Wallet'
-          type: array
-      required:
-      - wallets
+        externalAccountId:
+          description: Third-party identifier (ID of an external account)
+          type: string
       type: object
