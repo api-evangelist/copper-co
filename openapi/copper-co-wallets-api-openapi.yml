@@ -267,6 +267,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Wallets:
+      properties:
+        wallets:
+          description: List of wallets
+          items:
+            $ref: '#/components/schemas/Wallet'
+          type: array
+      required:
+      - wallets
+      type: object
     Wallet:
       properties:
         available:
@@ -319,16 +329,6 @@ components:
       - walletId
       - portfolioId
       - currency
-      type: object
-    Wallets:
-      properties:
-        wallets:
-          description: List of wallets
-          items:
-            $ref: '#/components/schemas/Wallet'
-          type: array
-      required:
-      - wallets
       type: object
     CreateWallet:
       properties:

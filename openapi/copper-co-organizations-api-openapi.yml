@@ -279,43 +279,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    OrganizationMember:
-      properties:
-        _embedded:
-          $ref: '#/components/schemas/OrganizationMemberEmbedded'
-          description: Additional data about the member
-          type: object
-        createdAt:
-          description: Created at timestamp in milliseconds
-          type: string
-        deactivatedAt:
-          description: Deactivated at timestamp in milliseconds
-          type: string
-        isActive:
-          description: Indicates, whether the member is active
-          type: boolean
-        memberType:
-          $ref: '#/components/schemas/MemberType'
-          description: The member type. [See details](/enums/MemberType)
-        organizationId:
-          description: The organization ID
-          type: string
-        updatedAt:
-          description: Last updated at timestamp in milliseconds
-          type: string
-        userId:
-          description: The user ID
-          type: string
-      required:
-      - organizationId
-      - userId
-      - isActive
-      type: object
-    MemberType:
-      enum:
-      - user
-      - service
-      type: string
     OrganizationMemberEmbedded:
       properties:
         permissionGroups:
@@ -327,6 +290,105 @@ components:
           $ref: '#/components/schemas/User'
           description: Member's user information
           type: object
+      type: object
+    OrganizationMembers:
+      properties:
+        members:
+          description: List of organization members
+          items:
+            $ref: '#/components/schemas/OrganizationMember'
+          type: array
+      required:
+      - members
+      type: object
+    OrganizationType:
+      enum:
+      - standard
+      type: string
+    OrganizationExtra:
+      properties:
+        defaultFiatPortfolioId:
+          description: Portfolio id where fiat deposits are credited (must be a trading portfolio)
+          type: string
+      type: object
+    Organization:
+      properties:
+        alias:
+          description: The organization alias
+          type: string
+        createdAt:
+          description: The organization creation timestamp
+          type: string
+        extra:
+          $ref: '#/components/schemas/OrganizationExtra'
+          description: The organization additional information
+          type: object
+        organizationId:
+          description: The organization ID
+          type: string
+        organizationName:
+          description: The organization name
+          type: string
+        organizationType:
+          $ref: '#/components/schemas/OrganizationType'
+          description: The organization type. [See details](/enums/OrganizationType)
+        reportingCurrency:
+          description: The organization reporting currency
+          type: string
+      required:
+      - organizationId
+      - organizationName
+      - createdAt
+      - reportingCurrency
+      - organizationType
+      type: object
+    MemberType:
+      enum:
+      - user
+      - service
+      type: string
+    Activities:
+      properties:
+        activities:
+          items:
+            $ref: '#/components/schemas/Activity'
+          type: array
+      type: object
+    Organizations:
+      properties:
+        organizations:
+          description: List of organizations
+          items:
+            $ref: '#/components/schemas/Organization'
+          type: array
+      required:
+      - organizations
+      type: object
+    Activity:
+      properties:
+        activityId:
+          type: string
+        activityType:
+          $ref: '#/components/schemas/ActivityType'
+          description: '[See details](/enums/ActivityType)'
+        createdAt:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: string
+        portfolioId:
+          type: string
+        userId:
+          type: string
+      required:
+      - activityId
+      - name
+      - description
+      - createdAt
+      - activityType
       type: object
     ActivityType:
       enum:
@@ -413,22 +475,6 @@ components:
       - loan-extension-accepted
       - loan-extension-cancelled
       type: string
-    OrganizationExtra:
-      properties:
-        defaultFiatPortfolioId:
-          description: Portfolio id where fiat deposits are credited (must be a trading portfolio)
-          type: string
-      type: object
-    Organizations:
-      properties:
-        organizations:
-          description: List of organizations
-          items:
-            $ref: '#/components/schemas/Organization'
-          type: array
-      required:
-      - organizations
-      type: object
     User:
       properties:
         createdAt:
@@ -446,81 +492,35 @@ components:
       required:
       - userId
       type: object
-    OrganizationType:
-      enum:
-      - standard
-      type: string
-    OrganizationMembers:
+    OrganizationMember:
       properties:
-        members:
-          description: List of organization members
-          items:
-            $ref: '#/components/schemas/OrganizationMember'
-          type: array
-      required:
-      - members
-      type: object
-    Organization:
-      properties:
-        alias:
-          description: The organization alias
-          type: string
-        createdAt:
-          description: The organization creation timestamp
-          type: string
-        extra:
-          $ref: '#/components/schemas/OrganizationExtra'
-          description: The organization additional information
+        _embedded:
+          $ref: '#/components/schemas/OrganizationMemberEmbedded'
+          description: Additional data about the member
           type: object
+        createdAt:
+          description: Created at timestamp in milliseconds
+          type: string
+        deactivatedAt:
+          description: Deactivated at timestamp in milliseconds
+          type: string
+        isActive:
+          description: Indicates, whether the member is active
+          type: boolean
+        memberType:
+          $ref: '#/components/schemas/MemberType'
+          description: The member type. [See details](/enums/MemberType)
         organizationId:
           description: The organization ID
           type: string
-        organizationName:
-          description: The organization name
+        updatedAt:
+          description: Last updated at timestamp in milliseconds
           type: string
-        organizationType:
-          $ref: '#/components/schemas/OrganizationType'
-          description: The organization type. [See details](/enums/OrganizationType)
-        reportingCurrency:
-          description: The organization reporting currency
+        userId:
+          description: The user ID
           type: string
       required:
       - organizationId
-      - organizationName
-      - createdAt
-      - reportingCurrency
-      - organizationType
-      type: object
-    Activities:
-      properties:
-        activities:
-          items:
-            $ref: '#/components/schemas/Activity'
-          type: array
-      type: object
-    Activity:
-      properties:
-        activityId:
-          type: string
-        activityType:
-          $ref: '#/components/schemas/ActivityType'
-          description: '[See details](/enums/ActivityType)'
-        createdAt:
-          type: string
-        description:
-          type: string
-        name:
-          type: string
-        organizationId:
-          type: string
-        portfolioId:
-          type: string
-        userId:
-          type: string
-      required:
-      - activityId
-      - name
-      - description
-      - createdAt
-      - activityType
+      - userId
+      - isActive
       type: object

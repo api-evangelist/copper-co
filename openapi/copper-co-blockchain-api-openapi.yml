@@ -79,20 +79,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ValidateAddress:
-      properties:
-        address:
-          type: string
-        currency:
-          type: string
-        mainCurrency:
-          type: string
-        memo:
-          type: string
-      required:
-      - currency
-      - address
-      type: object
     AddressValidation:
       properties:
         address:
@@ -107,4 +93,18 @@ components:
           type: boolean
       required:
       - valid
+      type: object
+    ValidateAddress:
+      properties:
+        address:
+          type: string
+        currency:
+          type: string
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+      required:
+      - currency
+      - address
       type: object

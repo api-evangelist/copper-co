@@ -293,6 +293,63 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    DepositTargetType:
+      enum:
+      - proxy
+      - direct
+      - external-wallet
+      type: string
+    DepositTargetStatus:
+      enum:
+      - new
+      - pending
+      - approval-pending
+      - enabled
+      - disabled
+      - error
+      - portfolio-archived
+      type: string
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    CreateTarget:
+      properties:
+        activationCode:
+          type: string
+        address:
+          type: string
+        currency:
+          type: string
+        externalId:
+          type: string
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+        name:
+          type: string
+        portfolioId:
+          type: string
+      required:
+      - externalId
+      - portfolioId
+      - currency
+      - mainCurrency
+      type: object
+    ActivateCurrency:
+      properties:
+        currency:
+          type: string
+        mainCurrency:
+          type: string
+      required:
+      - currency
+      type: object
     DepositTarget:
       properties:
         acceptAllTokens:
@@ -363,50 +420,8 @@ components:
       - ASC
       - DESC
       type: string
-    ActivatedToken:
-      properties: {}
-      type: object
-    DepositTargetStatus:
-      enum:
-      - new
-      - pending
-      - approval-pending
-      - enabled
-      - disabled
-      - error
-      - portfolio-archived
-      type: string
-    CreateTarget:
-      properties:
-        activationCode:
-          type: string
-        address:
-          type: string
-        currency:
-          type: string
-        externalId:
-          type: string
-        mainCurrency:
-          type: string
-        memo:
-          type: string
-        name:
-          type: string
-        portfolioId:
-          type: string
-      required:
-      - externalId
-      - portfolioId
-      - currency
-      - mainCurrency
-      type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
+    DepositTargetOrderGroup:
+      enum: []
       type: string
     DepositTargets:
       properties:
@@ -417,21 +432,6 @@ components:
       required:
       - depositTargets
       type: object
-    ActivateCurrency:
-      properties:
-        currency:
-          type: string
-        mainCurrency:
-          type: string
-      required:
-      - currency
+    ActivatedToken:
+      properties: {}
       type: object
-    DepositTargetType:
-      enum:
-      - proxy
-      - direct
-      - external-wallet
-      type: string
-    DepositTargetOrderGroup:
-      enum: []
-      type: string

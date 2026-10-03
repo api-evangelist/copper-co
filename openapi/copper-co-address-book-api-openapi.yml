@@ -353,135 +353,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CurrencyConfiguration:
-      properties:
-        createdAt:
-          description: Created at timestamp
-          type: string
-        createdBy:
-          description: Created by user id
-          type: string
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        currencyConfigurationId:
-          description: Currency configuration id
-          type: string
-        extra:
-          $ref: '#/components/schemas/CurrencyConfigurationExtra'
-          description: Extra information for an address
-          type: object
-        isWhitelist:
-          description: Indicates, if an address is whitelisted
-          type: boolean
-        lastUsedAt:
-          description: Last used at
-          type: string
-        portfolioIds:
-          description: Portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-        updatedAt:
-          description: Last updated Updated at timestamp
-          type: string
-        updatedBy:
-          description: Updated by user id
-          type: string
-      required:
-      - currencyConfigurationId
-      - cryptoAddressId
-      - currency
-      - createdBy
-      - createdAt
-      - isWhitelist
-      type: object
-    AddressCategory:
-      enum:
-      - smart-contract
-      - payable-smart-contract
-      - mining
-      - unknown
-      - self-hosted
-      - vasp
-      type: string
-    CryptoAddressExtra:
-      properties: {}
-      type: object
-    Unit:
-      properties: {}
-      type: object
-    CreateCryptoAddress:
-      properties:
-        acceptTokens:
-          description: Indicates, if address can be used for network tokens
-          type: boolean
-        address:
-          description: Address
-          type: string
-        addressTags:
-          description: Address tags
-          items:
-            $ref: '#/components/schemas/AddressTag'
-          type: array
-        addressType:
-          $ref: '#/components/schemas/AddressType'
-          description: '[See details](/enums/AddressType)'
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        isWhitelist:
-          default: 'false'
-          description: Indicates, if address is whitelisted
-          examples:
-          - 'false'
-          type: boolean
-        mainCurrency:
-          description: Main currency (network) of an address
-          type: string
-        memo:
-          description: Address memo (destination tag for XRP)
-          type: string
-        name:
-          description: Name of the address
-          type: string
-        portfolioIds:
-          description: Comma-separated portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-      required:
-      - cryptoAddressId
-      - currency
-      - name
-      - address
-      type: object
-    CryptoAddresses:
-      properties:
-        cryptoAddresses:
-          description: List of crypto addresses
-          items:
-            $ref: '#/components/schemas/CryptoAddress'
-          type: array
-      required:
-      - cryptoAddresses
-      type: object
-    AddressType:
-      enum:
-      - externally-owned-account
-      - internal-account
-      - smart-contract
-      - payable-smart-contract
-      type: string
-    CurrencyConfigurationExtra:
-      properties: {}
-      type: object
     CryptoAddress:
       properties:
         _embedded:
@@ -563,6 +434,15 @@ components:
       - isWhitelist
       - addressType
       type: object
+    AddressCategory:
+      enum:
+      - smart-contract
+      - payable-smart-contract
+      - mining
+      - unknown
+      - self-hosted
+      - vasp
+      type: string
     CryptoAddressEmbedded:
       properties:
         currencyConfigurations:
@@ -571,6 +451,126 @@ components:
             $ref: '#/components/schemas/CurrencyConfiguration'
           type: array
       type: object
+    CryptoAddresses:
+      properties:
+        cryptoAddresses:
+          description: List of crypto addresses
+          items:
+            $ref: '#/components/schemas/CryptoAddress'
+          type: array
+      required:
+      - cryptoAddresses
+      type: object
+    Unit:
+      properties: {}
+      type: object
+    CryptoAddressExtra:
+      properties: {}
+      type: object
     AddressTag:
       enum: []
+      type: string
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
+      type: object
+    CurrencyConfigurationExtra:
+      properties: {}
+      type: object
+    CreateCryptoAddress:
+      properties:
+        acceptTokens:
+          description: Indicates, if address can be used for network tokens
+          type: boolean
+        address:
+          description: Address
+          type: string
+        addressTags:
+          description: Address tags
+          items:
+            $ref: '#/components/schemas/AddressTag'
+          type: array
+        addressType:
+          $ref: '#/components/schemas/AddressType'
+          description: '[See details](/enums/AddressType)'
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        isWhitelist:
+          default: 'false'
+          description: Indicates, if address is whitelisted
+          examples:
+          - 'false'
+          type: boolean
+        mainCurrency:
+          description: Main currency (network) of an address
+          type: string
+        memo:
+          description: Address memo (destination tag for XRP)
+          type: string
+        name:
+          description: Name of the address
+          type: string
+        portfolioIds:
+          description: Comma-separated portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+      required:
+      - cryptoAddressId
+      - currency
+      - name
+      - address
+      type: object
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
       type: string

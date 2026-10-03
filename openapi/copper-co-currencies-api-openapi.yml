@@ -254,50 +254,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    FeeLevel:
-      enum:
-      - low
-      - medium
-      - high
-      type: string
-    FeesLevels:
-      properties:
-        feesLevels:
-          items:
-            $ref: '#/components/schemas/FeesLevel'
-          type: array
-      type: object
-    CurrencyTag:
-      enum:
-      - deposit-custody
-      - deposit-trading-vault
-      - deposit-trading
-      - deposit-external
-      - withdraw-custody
-      - withdraw-trading-vault
-      - withdraw-trading
-      - withdraw-external
-      - show-custody
-      - show-trading-vault
-      - show-trading
-      - show-external
-      - show-fees-vault
-      - show-clearloop
-      - defi-allowed
-      type: string
-    UniverseCurrencyExtra:
-      properties: {}
-      type: object
-    CurrenciesData:
-      properties:
-        currencies:
-          description: Currencies list
-          items:
-            $ref: '#/components/schemas/CurrencyData'
-          type: array
-      required:
-      - currencies
-      type: object
     CurrencyData:
       properties:
         confirmations:
@@ -346,6 +302,43 @@ components:
       - mainCurrency
       - name
       type: object
+    CurrencyTag:
+      enum:
+      - deposit-custody
+      - deposit-trading-vault
+      - deposit-trading
+      - deposit-external
+      - withdraw-custody
+      - withdraw-trading-vault
+      - withdraw-trading
+      - withdraw-external
+      - show-custody
+      - show-trading-vault
+      - show-trading
+      - show-external
+      - show-fees-vault
+      - show-clearloop
+      - defi-allowed
+      type: string
+    UniverseCurrencyExtra:
+      properties: {}
+      type: object
+    FeeLevel:
+      enum:
+      - low
+      - medium
+      - high
+      type: string
+    CurrenciesData:
+      properties:
+        currencies:
+          description: Currencies list
+          items:
+            $ref: '#/components/schemas/CurrencyData'
+          type: array
+      required:
+      - currencies
+      type: object
     FeesLevel:
       properties:
         currency:
@@ -355,4 +348,11 @@ components:
           description: '[See details](/enums/FeeLevel)'
         value:
           type: string
+      type: object
+    FeesLevels:
+      properties:
+        feesLevels:
+          items:
+            $ref: '#/components/schemas/FeesLevel'
+          type: array
       type: object

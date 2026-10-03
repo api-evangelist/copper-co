@@ -80,9 +80,9 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    HyperliquidExchangeResponse:
+    HyperliquidExchangeRequest:
       properties: {}
       type: object
-    HyperliquidExchangeRequest:
+    HyperliquidExchangeResponse:
       properties: {}
       type: object
