@@ -190,12 +190,6 @@ components:
       - networkTag
       - counterpartyType
       type: object
-    CounterpartyType:
-      enum:
-      - standard
-      - clearloop-exchange
-      - agency-desk
-      type: string
     Counterparties:
       properties:
         counterparties:
@@ -209,4 +203,10 @@ components:
     CounterpartyTag:
       enum:
       - featured
+      type: string
+    CounterpartyType:
+      enum:
+      - standard
+      - clearloop-exchange
+      - agency-desk
       type: string

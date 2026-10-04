@@ -399,14 +399,17 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Report:
-      properties: {}
-      type: object
-    LendingReportType:
+    NetReportType:
       enum:
-      - outstanding-loans-report
-      - loan-activity-report
-      - loan-fees-report
+      - transfers
+      - orders
+      - transactions
+      - trading
+      type: string
+    LoanSide:
+      enum:
+      - lend
+      - borrow
       type: string
     PortfolioType:
       enum:
@@ -416,20 +419,10 @@ components:
       - external
       - clearloop
       type: string
-    OrderType:
+    StakeReportTypes:
       enum:
-      - sell
-      - buy
-      - deposit
-      - withdraw
-      - multi-withdraw
-      - wallet-message
-      - retrieved-deposit
-      - earn-reward
-      - earn-shared-reward
-      - claim-shared-reward
-      - cross-chain-deposit
-      - cross-chain-withdraw
+      - rewards
+      - staking-orders
       type: string
     CreateLendingReport:
       properties:
@@ -454,6 +447,61 @@ components:
           type: string
       required:
       - organizationId
+      - reportType
+      type: object
+    CreateWalletReport:
+      properties:
+        dateFrom:
+          description: Timestamp in milliseconds for the initial report entry
+          type: string
+        dateTo:
+          description: Timestamp in milliseconds for the final report entry
+          type: string
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+      required:
+      - dateFrom
+      - dateTo
+      type: object
+    CreateStakeRewardsReport:
+      properties:
+        portfolioIds:
+          description: List of portfolio ids for the report
+          examples:
+          - portfolioId1,portfolioId2
+          items:
+            type: string
+          type: array
+        portfolioTypes:
+          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
+          examples:
+          - custody,external
+          items:
+            $ref: '#/components/schemas/PortfolioType'
+          type: array
+        reportType:
+          $ref: '#/components/schemas/StakeReportTypes'
+          description: Report type. [See details](/enums/StakeReportTypes)
+        terminatedAtFrom:
+          description: Timestamp in milliseconds of when orders were terminated from
+          type: string
+        terminatedAtTo:
+          description: Timestamp in milliseconds of when orders were terminated to
+          type: string
+      required:
+      - terminatedAtTo
       - reportType
       type: object
     CreateOrdersNetReport:
@@ -493,78 +541,6 @@ components:
       - terminatedAtTo
       - reportType
       type: object
-    StakeReportTypes:
-      enum:
-      - rewards
-      - staking-orders
-      type: string
-    CreateStakeRewardsReport:
-      properties:
-        portfolioIds:
-          description: List of portfolio ids for the report
-          examples:
-          - portfolioId1,portfolioId2
-          items:
-            type: string
-          type: array
-        portfolioTypes:
-          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
-          examples:
-          - custody,external
-          items:
-            $ref: '#/components/schemas/PortfolioType'
-          type: array
-        reportType:
-          $ref: '#/components/schemas/StakeReportTypes'
-          description: Report type. [See details](/enums/StakeReportTypes)
-        terminatedAtFrom:
-          description: Timestamp in milliseconds of when orders were terminated from
-          type: string
-        terminatedAtTo:
-          description: Timestamp in milliseconds of when orders were terminated to
-          type: string
-      required:
-      - terminatedAtTo
-      - reportType
-      type: object
-    LoanSide:
-      enum:
-      - lend
-      - borrow
-      type: string
-    NetReportType:
-      enum:
-      - transfers
-      - orders
-      - transactions
-      - trading
-      type: string
-    CreateWalletReport:
-      properties:
-        dateFrom:
-          description: Timestamp in milliseconds for the initial report entry
-          type: string
-        dateTo:
-          description: Timestamp in milliseconds for the final report entry
-          type: string
-        portfolioIds:
-          description: List of portfolio ids for the report
-          examples:
-          - portfolioId1,portfolioId2
-          items:
-            type: string
-          type: array
-        portfolioTypes:
-          description: List of portfolio types for the report. [See details](/enums/PortfolioType)
-          examples:
-          - custody,external
-          items:
-            $ref: '#/components/schemas/PortfolioType'
-          type: array
-      required:
-      - dateFrom
-      - dateTo
-      type: object
     CreateStakeOrdersReport:
       properties:
         portfolioIds:
@@ -592,4 +568,28 @@ components:
           type: string
       required:
       - terminatedAtTo
+      type: object
+    LendingReportType:
+      enum:
+      - outstanding-loans-report
+      - loan-activity-report
+      - loan-fees-report
+      type: string
+    OrderType:
+      enum:
+      - sell
+      - buy
+      - deposit
+      - withdraw
+      - multi-withdraw
+      - wallet-message
+      - retrieved-deposit
+      - earn-reward
+      - earn-shared-reward
+      - claim-shared-reward
+      - cross-chain-deposit
+      - cross-chain-withdraw
+      type: string
+    Report:
+      properties: {}
       type: object

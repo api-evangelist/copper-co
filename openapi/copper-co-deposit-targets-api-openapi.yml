@@ -293,11 +293,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    DepositTargetType:
+    PortfolioType:
       enum:
-      - proxy
-      - direct
-      - external-wallet
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
+    ActivatedToken:
+      properties: {}
+      type: object
+    DepositTargets:
+      properties:
+        depositTargets:
+          items:
+            $ref: '#/components/schemas/DepositTarget'
+          type: array
+      required:
+      - depositTargets
+      type: object
+    ActivateCurrency:
+      properties:
+        currency:
+          type: string
+        mainCurrency:
+          type: string
+      required:
+      - currency
+      type: object
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
       type: string
     DepositTargetStatus:
       enum:
@@ -309,47 +337,6 @@ components:
       - error
       - portfolio-archived
       type: string
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    CreateTarget:
-      properties:
-        activationCode:
-          type: string
-        address:
-          type: string
-        currency:
-          type: string
-        externalId:
-          type: string
-        mainCurrency:
-          type: string
-        memo:
-          type: string
-        name:
-          type: string
-        portfolioId:
-          type: string
-      required:
-      - externalId
-      - portfolioId
-      - currency
-      - mainCurrency
-      type: object
-    ActivateCurrency:
-      properties:
-        currency:
-          type: string
-        mainCurrency:
-          type: string
-      required:
-      - currency
-      type: object
     DepositTarget:
       properties:
         acceptAllTokens:
@@ -415,23 +402,36 @@ components:
       - acceptAllTokens
       - requireTokensActivation
       type: object
-    SortingDirection:
+    DepositTargetType:
       enum:
-      - ASC
-      - DESC
+      - proxy
+      - direct
+      - external-wallet
       type: string
     DepositTargetOrderGroup:
       enum: []
       type: string
-    DepositTargets:
+    CreateTarget:
       properties:
-        depositTargets:
-          items:
-            $ref: '#/components/schemas/DepositTarget'
-          type: array
+        activationCode:
+          type: string
+        address:
+          type: string
+        currency:
+          type: string
+        externalId:
+          type: string
+        mainCurrency:
+          type: string
+        memo:
+          type: string
+        name:
+          type: string
+        portfolioId:
+          type: string
       required:
-      - depositTargets
-      type: object
-    ActivatedToken:
-      properties: {}
+      - externalId
+      - portfolioId
+      - currency
+      - mainCurrency
       type: object

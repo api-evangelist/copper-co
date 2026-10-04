@@ -267,6 +267,14 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
+      type: string
     Wallets:
       properties:
         wallets:
@@ -330,6 +338,12 @@ components:
       - portfolioId
       - currency
       type: object
+    WalletExtra:
+      properties:
+        externalAccountId:
+          description: Third-party identifier (ID of an external account)
+          type: string
+      type: object
     CreateWallet:
       properties:
         currency:
@@ -348,18 +362,4 @@ components:
       - walletId
       - portfolioId
       - currency
-      type: object
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    WalletExtra:
-      properties:
-        externalAccountId:
-          description: Third-party identifier (ID of an external account)
-          type: string
       type: object
