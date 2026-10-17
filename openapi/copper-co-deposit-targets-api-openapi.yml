@@ -293,40 +293,33 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PortfolioType:
-      enum:
-      - custody
-      - trading-vault
-      - trading
-      - external
-      - clearloop
-      type: string
-    ActivatedToken:
-      properties: {}
-      type: object
-    DepositTargets:
+    CreateTarget:
       properties:
-        depositTargets:
-          items:
-            $ref: '#/components/schemas/DepositTarget'
-          type: array
-      required:
-      - depositTargets
-      type: object
-    ActivateCurrency:
-      properties:
+        activationCode:
+          type: string
+        address:
+          type: string
         currency:
+          type: string
+        externalId:
           type: string
         mainCurrency:
           type: string
+        memo:
+          type: string
+        name:
+          type: string
+        portfolioId:
+          type: string
       required:
+      - externalId
+      - portfolioId
       - currency
+      - mainCurrency
       type: object
-    SortingDirection:
-      enum:
-      - ASC
-      - DESC
-      type: string
+    ActivatedToken:
+      properties: {}
+      type: object
     DepositTargetStatus:
       enum:
       - new
@@ -408,30 +401,37 @@ components:
       - direct
       - external-wallet
       type: string
-    DepositTargetOrderGroup:
-      enum: []
+    PortfolioType:
+      enum:
+      - custody
+      - trading-vault
+      - trading
+      - external
+      - clearloop
       type: string
-    CreateTarget:
+    SortingDirection:
+      enum:
+      - ASC
+      - DESC
+      type: string
+    DepositTargets:
       properties:
-        activationCode:
-          type: string
-        address:
-          type: string
+        depositTargets:
+          items:
+            $ref: '#/components/schemas/DepositTarget'
+          type: array
+      required:
+      - depositTargets
+      type: object
+    ActivateCurrency:
+      properties:
         currency:
-          type: string
-        externalId:
           type: string
         mainCurrency:
           type: string
-        memo:
-          type: string
-        name:
-          type: string
-        portfolioId:
-          type: string
       required:
-      - externalId
-      - portfolioId
       - currency
-      - mainCurrency
       type: object
+    DepositTargetOrderGroup:
+      enum: []
+      type: string

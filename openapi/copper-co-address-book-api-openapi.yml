@@ -353,16 +353,54 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CryptoAddressEmbedded:
-      properties:
-        currencyConfigurations:
-          description: Crypto address currency configuration
-          items:
-            $ref: '#/components/schemas/CurrencyConfiguration'
-          type: array
-      type: object
-    CurrencyConfigurationExtra:
+    CryptoAddressExtra:
       properties: {}
+      type: object
+    CurrencyConfiguration:
+      properties:
+        createdAt:
+          description: Created at timestamp
+          type: string
+        createdBy:
+          description: Created by user id
+          type: string
+        cryptoAddressId:
+          description: Crypto address id
+          type: string
+        currency:
+          description: Currency of an address
+          type: string
+        currencyConfigurationId:
+          description: Currency configuration id
+          type: string
+        extra:
+          $ref: '#/components/schemas/CurrencyConfigurationExtra'
+          description: Extra information for an address
+          type: object
+        isWhitelist:
+          description: Indicates, if an address is whitelisted
+          type: boolean
+        lastUsedAt:
+          description: Last used at
+          type: string
+        portfolioIds:
+          description: Portfolio ids, if address set for particular portfolios
+          items:
+            type: string
+          type: array
+        updatedAt:
+          description: Last updated Updated at timestamp
+          type: string
+        updatedBy:
+          description: Updated by user id
+          type: string
+      required:
+      - currencyConfigurationId
+      - cryptoAddressId
+      - currency
+      - createdBy
+      - createdAt
+      - isWhitelist
       type: object
     AddressCategory:
       enum:
@@ -373,16 +411,9 @@ components:
       - self-hosted
       - vasp
       type: string
-    CryptoAddressExtra:
+    CurrencyConfigurationExtra:
       properties: {}
       type: object
-    AddressType:
-      enum:
-      - externally-owned-account
-      - internal-account
-      - smart-contract
-      - payable-smart-contract
-      type: string
     CreateCryptoAddress:
       properties:
         acceptTokens:
@@ -434,52 +465,13 @@ components:
     AddressTag:
       enum: []
       type: string
-    CurrencyConfiguration:
-      properties:
-        createdAt:
-          description: Created at timestamp
-          type: string
-        createdBy:
-          description: Created by user id
-          type: string
-        cryptoAddressId:
-          description: Crypto address id
-          type: string
-        currency:
-          description: Currency of an address
-          type: string
-        currencyConfigurationId:
-          description: Currency configuration id
-          type: string
-        extra:
-          $ref: '#/components/schemas/CurrencyConfigurationExtra'
-          description: Extra information for an address
-          type: object
-        isWhitelist:
-          description: Indicates, if an address is whitelisted
-          type: boolean
-        lastUsedAt:
-          description: Last used at
-          type: string
-        portfolioIds:
-          description: Portfolio ids, if address set for particular portfolios
-          items:
-            type: string
-          type: array
-        updatedAt:
-          description: Last updated Updated at timestamp
-          type: string
-        updatedBy:
-          description: Updated by user id
-          type: string
-      required:
-      - currencyConfigurationId
-      - cryptoAddressId
-      - currency
-      - createdBy
-      - createdAt
-      - isWhitelist
-      type: object
+    AddressType:
+      enum:
+      - externally-owned-account
+      - internal-account
+      - smart-contract
+      - payable-smart-contract
+      type: string
     CryptoAddresses:
       properties:
         cryptoAddresses:
@@ -573,4 +565,12 @@ components:
       type: object
     Unit:
       properties: {}
+      type: object
+    CryptoAddressEmbedded:
+      properties:
+        currencyConfigurations:
+          description: Crypto address currency configuration
+          items:
+            $ref: '#/components/schemas/CurrencyConfiguration'
+          type: array
       type: object

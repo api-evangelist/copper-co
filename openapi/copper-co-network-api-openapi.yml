@@ -200,13 +200,13 @@ components:
       required:
       - counterparties
       type: object
-    CounterpartyTag:
-      enum:
-      - featured
-      type: string
     CounterpartyType:
       enum:
       - standard
       - clearloop-exchange
       - agency-desk
+      type: string
+    CounterpartyTag:
+      enum:
+      - featured
       type: string

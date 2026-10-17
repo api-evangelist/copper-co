@@ -51,16 +51,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SignAsyncStatusResponse:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/SignAsyncStatus'
-          type: string
-        message:
-          type: string
-          examples:
-          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=
     SignAsyncStatus:
       type: object
       enum:
@@ -78,6 +68,17 @@ components:
         * `completed`: The transaction has been signed
 
         * `error`: Something went wrong, see the message field'
+    SignAsyncResponse:
+      type: object
+      properties:
+        transactionRequestId:
+          type: string
+        sessionKey:
+          type: string
+        sessionTimestamp:
+          type: string
+          examples:
+          - '1608296004000'
     SignAsyncRequest:
       type: object
       properties:
@@ -115,14 +116,13 @@ components:
       - apiKey
       - apiSecret
       - signRequest
-    SignAsyncResponse:
+    SignAsyncStatusResponse:
       type: object
       properties:
-        transactionRequestId:
+        status:
+          $ref: '#/components/schemas/SignAsyncStatus'
           type: string
-        sessionKey:
-          type: string
-        sessionTimestamp:
+        message:
           type: string
           examples:
-          - '1608296004000'
+          - AQRwL5FqGrbLaPO4w+NoEq9oZ...R5I/wjEQND/4YmIn+rbN9uh5U/0=

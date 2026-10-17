@@ -254,16 +254,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    UniverseCurrencyExtra:
-      properties: {}
-      type: object
-    FeesLevels:
-      properties:
-        feesLevels:
-          items:
-            $ref: '#/components/schemas/FeesLevel'
-          type: array
-      type: object
     FeesLevel:
       properties:
         currency:
@@ -273,16 +263,6 @@ components:
           description: '[See details](/enums/FeeLevel)'
         value:
           type: string
-      type: object
-    CurrenciesData:
-      properties:
-        currencies:
-          description: Currencies list
-          items:
-            $ref: '#/components/schemas/CurrencyData'
-          type: array
-      required:
-      - currencies
       type: object
     CurrencyData:
       properties:
@@ -332,6 +312,16 @@ components:
       - mainCurrency
       - name
       type: object
+    UniverseCurrencyExtra:
+      properties: {}
+      type: object
+    FeesLevels:
+      properties:
+        feesLevels:
+          items:
+            $ref: '#/components/schemas/FeesLevel'
+          type: array
+      type: object
     FeeLevel:
       enum:
       - low
@@ -356,3 +346,13 @@ components:
       - show-clearloop
       - defi-allowed
       type: string
+    CurrenciesData:
+      properties:
+        currencies:
+          description: Currencies list
+          items:
+            $ref: '#/components/schemas/CurrencyData'
+          type: array
+      required:
+      - currencies
+      type: object
